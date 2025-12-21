@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>幻境檔案庫 | Cyber-Fantasy Archives v5.0-Performance</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Orbitron:wght@400;600;800&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        cyber: {
+                            blue: '#00f2ff',
+                            purple: '#bc13fe',
+                            dark: '#050505',
+                            glass: 'rgba(13, 17, 23, 0.65)',
+                            text: '#e2e8f0'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['"Noto Sans TC"', 'sans-serif'],
+                        tech: ['"Orbitron"', 'sans-serif'],
+                        mono: ['"Rajdhani"', 'monospace'],
+                    },
+                    animation: {
+                        'grid-move': 'grid-move 40s linear infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        :root {
+            --neon-blue: #00f2ff;
+            --neon-purple: #bc13fe;
+            --bg-dark: #020204;
+        }
+
+        /* 效能優化：強制硬體加速關鍵層 */
+        .cyber-grid, #particle-canvas, .glass-panel {
+            will-change: transform;
+            backface-visibility: hidden;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: #e2e8f0;
+            overflow: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .cyber-grid {
+            position: fixed;
+            width: 300vw;
+            height: 300vh;
+            left: -100%;
+            top: -100%;
+            background-image: 
+                linear-gradient(to right, rgba(0, 242, 255, 0.05) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(188, 19, 254, 0.05) 1px, transparent 1px);
+            background-size: 80px 80px;
+            transform: perspective(500px) rotateX(60deg) translateY(-100px) translateZ(-200px);
+            animation: grid-move 40s linear infinite;
+            z-index: -3;
+            pointer-events: none;
+            mask-image: radial-gradient(circle at center, black 40%, transparent 80%);
+        }
+
+        @keyframes grid-move {
+            0% { transform: perspective(500px) rotateX(60deg) translateY(0) translateZ(-200px); }
+            100% { transform: perspective(500px) rotateX(60deg) translateY(80px) translateZ(-200px); }
+        }
+
+        .scanlines {
+            position: fixed;
+            inset: 0;
+            background: linear-gradient(
+                to bottom,
+                rgba(255,255,255,0),
+                rgba(255,255,255,0) 50%,
+                rgba(0,0,0,0.1) 50%,
+                rgba(0,0,0,0.1)
+            );
+            background-size: 100% 4px;
+            pointer-events: none;
+            z-index: 50;
+            opacity: 0.15;
+        }
+
+        #particle-canvas {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: -2;
+            pointer-events: none;
+        }
+
+        .glass-panel {
+            background: rgba(5, 5, 8, 0.7);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+        }
+
+        .holo-card {
+            position: relative;
+            background: linear-gradient(135deg, rgba(13,17,23,0.9) 0%, rgba(5,5,8,0.95) 100%);
+            border: 1px solid rgba(0, 242, 255, 0.1);
+            transition: transform 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+            overflow: hidden;
+        }
+        
+        .holo-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 2px; height: 100%;
+            background: linear-gradient(to bottom, transparent, var(--neon-blue), transparent);
+            opacity: 0.5;
+        }
+
+        .holo-card:hover {
+            border-color: rgba(0, 242, 255, 0.4);
+            box-shadow: 0 0 30px rgba(0, 242, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .corner-deco {
+            position: absolute;
+            width: 8px; height: 8px;
+            transition: all 0.3s;
+            border: 1px solid var(--neon-blue);
+        }
+        .c-tl { top: 0; left: 0; border-bottom: none; border-right: none; }
+        .c-tr { top: 0; right: 0; border-bottom: none; border-left: none; }
+        .c-bl { bottom: 0; left: 0; border-top: none; border-right: none; }
+        .c-br { bottom: 0; right: 0; border-top: none; border-left: none; }
+
+        .holo-card:hover .corner-deco {
+            width: 20px; height: 20px;
+            box-shadow: 0 0 8px var(--neon-blue);
+        }
+
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: rgba(0,0,0,0.3); }
+        .custom-scrollbar::-webkit-scrollbar-thumb { 
+            background: rgba(0, 242, 255, 0.2); 
+            border-radius: 3px; 
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: var(--neon-blue); }
+
+        .text-glow { text-shadow: 0 0 10px rgba(0, 242, 255, 0.7); }
+        .text-glow-purple { text-shadow: 0 0 10px rgba(188, 19, 254, 0.7); }
+
+        .glitch-text { position: relative; }
+        .glitch-text::before, .glitch-text::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: var(--bg-dark);
+            opacity: 0.8;
+        }
+        .glitch-text::before {
+            left: 2px;
+            text-shadow: -1px 0 #ff00c1;
+            clip-path: inset(44% 0 61% 0);
+            animation: glitch-anim 4s infinite linear alternate-reverse;
+        }
+        .glitch-text::after {
+            left: -2px;
+            text-shadow: -1px 0 #00fff9;
+            clip-path: inset(55% 0 10% 0);
+            animation: glitch-anim 3s infinite linear alternate-reverse;
+        }
+        @keyframes glitch-anim {
+            0% { clip-path: inset(40% 0 60% 0); transform: translate(-2px, 0); }
+            2% { clip-path: inset(40% 0 60% 0); transform: translate(2px, 0); }
+            4%, 100% { clip-path: inset(100% 0 0 0); transform: translate(0, 0); }
+        }
+
+        #chapter-body p {
+            margin-bottom: 2em;
+            line-height: 2;
+            text-align: justify;
+            opacity: 0.9;
+            font-size: 1.1rem;
+        }
+        @media (min-width: 768px) {
+            #chapter-body p { font-size: 1.15rem; }
+        }
+        
+        #chapter-body hr {
+            border-color: rgba(255,255,255,0.1);
+            margin: 3rem 0;
+        }
+
+        .cyber-btn {
+            background: rgba(0, 242, 255, 0.05);
+            border: 1px solid rgba(0, 242, 255, 0.3);
+            color: var(--neon-blue);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            user-select: none;
+        }
+        .cyber-btn::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 242, 255, 0.2), transparent);
+            transition: 0.5s;
+        }
+        .cyber-btn:hover:not(:disabled) {
+            background: rgba(0, 242, 255, 0.15);
+            border-color: var(--neon-blue);
+            box-shadow: 0 0 20px rgba(0, 242, 255, 0.2);
+            color: white;
+        }
+        .cyber-btn:hover:not(:disabled)::before { left: 100%; }
+        .cyber-btn:disabled { opacity: 0.3; cursor: not-allowed; border-color: #333; color: #666; }
+
+        .sidebar {
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        
+        @keyframes loading-scan {
+            0% { width: 0%; left: 0; }
+            50% { width: 50%; left: 25%; }
+            100% { width: 100%; left: 0; }
+        }
+    </style>
+</head>
+<body class="flex h-screen w-full font-sans selection:bg-cyber-purple selection:text-white">
+
+    <div class="cyber-grid"></div>
+    <div class="scanlines"></div>
+    <canvas id="particle-canvas"></canvas>
+    
+    <div id="mobile-overlay" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-40 hidden transition-opacity duration-300" onclick="toggleSidebar()"></div>
+
+    <button aria-label="Toggle Menu" onclick="toggleSidebar()" class="md:hidden fixed top-4 right-4 z-50 text-cyber-blue border border-cyber-blue/30 w-10 h-10 flex items-center justify-center bg-black/80 rounded glass-panel hover:shadow-[0_0_15px_rgba(0,242,255,0.3)] transition">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <aside id="sidebar" class="sidebar fixed md:relative inset-y-0 left-0 w-80 transform -translate-x-full md:translate-x-0 z-50 flex flex-col glass-panel border-r border-white/5 shadow-2xl shrink-0">
+        <div class="p-8 border-b border-white/5 relative group cursor-default">
+            <div class="absolute inset-0 bg-gradient-to-r from-cyber-blue/5 to-transparent opacity-0 group-hover:opacity-100 transition duration-500"></div>
+            <h1 class="text-2xl font-black tracking-widest font-tech text-white glitch-text" data-text="幻境檔案庫">幻境檔案庫</h1>
+            <div class="flex justify-between items-end mt-2">
+                <p class="text-[10px] text-cyber-purple uppercase tracking-[0.3em] font-mono">System v5.0.1</p>
+                <div class="flex gap-1">
+                    <div class="w-1.5 h-1.5 bg-cyber-blue rounded-full animate-pulse"></div>
+                    <div class="w-1.5 h-1.5 bg-cyber-blue rounded-full animate-pulse delay-75"></div>
+                </div>
+            </div>
+        </div>
+
+        <nav class="flex-1 overflow-y-auto p-4 space-y-2 custom-scrollbar">
+            <div class="mb-6">
+                <button onclick="toggleMenu('novel-1')" class="w-full text-left p-4 flex justify-between items-center bg-white/5 hover:bg-cyber-blue/10 border border-transparent hover:border-cyber-blue/30 rounded transition duration-300 group">
+                    <span class="font-tech text-sm tracking-wider text-gray-300 group-hover:text-cyber-blue transition"><i class="fas fa-database mr-3 w-4"></i> DATA: 神代理</span>
+                    <i id="novel-1-icon" class="fas fa-caret-right text-cyber-blue transition-transform duration-300"></i>
+                </button>
+                
+                <div id="novel-1" class="hidden overflow-hidden transition-all duration-300">
+                    <div class="mt-2 ml-4 pl-3 border-l border-white/10 space-y-1">
+                        <div class="py-2 text-[10px] font-mono text-cyber-purple tracking-widest opacity-70 uppercase">
+                            // Sequence: Awakening
+                        </div>
+                        <a href="javascript:void(0)" onclick="loadChapter('n1_c1')" class="chapter-link n1_c1 block py-2.5 px-4 text-xs text-gray-400 hover:text-white hover:bg-white/5 hover:border-l-2 hover:border-cyber-blue rounded-r transition-all duration-200">
+                            01 | 一切的開始
+                        </a>
+                        <a href="javascript:void(0)" onclick="loadChapter('n1_c2')" class="chapter-link n1_c2 block py-2.5 px-4 text-xs text-gray-400 hover:text-white hover:bg-white/5 hover:border-l-2 hover:border-cyber-blue rounded-r transition-all duration-200">
+                            02 | 神
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <button class="w-full text-left p-4 flex justify-between items-center border border-white/5 border-dashed rounded opacity-50 cursor-not-allowed group">
+                    <span class="font-tech text-sm text-gray-500"><i class="fas fa-lock mr-3 w-4"></i> 怪物遊戲</span>
+                    <span class="text-[9px] bg-red-500/10 text-red-400 border border-red-500/20 px-1.5 py-0.5 rounded font-mono">LOCKED</span>
+                </button>
+            </div>
+        </nav>
+
+        <div class="p-6 border-t border-white/5 bg-black/20">
+            <h3 class="text-cyber-blue font-bold text-[10px] uppercase mb-3 tracking-[0.2em] font-mono flex items-center gap-2">
+                <i class="fas fa-terminal"></i> Admin_Access
+            </h3>
+            <div class="flex items-center gap-4 group">
+                <div class="w-10 h-10 rounded bg-gray-900 border border-cyber-purple/30 flex items-center justify-center text-white shadow-[0_0_10px_rgba(188,19,254,0.1)] group-hover:shadow-[0_0_15px_rgba(188,19,254,0.4)] group-hover:border-cyber-purple transition duration-300">
+                    <span class="font-bold">虛</span>
+                </div>
+                <div>
+                    <p class="font-bold text-gray-200 text-sm tracking-wide group-hover:text-cyber-purple transition">虛映</p>
+                    <p class="text-[10px] text-gray-500 mt-0.5 font-mono">STATUS: ONLINE</p>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <main class="flex-1 flex flex-col relative z-10 w-full overflow-hidden">
+        <header class="h-16 flex items-center justify-between px-6 md:px-10 border-b border-white/5 bg-cyber-dark/80 backdrop-blur-md sticky top-0 z-30 shrink-0">
+            <div class="flex items-center gap-6">
+                <div class="text-[10px] font-mono text-cyber-blue flex items-center gap-2 border border-cyber-blue/20 px-2 py-1 rounded bg-cyber-blue/5">
+                    <span class="w-1.5 h-1.5 bg-cyber-blue rounded-full shadow-[0_0_5px_var(--neon-blue)] animate-pulse"></span>
+                    NET_LINK: STABLE
+                </div>
+                <div class="hidden md:block text-[10px] text-gray-500 font-mono tracking-wider">
+                    // TERMINAL_ID: XF-99-ALPHA
+                </div>
+            </div>
+            <div class="text-xs font-mono text-cyber-purple tracking-widest flex items-center gap-3">
+                <span id="current-time">00:00:00</span> <i class="far fa-clock"></i>
+            </div>
+        </header>
+
+        <div id="content-container" class="flex-1 overflow-y-auto p-6 md:p-12 scroll-smooth custom-scrollbar relative">
+            
+            <div id="default-view" class="max-w-5xl mx-auto py-8 md:py-16">
+                <div class="holo-card p-10 md:p-16 mb-12 rounded bg-gradient-to-br from-gray-900/60 to-black/60 backdrop-blur-sm animate-float">
+                    <div class="corner-deco c-tl"></div><div class="corner-deco c-tr"></div>
+                    <div class="corner-deco c-bl"></div><div class="corner-deco c-br"></div>
+                    
+                    <div class="relative z-10">
+                        <h2 class="text-5xl md:text-7xl font-black mb-6 text-white font-tech tracking-tighter uppercase italic drop-shadow-lg">
+                            Archive <br>
+                            <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyber-blue to-cyber-purple">Terminal</span>
+                        </h2>
+                        
+                        <p class="text-gray-300 leading-relaxed text-lg font-light max-w-2xl border-l-2 border-cyber-blue pl-6 py-2">
+                            歡迎接入幻境檔案庫。神經連結已同步。<br>
+                            所有檔案已解密，請由左側導航選單存取記憶體數據。
+                        </p>
+                    </div>
+                    
+                    <div class="absolute -bottom-10 -right-10 text-9xl text-white/5 transform rotate-[-15deg] pointer-events-none">
+                        <i class="fas fa-microchip"></i>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="holo-card p-6 rounded group">
+                        <h4 class="text-cyber-blue font-bold mb-4 font-mono flex items-center gap-2 border-b border-white/10 pb-3">
+                            <i class="fas fa-code-branch text-xs"></i> SYSTEM_LOGS
+                        </h4>
+                        <ul class="text-xs text-gray-400 space-y-4 font-mono">
+                            <li class="flex gap-3">
+                                <span class="text-cyber-purple">>></span> 
+                                <span>2025.12.21 - UI 視覺核心升級至 v4.0 (Glassmorphism)</span>
+                            </li>
+                            <li class="flex gap-3">
+                                <span class="text-cyber-purple">>></span> 
+                                <span>2025.12.20 - 資料庫載入《神代理》</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="holo-card p-6 rounded group">
+                        <h4 class="text-cyber-purple font-bold mb-4 font-mono flex items-center gap-2 border-b border-white/10 pb-3">
+                            <i class="fas fa-satellite-dish"></i> COMM_LINK
+                        </h4>
+                        <div class="flex flex-col gap-3">
+                            <div class="text-[10px] uppercase text-gray-500 tracking-widest">Direct Frequency</div>
+                            
+                            <div class="flex items-center gap-2 bg-black/40 border border-white/10 p-2 pl-3 rounded hover:border-cyber-purple/50 transition">
+                                <code class="text-sm text-cyber-blue font-mono flex-1 truncate select-all" id="email-text">MriaWisp@mirawisp.dpdns.org</code>
+                                <button onclick="copyEmail()" class="w-8 h-8 flex items-center justify-center hover:bg-cyber-purple hover:text-white transition text-gray-400 rounded">
+                                    <i class="fas fa-copy"></i>
+                                </button>
+                            </div>
+                            <div id="copy-feedback" class="h-4 text-[10px] text-green-400 font-mono opacity-0 transition-opacity font-bold flex items-center gap-2">
+                                <i class="fas fa-check"></i> COPIED TO CLIPBOARD
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <article id="reader-view" class="hidden max-w-3xl mx-auto pb-40 relative min-h-screen">
+                <div id="loading-overlay" class="absolute inset-0 z-20 flex flex-col items-center pt-40 hidden pointer-events-none">
+                    <div class="text-cyber-blue font-mono text-xl animate-pulse tracking-widest mb-4">DECRYPTING DATA STREAM...</div>
+                    <div class="w-64 h-0.5 bg-gray-800 rounded overflow-hidden relative">
+                        <div class="absolute h-full bg-cyber-blue animate-[loading-scan_1.5s_ease-in-out_infinite]"></div>
+                    </div>
+                </div>
+
+                <div id="chapter-content-wrapper" class="opacity-0 transition-all duration-700 ease-out transform translate-y-8">
+                    <div class="mb-12 border-b border-white/10 pb-8 relative">
+                        <div class="absolute -left-8 top-0 bottom-0 w-1 bg-gradient-to-b from-cyber-blue via-cyber-purple to-transparent opacity-60"></div>
+                        <span class="text-cyber-purple text-xs font-mono mb-4 block tracking-[0.2em] uppercase">// MEMORY_ACCESS_GRANTED</span>
+                        
+                        <h1 id="chapter-title" class="text-3xl md:text-5xl font-bold text-white tracking-wide leading-tight min-h-[1.2em]"></h1>
+                        
+                        <div class="flex justify-between items-end mt-8">
+                            <span id="reading-progress" class="text-[10px] text-cyber-blue font-mono bg-cyber-blue/5 px-3 py-1 border border-cyber-blue/20 rounded">FILE: 001</span>
+                            <div class="text-[10px] text-gray-500 font-mono flex items-center gap-2">
+                                <div class="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></div> READ_MODE: OPTIMIZED
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="chapter-body" class="text-gray-300 font-light tracking-wide"></div>
+
+                    <div class="mt-24 border-t border-white/10 pt-12 flex flex-col md:flex-row justify-between items-center gap-6">
+                        <button id="prev-btn" onclick="goPrev()" class="cyber-btn px-8 py-4 w-full md:w-auto font-mono tracking-widest text-sm rounded flex items-center justify-center gap-3 group">
+                            <i class="fas fa-chevron-left text-xs group-hover:-translate-x-1 transition"></i> PREVIOUS
+                        </button>
+                        <div class="hidden md:flex gap-3 opacity-30">
+                             <div class="w-1.5 h-1.5 bg-white rounded-full"></div>
+                             <div class="w-1.5 h-1.5 bg-white rounded-full"></div>
+                             <div class="w-1.5 h-1.5 bg-white rounded-full"></div>
+                        </div>
+                        <button id="next-btn" onclick="goNext()" class="cyber-btn px-8 py-4 w-full md:w-auto font-mono tracking-widest text-sm rounded flex items-center justify-center gap-3 group">
+                            NEXT <i class="fas fa-chevron-right text-xs group-hover:translate-x-1 transition"></i>
+                        </button>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </main>
+
+    <script>
+        // --- 效能優化：粒子特效 (使用屏後渲染機制) ---
+        const canvas = document.getElementById('particle-canvas');
+        const ctx = canvas.getContext('2d', { alpha: true });
+        let width, height;
+        let particles = [];
+        let mouse = { x: null, y: null };
+        let isPageVisible = true;
+
+        // 監聽頁面可見性，不可見時停止動畫節省效能
+        document.addEventListener('visibilitychange', () => {
+            isPageVisible = (document.visibilityState === 'visible');
+        });
+
+        window.addEventListener('mousemove', (e) => {
+            mouse.x = e.x;
+            mouse.y = e.y;
+        }, { passive: true });
+
+        class Particle {
+            constructor() { this.reset(); }
+            reset() {
+                this.x = Math.random() * width;
+                this.y = Math.random() * height;
+                this.vx = (Math.random() - 0.5) * 0.2; 
+                this.vy = (Math.random() - 0.5) * 0.2;
+                this.size = Math.random() * 1.5 + 0.5;
+                this.color = Math.random() > 0.5 ? 'rgba(0, 242, 255,' : 'rgba(188, 19, 254,';
+                this.baseAlpha = Math.random() * 0.3 + 0.1;
+                this.alpha = this.baseAlpha;
+            }
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+                if (mouse.x) {
+                    const dx = mouse.x - this.x;
+                    const dy = mouse.y - this.y;
+                    const distSq = dx * dx + dy * dy; // 使用平方距離減少開根號計算
+                    if (distSq < 22500) { // 150^2
+                        const dist = Math.sqrt(distSq);
+                        this.alpha = Math.min(this.baseAlpha + 0.4, 0.8);
+                        this.x -= dx * 0.005; 
+                        this.y -= dy * 0.005;
+                    } else if (this.alpha > this.baseAlpha) {
+                        this.alpha -= 0.01;
+                    }
+                }
+                if (this.x < 0) this.x = width;
+                if (this.x > width) this.x = 0;
+                if (this.y < 0) this.y = height;
+                if (this.y > height) this.y = 0;
+            }
+            draw() {
+                ctx.fillStyle = this.color + this.alpha + ')';
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, 6.28); // 2*PI ~= 6.28
+                ctx.fill();
+            }
+        }
+
+        function initParticles() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+            particles = [];
+            const count = Math.min(Math.floor(width / 20), 100);
+            for (let i = 0; i < count; i++) particles.push(new Particle());
+        }
+
+        function animate() {
+            if (isPageVisible) {
+                ctx.clearRect(0, 0, width, height);
+                for (let i = 0; i < particles.length; i++) {
+                    particles[i].update();
+                    particles[i].draw();
+                }
+            }
+            requestAnimationFrame(animate);
+        }
+
+        // --- 核心邏輯 (Immutable Data & Logic) ---
+        const NOVEL_DATA = {
+            'n1_c1': {
+                title: '一切的開始',
+                content: `
+                    <p>抗爭元年，地球上開始會在某些地方憑空出現一些怪物，那些怪物稱為「白豔」。白豔的破壞力極強，且普通人是看不到白豔的，只有某些覺醒了特殊能力的人才能看到。</p>
+                    <p>這些有特殊能力的人稱為「能力者」，擁有能夠跟白豔對戰的能力。各國政府也立刻採取了行動，研發讓普通人也看得到白豔的裝置，同時將年號改為抗爭。</p>
+                    <p>時間回到現代抗爭曆1583年。白豔的出現極大程度上改變了都市的分部，人類跟白豔的戰爭仍在繼續。</p>
+                    <hr>
+                    <p>時間：10點 地點：T國。</p>
+                    <p>都市，美麗的夜景如同牛奶一般……我幹嘛拿牛奶來形容夜色？看著手中的牛奶，久遠晴深深的嘆了一口氣，隨後將牛奶一飲而盡。</p>
+                    <p>明天是他國中三年級的開學，晴抱著沒有很開心的心情就寢，畢竟都是幾乎都不會出現白豔，所以不會停課。</p>
+                    <p>隔天——開學日，過了一個暑假，作息紊亂、日夜顛倒的晴顯得非常不適應。</p>
+                    <p>雖然可以看到他久違的朋友，但是本來跟晴是青梅竹馬的白川悠由於在暑假時覺醒了能力，所以轉到了政府設立的「國立能力者專業學院」，不再就讀晴的普通學校。</p>
+                    <p>其實晴剛接到這消息的時候是抱有一絲他自己也覺得沒良心的期待的，因為能力者的能力等級由低到高分為D、C、B、A、S級，要是覺醒的是D級或C級這種比較爛的能力，有些人還是可以去讀普通學校的，可惜悠的天賦驚人，未能如晴所願。</p>
+                    <p>想到這裡的晴更抑鬱了。</p>
+                    <p>終於，他快撐到放學了。</p>
+                    <p>啊……好累啊，最後一節課是什麼？白豔介紹課？又來，每個學期的開學時都有，而且內容還不會變，怎麼辦？下節課我能睡整節嗎？</p>
+                    <p>此時上課鐘響，老師走進教室，並張貼了手上的資料。</p>
+                    <p>晴看著資料，是他已經看了無數次的「白豔分級表」</p>
+                    <p>白豔依照強度分成六級——</p>
+                    <div class="pl-4 border-l-2 border-cyber-purple/50 my-6 italic text-gray-400">
+                        <p class="!mb-2">一級 無害</p>                              
+                        <p class="!mb-2">二級 一位普通成年人拿棍棒可以打到</p>
+                        <p class="!mb-2">三級 好幾位軍人拿槍可以打到</p>
+                        <p class="!mb-2">四級 需要一隊軍隊的火力</p>
+                        <p class="!mb-2">五級 需要動員全國一半以上的絕對才行</p>
+                        <p class="!mb-0">六級 可能導致一個國家滅亡</p>
+                    </div>
+                    <p>看到這的晴，終於支撐不住強烈的睡意，閉上了眼睛。</p>
+                    <p>意識一片朦朧中，晴看到了一個人的形體，飄忽不定，無法判定性別。</p>
+                    <p>「你是誰？」Who are you? 我問。</p>
+                    <p class="text-cyber-blue font-bold text-glow">「我是神」我得到了 I am god。</p>
+                    <p>「蛤？？？」</p>
+                    <p class="text-right text-gray-500 text-sm mt-12 font-mono">（第一章完）</p>
+                `
+            },
+            'n1_c2': {
+                title: '神',
+                content: `
+                    <p>「神？」我驚疑不定的問。</p>
+                    <p>「沒錯，人類，我是神，你渴望力量嗎？我可以給你力量。」</p>
+                    <p>「為什麼聽起來像跟惡魔簽賣身契？」</p>
+                    <p>「……我給你力量吧。」頓了一下的神決定忽視我的問題。</p>
+                    <hr>
+                    <p>下課鐘聲響起的一瞬間，我也驚醒了。</p>
+                    <p>直到回到了家，走進了我的房間，我都沒想明白這個問題。</p>
+                    <p>「在想什麼？這麼後知後覺。」一道聲音突然響起。</p>
+                    <p>「神？你在哪？」果然不是夢。</p>
+                    <p>「低頭看一下你的脖子。」我低頭，脖子上掛著一條紅線，一路延伸到我的衣服裡。扯出來一看，我發現上面掛著一個黑色的、摸起來像玉的珠子。</p>
+                    <p>突然我覺得眼前場景一晃，瞬間，我來到了一座森林。</p>
+                    <p class="text-cyber-purple font-bold text-glow-purple">「這是第一森林。」神用一種非常平靜的語氣回答了我的問題。</p>
+                    <p>「吼！！！」一聲怪獸吼聲傳來，緊接著出現了一隻長相奇特的白豔。我想也不想直接就跑。</p>
+                    <p>「哎呀，看起來是一隻3級白豔……人類你跑什麼，快去打倒他啊。」神提出了一個不可能的要求。</p>
+                    <p>「辦不到啊啊啊啊啊啊啊。」</p>
+                    <p>在這怪物滿天下的時代，很多學校都非常重視跑步速度的訓練，晴在這方面的表現也不錯，所以他漸漸和白豔拉開了距離……的話就太誇張了，距離沒拉遠，還越來越近了。</p>
+                    <p>「沒有能力的人類這麼爛喔。」神說完，頓了頓又道。</p>
+                    <p>「好吧，我給你能力吧。」</p>
+                    <p>「什……？」瞬間，我獲得了能力，這個能力的資訊灌入了我的腦袋裡，這感覺……還挺奇妙的。</p>
+                    <p>「誒，人類，我都給你能力了你還跑什麼。」</p>
+                    <p>「物理上允許了，精神上不允許啊。」我會怕啊啊啊啊啊。</p>
+                    <p>「放心吧人類，我給你的能力很強，更何況還有我在。」</p>
+                    <p>「你保證，我不會受傷嗎？」我放慢腳步。</p>
+                    <p>「我保證。」神說道。</p>
+                    <p>我停下腳步，內心艱難做出決定。</p>
+                    <p>我面向白豔。</p>
+                    <p class="text-right text-gray-500 text-sm mt-12 font-mono">（第二章完）</p>
+                `
+            }
+        };
+
+        const CHAPTER_ORDER = ['n1_c1', 'n1_c2'];
+        let currentChapterKey = null;
+        let typingTimer = null;
+
+        function toggleMenu(id) {
+            const el = document.getElementById(id);
+            const icon = document.getElementById(id + '-icon');
+            const isHidden = el.classList.contains('hidden');
+            
+            // 效能優化：使用 class 切換而非直接操作大量 style
+            el.classList.toggle('hidden');
+            icon.style.transform = isHidden ? 'rotate(90deg)' : 'rotate(0deg)';
+        }
+
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('mobile-overlay');
+            const isOpen = !sidebar.classList.contains('-translate-x-full');
+            
+            if (isOpen) {
+                sidebar.classList.add('-translate-x-full');
+                overlay.classList.remove('opacity-100');
+                setTimeout(() => overlay.classList.add('hidden'), 300);
+            } else {
+                overlay.classList.remove('hidden');
+                void overlay.offsetWidth;
+                overlay.classList.add('opacity-100');
+                sidebar.classList.remove('-translate-x-full');
+            }
+        }
+
+        function copyEmail() {
+            const emailText = document.getElementById('email-text').innerText;
+            const feedback = document.getElementById('copy-feedback');
+            navigator.clipboard.writeText(emailText).then(() => {
+                feedback.style.opacity = '1';
+                setTimeout(() => feedback.style.opacity = '0', 2000);
+            });
+        }
+
+        // 優化打字機：修復快速切換 Bug
+        function typeWriter(text, elementId, speed = 40) {
+            const element = document.getElementById(elementId);
+            if (typingTimer) clearTimeout(typingTimer);
+            
+            element.textContent = ''; 
+            let i = 0;
+            function type() {
+                if (i < text.length) {
+                    element.textContent += text.charAt(i);
+                    i++;
+                    typingTimer = setTimeout(type, speed);
+                }
+            }
+            type();
+        }
+
+        function loadChapter(chapterKey) {
+            const data = NOVEL_DATA[chapterKey];
+            if (!data) return;
+            currentChapterKey = chapterKey;
+
+            if (window.innerWidth < 768) toggleSidebar();
+
+            const defaultView = document.getElementById('default-view');
+            const readerView = document.getElementById('reader-view');
+            const loading = document.getElementById('loading-overlay');
+            const contentWrapper = document.getElementById('chapter-content-wrapper');
+
+            defaultView.style.display = 'none';
+            readerView.classList.remove('hidden');
+            
+            // 重置動畫狀態
+            contentWrapper.style.opacity = '0';
+            contentWrapper.style.transform = 'translateY(15px)';
+            loading.classList.remove('hidden');
+
+            // 模擬解密延遲
+            setTimeout(() => {
+                loading.classList.add('hidden');
+                document.getElementById('chapter-body').innerHTML = data.content;
+                typeWriter(data.title, 'chapter-title');
+                
+                const idx = CHAPTER_ORDER.indexOf(chapterKey);
+                document.getElementById('reading-progress').textContent = `DATA_FILE: ${String(idx + 1).padStart(3, '0')}`;
+
+                // 導航點亮優化
+                document.querySelectorAll('.chapter-link').forEach(link => {
+                    link.classList.remove('text-white', 'border-l-2', 'border-cyber-blue', 'bg-white/5');
+                });
+                const activeLink = document.querySelector(`.chapter-link.${chapterKey}`);
+                if(activeLink) activeLink.classList.add('text-white', 'border-l-2', 'border-cyber-blue', 'bg-white/5');
+
+                document.getElementById('prev-btn').disabled = (idx === 0);
+                document.getElementById('next-btn').disabled = (idx === CHAPTER_ORDER.length - 1);
+
+                contentWrapper.style.opacity = '1';
+                contentWrapper.style.transform = 'translateY(0)';
+                document.getElementById('content-container').scrollTo({top: 0, behavior: 'instant'});
+            }, 500);
+        }
+
+        function goPrev() {
+            const idx = CHAPTER_ORDER.indexOf(currentChapterKey);
+            if (idx > 0) loadChapter(CHAPTER_ORDER[idx - 1]);
+        }
+
+        function goNext() {
+            const idx = CHAPTER_ORDER.indexOf(currentChapterKey);
+            if (idx < CHAPTER_ORDER.length - 1) loadChapter(CHAPTER_ORDER[idx + 1]);
+        }
+
+        function updateTime() {
+            const now = new Date();
+            document.getElementById('current-time').textContent = now.toLocaleTimeString('en-GB', {hour12: false});
+        }
+
+        // 初始化
+        window.addEventListener('resize', () => {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        }, { passive: true });
+
+        initParticles();
+        animate();
+        setInterval(updateTime, 1000);
+        updateTime();
+    </script>
+</body>
+</html>
