@@ -2,12 +2,15 @@
 <html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 優化視口設置，解決移動端點擊延遲與佈局問題 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>幻境小說庫</title>
+    
+    <!-- 字體資源 -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Orbitron:wght@400;600;800&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Quicksand:wght@500;700&family=Varela+Round&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     
     <script>
@@ -15,33 +18,32 @@
             theme: {
                 extend: {
                     colors: {
-                        cyber: {
-                            blue: '#00f2ff',
-                            purple: '#bc13fe',
-                            dark: '#050505',
-                            glass: 'rgba(13, 17, 23, 0.75)',
-                            text: '#e2e8f0'
+                        theme: {
+                            bg: '#fdfbf7', // 更加柔和的米白底色
+                            primary: '#ffb7b2',
+                            secondary: '#a2d2ff',
+                            accent: '#ffef96',
+                            text: '#4a4a4a',
+                            dark: '#2d3436',
                         }
                     },
                     fontFamily: {
                         sans: ['"Noto Sans TC"', 'sans-serif'],
-                        tech: ['"Orbitron"', 'sans-serif'],
-                        mono: ['"Rajdhani"', 'monospace'],
+                        cute: ['"Varela Round"', '"Quicksand"', 'sans-serif'],
                     },
                     animation: {
-                        'fade-in-up': 'fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards',
-                        'crt-turn-on': 'crtTurnOn 0.4s ease-out forwards',
+                        'float': 'float 6s ease-in-out infinite',
+                        'float-delayed': 'float 6s ease-in-out 3s infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'slide-in': 'slideIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+                        'fade-in': 'fadeIn 0.6s ease-out forwards',
+                        'scale-in': 'scaleIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards',
                     },
                     keyframes: {
-                        fadeInUp: {
-                            '0%': { opacity: '0', transform: 'translate3d(0, 20px, 0)' },
-                            '100%': { opacity: '1', transform: 'translate3d(0, 0, 0)' },
-                        },
-                        crtTurnOn: {
-                            '0%': { transform: 'scale(1, 0.002)', opacity: 0, filter: 'brightness(3)' },
-                            '50%': { transform: 'scale(1, 0.002)', opacity: 1 },
-                            '100%': { transform: 'scale(1, 1)', opacity: 1, filter: 'brightness(1)' }
-                        }
+                        float: { '0%, 100%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(-10px)' } },
+                        slideIn: { '0%': { opacity: '0', transform: 'translateY(20px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } },
+                        fadeIn: { '0%': { opacity: '0' }, '100%': { opacity: '1' } },
+                        scaleIn: { '0%': { opacity: '0', transform: 'scale(0.95)' }, '100%': { opacity: '1', transform: 'scale(1)' } },
                     }
                 }
             }
@@ -49,517 +51,552 @@
     </script>
 
     <style>
+        /* 全局變數與基礎設定 */
         :root {
-            --neon-blue: #00f2ff;
-            --neon-purple: #bc13fe;
-            --bg-dark: #020204;
-        }
-
-        /* --- 效能優化類別 --- */
-        .hardware-accel {
-            transform: translate3d(0, 0, 0);
-            backface-visibility: hidden;
-            perspective: 1000px;
+            --glass-bg: rgba(255, 255, 255, 0.65);
+            --glass-border: rgba(255, 255, 255, 0.5);
+            --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
         }
 
         body {
-            background-color: var(--bg-dark);
-            color: #e2e8f0;
+            /* 更加夢幻的漸層背景 */
+            background: linear-gradient(120deg, #fdfbf7 0%, #ffe4e1 50%, #e0f7fa 100%);
+            background-size: 200% 200%;
+            animation: gradientBG 15s ease infinite;
+            color: #4a4a4a;
+            /* 使用 dvh 適配所有移動端瀏覽器的高度 */
+            height: 100dvh;
+            width: 100vw;
             overflow: hidden;
             -webkit-font-smoothing: antialiased;
-            height: 100vh;
-            width: 100vw;
         }
 
-        /* 開機動畫容器 */
-        .crt-container {
-            width: 100%;
-            height: 100%;
-            animation: crt-turn-on 0.8s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
-        .cyber-grid {
-            position: fixed;
-            width: 300vw;
-            height: 300vh;
-            left: -100%;
-            top: -100%;
-            background-image: 
-                linear-gradient(to right, rgba(0, 242, 255, 0.03) 1px, transparent 1px),
-                linear-gradient(to bottom, rgba(188, 19, 254, 0.03) 1px, transparent 1px);
-            background-size: 80px 80px;
-            /* 優化：使用 translate3d 強制 GPU 渲染 */
-            transform: perspective(500px) rotateX(60deg) translateY(-100px) translateZ(-200px);
-            animation: grid-move 40s linear infinite;
-            z-index: -3;
-            pointer-events: none;
-            mask-image: radial-gradient(circle at center, black 30%, transparent 80%);
-            will-change: transform;
-        }
-
-        @keyframes grid-move {
-            0% { transform: perspective(500px) rotateX(60deg) translateY(0) translateZ(-200px); }
-            100% { transform: perspective(500px) rotateX(60deg) translateY(80px) translateZ(-200px); }
-        }
-
-        .scanlines {
-            position: fixed;
-            inset: 0;
-            background: linear-gradient(
-                to bottom,
-                rgba(255,255,255,0),
-                rgba(255,255,255,0) 50%,
-                rgba(0,0,0,0.06) 50%,
-                rgba(0,0,0,0.06)
-            );
-            background-size: 100% 3px;
-            pointer-events: none;
-            z-index: 50;
-            opacity: 0.6;
-        }
-
-        #particle-canvas {
+        /* 背景畫布優化 */
+        #sakura-canvas {
             position: fixed;
             top: 0; left: 0;
             width: 100%; height: 100%;
-            z-index: -2;
+            z-index: -1;
             pointer-events: none;
         }
 
+        /* 毛玻璃特效組件 */
         .glass-panel {
-            background: rgba(5, 5, 8, 0.85);
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-right: 1px solid var(--glass-border);
+            box-shadow: var(--glass-shadow);
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
             backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border-right: 1px solid rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            border-radius: 24px;
+            box-shadow: 0 10px 40px -10px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
-        .holo-card {
-            position: relative;
-            background: linear-gradient(135deg, rgba(13,17,23,0.95) 0%, rgba(5,5,8,0.98) 100%);
-            border: 1px solid rgba(0, 242, 255, 0.15);
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
-        }
-        
-        .holo-card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; width: 2px; height: 100%;
-            background: linear-gradient(to bottom, transparent, var(--neon-blue), transparent);
-            opacity: 0.6;
-            transition: opacity 0.3s;
-        }
-
-        .holo-card:hover {
-            border-color: rgba(0, 242, 255, 0.5);
-            box-shadow: 0 0 25px rgba(0, 242, 255, 0.15);
-            transform: translateY(-2px);
-        }
-
-        .corner-deco {
-            position: absolute;
-            width: 8px; height: 8px;
-            border: 1px solid var(--neon-blue);
-            transition: all 0.3s ease-out;
-            opacity: 0.7;
-        }
-        .c-tl { top: -1px; left: -1px; border-bottom: none; border-right: none; }
-        .c-tr { top: -1px; right: -1px; border-bottom: none; border-left: none; }
-        .c-bl { bottom: -1px; left: -1px; border-top: none; border-right: none; }
-        .c-br { bottom: -1px; right: -1px; border-top: none; border-left: none; }
-
-        .holo-card:hover .corner-deco {
-            width: 25px; height: 25px;
-            box-shadow: 0 0 10px var(--neon-blue);
-            opacity: 1;
-        }
-
-        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
-        .custom-scrollbar::-webkit-scrollbar-track { background: rgba(0,0,0,0.2); }
+        /* 滾動條美化 */
+        .custom-scrollbar::-webkit-scrollbar { width: 5px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
         .custom-scrollbar::-webkit-scrollbar-thumb { 
-            background: rgba(0, 242, 255, 0.2); 
-            border-radius: 3px;
+            background: rgba(162, 210, 255, 0.5);
+            border-radius: 10px;
         }
-        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: rgba(0, 242, 255, 0.4); }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: rgba(162, 210, 255, 0.8); }
 
-        .glitch-text { position: relative; display: inline-block; }
-        .glitch-text::before, .glitch-text::after {
-            content: attr(data-text);
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: var(--bg-dark);
-            opacity: 0.8;
+        /* 文章內容樣式優化 */
+        #chapter-body {
+            font-size: 1.05rem; /* 稍微加大字體 */
+            color: #374151;
         }
-        .glitch-text::before { left: 2px; text-shadow: -1px 0 #ff00c1; clip-path: inset(44% 0 61% 0); animation: glitch-anim 4s infinite linear alternate-reverse; }
-        .glitch-text::after { left: -2px; text-shadow: -1px 0 #00fff9; clip-path: inset(55% 0 10% 0); animation: glitch-anim 3s infinite linear alternate-reverse; }
         
-        @keyframes glitch-anim {
-            0% { clip-path: inset(40% 0 60% 0); transform: translate(-2px, 0); }
-            2% { clip-path: inset(40% 0 60% 0); transform: translate(2px, 0); }
-            4%, 100% { clip-path: inset(100% 0 0 0); transform: translate(0, 0); }
-        }
-
         #chapter-body p {
-            margin-bottom: 2em;
+            margin-bottom: 1.8em;
             line-height: 1.9;
-            text-align: justify;
-            opacity: 0.95;
-            font-size: 1.05rem;
-            text-shadow: 0 0 1px rgba(255,255,255,0.1);
+            text-align: justify; /* 兩端對齊 */
+            letter-spacing: 0.02em;
         }
-        
-        .cyber-btn {
+
+        /* 按鈕與互動元素 */
+        .nav-item {
             position: relative;
-            background: rgba(0, 242, 255, 0.05);
-            border: 1px solid rgba(0, 242, 255, 0.3);
-            color: var(--neon-blue);
             overflow: hidden;
             transition: all 0.3s ease;
-            z-index: 1;
         }
-        .cyber-btn::before {
+        
+        .nav-item::before {
             content: '';
             position: absolute;
-            top: 0; left: -100%; width: 100%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(0, 242, 255, 0.2), transparent);
-            transition: left 0.5s ease;
-            z-index: -1;
-        }
-        .cyber-btn:hover:not(:disabled) {
-            border-color: var(--neon-blue);
-            color: white;
-            box-shadow: 0 0 20px rgba(0, 242, 255, 0.25);
-            text-shadow: 0 0 8px rgba(0, 242, 255, 0.8);
-        }
-        .cyber-btn:hover:not(:disabled)::before { left: 100%; }
-        .cyber-btn:disabled { opacity: 0.3; cursor: not-allowed; filter: grayscale(1); }
-
-        .chapter-link {
-            position: relative;
-            padding-left: 1rem;
-            border-left: 1px solid transparent;
-        }
-        .chapter-link:hover, .chapter-link.active {
-            border-left-color: var(--neon-blue);
-            background: linear-gradient(90deg, rgba(0,242,255,0.05), transparent);
-            color: #fff;
-            padding-left: 1.25rem;
+            left: 0; top: 0; bottom: 0; width: 4px;
+            background: #ffb7b2;
+            transform: scaleY(0);
+            transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1);
         }
 
-        @keyframes loading-scan {
-            0% { width: 0%; left: 0; opacity: 1; }
-            50% { width: 50%; left: 25%; opacity: 0.8; }
-            100% { width: 100%; left: 100%; opacity: 0; }
+        .nav-item.active {
+            background: linear-gradient(90deg, rgba(255, 183, 178, 0.15) 0%, transparent 100%);
+            color: #e88680;
         }
+
+        .nav-item.active::before {
+            transform: scaleY(1);
+        }
+
+        .cute-btn {
+            background: white;
+            border-radius: 16px;
+            transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 4px 12px rgba(162, 210, 255, 0.2);
+            border: 1px solid rgba(255,255,255,0.8);
+        }
+        
+        .cute-btn:hover:not(:disabled) {
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 8px 16px rgba(162, 210, 255, 0.3);
+            background: #f0f9ff;
+        }
+
+        .cute-btn:active:not(:disabled) {
+            transform: translateY(1px);
+        }
+
+        .typing-cursor::after {
+            content: '|';
+            margin-left: 4px;
+            animation: blink 1s step-start infinite;
+            color: #ffb7b2;
+        }
+        @keyframes blink { 50% { opacity: 0; } }
+
+        /* 章節過渡動畫 */
+        .chapter-enter { animation: slideIn 0.5s ease forwards; }
     </style>
 </head>
-<body class="flex flex-col md:flex-row font-sans selection:bg-cyber-purple selection:text-white">
+<body class="flex flex-col md:flex-row font-sans">
 
-    <div class="crt-container flex flex-col md:flex-row w-full h-full relative">
-        <div class="cyber-grid"></div>
-        <div class="scanlines"></div>
-        <canvas id="particle-canvas" class="hardware-accel"></canvas>
-        
-        <div id="mobile-overlay" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-40 hidden transition-opacity duration-300" onclick="toggleSidebar()"></div>
+    <!-- 背景畫布 -->
+    <canvas id="sakura-canvas"></canvas>
+    
+    <!-- 手機版遮罩 -->
+    <div id="mobile-overlay" class="fixed inset-0 bg-black/20 backdrop-blur-[2px] z-40 hidden transition-opacity duration-300 opacity-0" onclick="toggleSidebar()"></div>
 
-        <div class="md:hidden flex items-center justify-between p-4 bg-black/80 border-b border-white/10 z-50 backdrop-blur-md">
-            <h1 class="text-xl font-black tracking-widest font-tech text-white text-glow">幻境檔案庫</h1>
-            <button onclick="toggleSidebar()" class="text-cyber-blue text-2xl hover:text-white transition-colors">
-                <i class="fas fa-bars"></i>
-            </button>
-        </div>
-
-        <aside id="sidebar" class="fixed md:relative inset-y-0 left-0 w-72 md:w-80 transform -translate-x-full md:translate-x-0 z-50 flex flex-col glass-panel transition-transform duration-300 ease-out shadow-2xl shadow-black">
-            <div class="p-8 border-b border-white/5 hidden md:block relative overflow-hidden">
-                <div class="absolute top-0 right-0 p-2 opacity-20 text-cyber-blue text-4xl"><i class="fas fa-microchip"></i></div>
-                <h1 class="text-2xl font-black tracking-widest font-tech text-white glitch-text" data-text="幻境檔案庫">幻境檔案庫</h1>
-                <div class="flex items-center gap-2 mt-2">
-                    <span class="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></span>
-                    <p class="text-[10px] text-cyber-purple uppercase tracking-[0.3em] font-mono">System v5.0.3 Stable</p>
-                </div>
-            </div>
-
-            <nav class="flex-1 overflow-y-auto p-4 space-y-2 custom-scrollbar">
-                <div class="mb-6 group">
-                    <button onclick="toggleMenu('novel-1')" class="w-full text-left p-4 flex justify-between items-center bg-white/5 hover:bg-cyber-blue/10 border border-transparent hover:border-cyber-blue/30 rounded transition-all duration-300 group-hover:shadow-[0_0_15px_rgba(0,242,255,0.1)]">
-                        <span class="font-tech text-sm tracking-wider text-gray-200 group-hover:text-cyber-blue transition-colors"><i class="fas fa-database mr-3"></i> DATA: 神代理</span>
-                        <i id="novel-1-icon" class="fas fa-caret-right text-cyber-blue transition-transform duration-300"></i>
-                    </button>
-                    
-                    <div id="novel-1" class="hidden transition-all duration-300 origin-top">
-                        <div class="mt-2 ml-4 pl-3 border-l border-white/10 space-y-1">
-                            <a href="javascript:void(0)" onclick="loadChapter('n1_c1')" class="chapter-link n1_c1 block py-2 px-4 text-xs text-gray-400 transition-all duration-300">01 | 一切的開始</a>
-                            <a href="javascript:void(0)" onclick="loadChapter('n1_c2')" class="chapter-link n1_c2 block py-2 px-4 text-xs text-gray-400 transition-all duration-300">02 | 神</a>
-                            <a href="javascript:void(0)" onclick="loadChapter('n1_c3')" class="chapter-link n1_c3 block py-2 px-4 text-xs text-gray-400 transition-all duration-300">03 | 初戰</a>
-
-                            </div>
-                    </div>
-                </div>
-                
-                <div class="opacity-40 grayscale hover:grayscale-0 hover:opacity-70 transition-all duration-500">
-                    <button class="w-full text-left p-4 flex justify-between items-center border border-white/5 border-dashed rounded cursor-not-allowed group">
-                        <span class="font-tech text-sm text-gray-500 group-hover:text-red-400 transition-colors"><i class="fas fa-lock mr-3"></i> 怪物遊戲</span>
-                        <span class="text-[9px] bg-red-500/10 text-red-400 px-1.5 py-0.5 rounded font-mono border border-red-500/20">LOCKED</span>
-                    </button>
-                </div>
-            </nav>
-
-            <div class="p-6 border-t border-white/5 bg-black/40 backdrop-blur-sm">
-                <div class="flex items-center gap-4 group cursor-default">
-                    <div class="w-10 h-10 rounded bg-gray-900 border border-cyber-purple/30 flex items-center justify-center text-white shadow-[0_0_10px_rgba(188,19,254,0.2)] group-hover:shadow-[0_0_15px_rgba(188,19,254,0.5)] transition-all">虛</div>
-                    <div>
-                        <p class="font-bold text-gray-200 text-sm group-hover:text-cyber-purple transition-colors">虛映</p>
-                        <p class="text-[10px] text-gray-500 font-mono flex items-center gap-1">
-                            <span class="w-1 h-1 bg-green-500 rounded-full"></span>
-                            STATUS: ONLINE
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </aside>
-
-        <main class="flex-1 flex flex-col min-w-0 h-full relative overflow-hidden z-10">
-            <header class="h-16 flex items-center justify-between px-6 border-b border-white/5 bg-black/60 backdrop-blur-md z-30 shadow-lg">
-                <div class="text-[10px] font-mono text-cyber-blue flex items-center gap-2">
-                    <span class="w-2 h-2 bg-cyber-blue rounded-full animate-ping"></span>
-                    <span class="opacity-80">LINK STABILITY: 98%</span>
-                </div>
-                <div class="text-xs font-mono text-cyber-purple tracking-widest shadow-black drop-shadow-md" id="current-time">00:00:00</div>
-            </header>
-
-            <div id="content-container" class="flex-1 overflow-y-auto p-4 md:p-12 custom-scrollbar scroll-smooth">
-                <div id="default-view" class="max-w-4xl mx-auto py-10 animate-fade-in-up">
-                    <div class="holo-card p-8 md:p-16 mb-8 rounded-lg overflow-hidden group">
-                        <div class="corner-deco c-tl"></div><div class="corner-deco c-tr"></div>
-                        <div class="corner-deco c-bl"></div><div class="corner-deco c-br"></div>
-                        <div class="absolute -right-10 -top-10 text-[150px] text-white opacity-[0.02] font-tech select-none pointer-events-none group-hover:opacity-[0.04] transition-opacity">ARCHIVE</div>
-                        
-                        <h2 class="text-4xl md:text-6xl font-black mb-6 text-white font-tech uppercase italic relative z-10">
-                            Archive <br>
-                            <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyber-blue to-cyber-purple drop-shadow-[0_0_10px_rgba(0,242,255,0.3)]">Terminal</span>
-                        </h2>
-                        <p class="text-gray-400 border-l-2 border-cyber-blue pl-4 text-sm md:text-base leading-relaxed">
-                            神經連結已同步。所有檔案已解密。<br>
-                            請從左側導航欄存取記憶體數據。
-                        </p>
-                    </div>
-
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div class="holo-card p-6 rounded bg-black/40 hover:bg-black/60 transition-colors">
-                            <h4 class="text-cyber-blue font-bold mb-3 font-mono text-xs tracking-widest flex items-center gap-2">
-                                <i class="fas fa-terminal"></i> SYSTEM_LOGS
-                            </h4>
-                            <ul class="text-[11px] text-gray-500 space-y-2 font-mono">
-                                <li class="hover:text-gray-300 transition-colors">> 2025.12.21 - 載入《神代理》第三章數據</li>
-                                <li class="hover:text-gray-300 transition-colors">> 2025.12.21 - 核心效能優化完成</li>
-                                <li class="hover:text-gray-300 transition-colors">> SYSTEM - 等待指令輸入...</li>
-                            </ul>
-                        </div>
-                        <div class="holo-card p-6 rounded bg-black/40 hover:bg-black/60 transition-colors">
-                            <h4 class="text-cyber-purple font-bold mb-3 font-mono text-xs tracking-widest flex items-center gap-2">
-                                <i class="fas fa-satellite-dish"></i> CONTACT
-                            </h4>
-                            <code class="text-xs text-cyber-blue block mb-3 bg-white/5 p-2 rounded border border-white/5 select-all">MriaWisp@mirawisp.dpdns.org</code>
-                            <button onclick="copyEmail()" class="text-[10px] border border-gray-600 hover:border-white text-gray-400 hover:text-white px-3 py-1 rounded uppercase transition-all flex items-center gap-2 w-fit">
-                                <i class="far fa-copy"></i> Copy Link
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <article id="reader-view" class="hidden max-w-3xl mx-auto pb-24">
-                    <div id="loading-overlay" class="py-20 text-center hidden">
-                        <div class="text-cyber-blue font-mono animate-pulse tracking-widest mb-4">DECRYPTING DATA STREAM...</div>
-                        <div class="w-64 h-px bg-gray-800 relative overflow-hidden mx-auto"><div class="absolute inset-0 bg-cyber-blue animate-[loading-scan_1s_infinite]"></div></div>
-                    </div>
-
-                    <div id="chapter-content-wrapper" class="opacity-0 hardware-accel">
-                        <div class="mb-10 border-b border-white/10 pb-6 relative">
-                            <div class="absolute -left-4 top-0 w-1 h-full bg-gradient-to-b from-cyber-blue to-transparent opacity-50"></div>
-                            <span class="text-cyber-purple text-[10px] font-mono tracking-widest uppercase block mb-2 flex items-center gap-2">
-                                <i class="fas fa-folder-open"></i> SEQUENCE_ACCESS
-                            </span>
-                            <h1 id="chapter-title" class="text-3xl md:text-4xl font-bold text-white tracking-wide leading-tight min-h-[1.2em]"></h1>
-                        </div>
-
-                        <div id="chapter-body" class="text-gray-300 font-light selection:bg-cyber-blue selection:text-black"></div>
-
-                        <div class="mt-16 flex flex-col md:flex-row gap-4 justify-between pt-10 border-t border-white/5">
-                            <button id="prev-btn" onclick="goPrev()" class="cyber-btn px-6 py-4 rounded font-mono text-xs flex items-center justify-center gap-2 group">
-                                <i class="fas fa-chevron-left group-hover:-translate-x-1 transition-transform"></i> PREV_DATA
-                            </button>
-                            <button id="next-btn" onclick="goNext()" class="cyber-btn px-6 py-4 rounded font-mono text-xs flex items-center justify-center gap-2 group">
-                                NEXT_DATA <i class="fas fa-chevron-right group-hover:translate-x-1 transition-transform"></i>
-                            </button>
-                        </div>
-                    </div>
-                </article>
-            </div>
-        </main>
+    <!-- 手機版頂部導航 -->
+    <div class="md:hidden flex items-center justify-between p-4 bg-white/70 border-b border-white/50 z-50 backdrop-blur-md shadow-sm sticky top-0 pt-[max(env(safe-area-inset-top),1rem)]">
+        <h1 class="text-lg font-bold font-cute text-gray-700 flex items-center gap-2">
+            <i class="fas fa-book-open text-theme-primary"></i> 幻境檔案庫
+        </h1>
+        <button onclick="toggleSidebar()" class="text-gray-500 text-xl p-2 active:scale-90 transition-transform">
+            <i class="fas fa-bars"></i>
+        </button>
     </div>
 
-    <script>
-        // --- 核心數據 (Data Core) ---
-        const NOVEL_DATA = {
-            'n1_c1': { title: '一切的開始', content: `<p>抗爭元年，地球上開始會在某些地方憑空出現一些怪物，那些怪物稱為「白豔」。白豔的破壞力極強，且普通人是看不到白豔的，只有某些覺醒了特殊能力的人才能看到。</p><p>這些有特殊能力的人稱為「能力者」，擁有能夠跟白豔對戰的能力。各國政府也立刻採取了行動，研發讓普通人也看得到白豔的裝置，同時將年號改為抗爭。</p><p>時間回到現代抗爭曆1583年。白豔的出現極大程度上改變了都市的分部，人類跟白豔的戰爭仍在繼續。</p><hr class="border-white/10 my-8"><p>時間：10點 地點：T國。</p><p>都市，美麗的夜景如同牛奶一般……我幹嘛拿牛奶來形容夜色？看著手中的牛奶，久遠晴深深的嘆了一口氣，隨後將牛奶一飲而盡。</p><p>明天是他國中三年級的開學，晴抱著沒有很開心的心情就寢，畢竟都是幾乎都不會出現白豔，所以不會停課。</p><p>隔天——開學日，過了一個暑假，作息紊亂、日夜顛倒的晴顯得非常不適應。</p><p>雖然可以看到他久違的朋友，但是本來跟晴是青梅竹馬的白川悠由於在暑假時覺醒了能力，所以轉到了政府設立的「國立能力者專業學院」，不再就讀晴的普通學校。</p><p>其實晴剛接到這消息的時候是抱有一絲他自己也覺得沒良心的期待的，因為能力者的能力等級由低到高分為D、C、B、A、S級，要是覺醒的是D級或C級這種比較爛的能力，有些人還是可以去讀普通學校的，可惜悠的天賦驚人，未能如晴所願。</p><p>想到這裡的晴更抑鬱了。</p><p>終於，他快撐到放學了。</p><p>啊……好累啊，最後一節課是什麼？白豔介紹課？又來，每個學期的開學時都有，而且內容還不會變，怎麼辦？下節課我能睡整節嗎？</p><p>此時上課鐘響，老師走進教室，並張貼了手上的資料。</p><p>晴看著資料，是他已經看了無數次的「白豔分級表」</p><p>白豔依照強度分成六級——</p><div class="pl-4 border-l-2 border-cyber-purple my-8 italic text-gray-400 text-sm bg-white/5 p-4 rounded-r"><p class="mb-1"><span class="text-cyber-blue font-mono mr-2">LV.1</span> 一級 無害</p><p class="mb-1"><span class="text-cyber-blue font-mono mr-2">LV.2</span> 二級 一位普通成年人拿棍棒可以打到</p><p class="mb-1"><span class="text-cyber-blue font-mono mr-2">LV.3</span> 三級 好幾位軍人拿槍可以打到</p><p class="mb-1"><span class="text-cyber-blue font-mono mr-2">LV.4</span> 四級 需要一隊軍隊的火力</p><p class="mb-1"><span class="text-cyber-blue font-mono mr-2">LV.5</span> 五級 需要動員全國一半以上的絕對才行</p><p><span class="text-cyber-blue font-mono mr-2">LV.6</span> 六級 可能導致一個國家滅亡</p></div><p>看到這的晴，終於支撐不住強烈的睡意，閉上了眼睛。</p><p>意識一片朦朧中，晴看到了一個人的形體，飄忽不定，無法判定性別。</p><p>「你是誰？」Who are you? 我問。</p><p class="text-cyber-blue font-bold text-lg text-glow">「我是神」我得到了 I am god。</p><p>「蛤？？？」</p><p class="text-right text-gray-500 text-xs mt-10 font-mono tracking-widest">（第一章完）</p>` },
-            'n1_c2': { title: '神', content: `<p>「神？」我驚疑不定的問。</p><p>「沒錯，人類，我是神，你渴望力量嗎？我可以給你力量。」</p><p>「為什麼聽起來像跟惡魔簽賣身契？」</p><p>「……我給你力量吧。」頓了一下的神決定忽視我的問題。</p><hr class="border-white/10 my-8"><p>下課鐘聲響起的一瞬間，我也驚醒了。</p><p>直到回到了家，走進了我的房間，我都沒想明白這個問題。</p><p>「在想什麼？這麼後知後覺。」一道聲音突然響起。</p><p>「神？你在哪？」果然不是夢。</p><p>「低頭看一下你的脖子。」我低頭，脖子上掛著一條紅線，一路延伸到我的衣服裡.扯出來一看，我發現上面掛著一個黑色的、摸起來像玉的珠子。</p><p>突然我覺得眼前場景一晃，瞬間，我來到了一座森林。</p><p class="text-cyber-purple font-bold text-lg text-glow-purple">「這是第一森林。」神用一種非常平靜的語氣回答了我的問題。</p><p>「吼！！！」一聲怪獸吼聲傳來，緊接著出現了一隻長相奇特的白豔。我想也不想直接就跑。</p><p>「哎呀，看起來是一隻3級白豔……人類你跑什麼，快去打倒他啊。」神提出了一個不可能的要求。</p><p>「辦不到啊啊啊啊啊啊啊。」</p><p>在這怪物滿天下的時代，很多學校都非常重視跑步速度的訓練，晴在這方面的表現也不錯，所以他漸漸和白豔拉開了距離……的話就太誇張了，距離沒拉遠，還越來越近了。</p><p>「沒有能力的人類這麼爛喔。」神說完，頓了頓又道。</p><p>「好吧，我給你能力吧。」</p><p>「什……？」瞬間，我獲得了能力，這個能力的資訊灌入了我的腦袋裡，這感覺……還挺奇妙的。</p><p>「誒，人類，我都給你能力了你還跑什麼。」</p><p>「物理上允許了，精神上不允許啊。」我會怕啊啊啊啊啊。</p><p>「放心吧人類，我給你的能力很強，更何況還有我在。」</p><p>「你保證，我不會受傷嗎？」我放慢腳步。</p><p>「我保證。」神說道。</p><p>我停下腳步，內心艱難做出決定。</p><p>我面向白豔。</p><p class="text-right text-gray-500 text-xs mt-10 font-mono tracking-widest">（第二章完）</p>` },
-            'n1_c3': { title: '初戰', content: `<p>神贈與我的能力是 A 級的體術，A 級體術指的是武術＋體內得到等級為 A 的增強。我朝白豔衝去，飛身一腳朝白豔的頭踢去，白豔被我一踢直接往一旁飛去，一時半會還爬不起來。</p><p>哇！效果竟然這麼好！不愧是 A 級體術。等一下，我突然想到……</p><p>「神，我要怎麼幹掉他？」</p><p>「直接殺了他啊。」神理所當然地說。</p><p>「怎麼殺？我不想用拳頭打死他。」我有心理上的障礙，我相信很多人都跟我一樣。</p><p>「嗯……你也沒有武器耶，不然你拿這個代替一下。」</p><p>我面前出現了一顆浮在空中的石頭，我伸手抓了過來。</p><p>「你要我用石頭丟他？」我應該沒理解錯神的意思吧？但怎麼想都怪怪的。</p><p>「嗯，沒錯，上面附了我的力量。」神說到這裡，白豔剛好也緩了過來，並再次朝我奔來。</p><p>聽了神的話的我，也是馬上擺了個棒球投手的姿勢，將石頭朝白豔的頭丟去。在 A 級體術＋神力的威力下，我只聽到了一聲頭蓋骨碎裂的聲音。</p><p>喔喔喔，聽到這聲音，我覺得我的頭也好痛，啊啊啊他腦袋爆了。</p><p>一時間場面過於血腥，我決定轉過頭不再看他。</p><p>「恭喜你幹掉了你人生中第一隻白豔。」神說道。</p><p>「這感覺不是值得慶祝的事情……所以你到底帶我來第一森林幹嘛？」想起這事的我質問神。</p><p>「當然是帶你來訓練的。」</p><p>「訓練？」我疑問。</p><p>「對，身為跟我連結的你，身份是神的代理人，實力自然不能差。」</p><p>「蛤？我是神的代理人？什麼時候變的？」</p><p>「從你跟我連結的那一刻開始。」</p><p>「那為什麼選我？」</p><p>「這個我還不能告訴你。」</p><p>「為什麼？」</p><p>「因為時機未到。」神看起來沒有要解釋的意思。</p><p>「好，就算這樣也不用跑到第一森林裡吧。」詢問無果的我決定回到原本的話題。</p><p>「為了讓你快速成長，實戰是必須的。放心，有我在，你死不了。」</p><p>「物理上沒問題了，那精神上的呢？」重視一下人權啊。</p><p>「精神上的誰管你啊。」看來神不適用人權。</p><p>冷靜冷靜，別生氣，算了，只要不會死就好。</p><p>晴調整得很快，迅速冷靜了下來。</p><p>「小心喔，白豔出現了，就在不遠處，正朝這裡靠近。」神提醒道。</p><p>「幾級？」我問。</p><p>「四。」神回答。</p><p>「四級？快，再給我一顆石頭。」我趕緊道。</p><p>別以為三級和四級只差了一級，差距好像很小，在白豔中，差一級就是天和地了。</p><p>「不，這次你要獨自打倒他，我不幫忙。」</p><p>「我自己？」我指著自己。</p><p>「對，你自己。放心，你快死時我會救你的。」</p><p>聽到自己性命無憂，我突然開始有點躍躍欲試了，畢竟我可是得到了 A 級能力啊。</p><p>「你要是贏了，我再多送你兩個能力。」神加了個獎勵。</p><p>「好。」我毫不猶豫答道。</p><p>這時，神口中的白豔終於現身，是一隻兩腳站立、長相恐怖的貓。</p><p>不只如此，這隻貓手上拿著一把……刀。</p><p>我：「刀……？」</p><p class="text-right text-gray-500 text-xs mt-10 font-mono tracking-widest">（第三章完）</p>` }
+    <!-- 側邊欄 -->
+    <aside id="sidebar" class="fixed md:relative inset-y-0 left-0 w-[280px] md:w-[320px] transform -translate-x-full md:translate-x-0 z-50 flex flex-col glass-panel transition-transform duration-500 cubic-bezier(0.16, 1, 0.3, 1) h-full">
+        <!-- 側邊欄頂部 -->
+        <div class="p-8 border-b border-white/40 bg-gradient-to-b from-white/40 to-transparent">
+            <h1 class="text-2xl font-black tracking-widest font-cute text-gray-700 drop-shadow-sm">幻境檔案庫</h1>
+            <div class="flex items-center gap-2 mt-3 bg-white/50 w-fit px-3 py-1 rounded-full border border-white/60 shadow-sm">
+                <span class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
+                <p class="text-[10px] text-gray-500 font-bold tracking-wider">SYSTEM V6.0 STARRY</p>
+            </div>
+        </div>
+
+        <!-- 導航列表 -->
+        <nav class="flex-1 overflow-y-auto p-4 space-y-4 custom-scrollbar">
             
-            // ===== 預留章節 (第 4 - 100 章) =====
-            // 請取消註解並填入內容
-            /*
-            , 'n1_c4': { title: '章節標題', content: '<p>內容...</p>' }
-            , 'n1_c5': { title: '章節標題', content: '<p>內容...</p>' }
-            , 'n1_c6': { title: '章節標題', content: '<p>內容...</p>' }
-            // ... (此處可繼續擴充至 100 章)
-            */
+            <!-- 小說 1 -->
+            <div class="group">
+                <button onclick="toggleMenu('novel-1')" class="w-full text-left p-4 flex justify-between items-center bg-white/60 hover:bg-white/80 border border-white/60 rounded-2xl shadow-sm transition-all duration-300 group-hover:shadow-md">
+                    <span class="font-cute font-bold text-gray-600 flex items-center gap-3">
+                        <span class="w-8 h-8 rounded-full bg-theme-primary/20 flex items-center justify-center text-theme-primary"><i class="fas fa-star text-xs"></i></span>
+                        神代理
+                    </span>
+                    <i id="novel-1-icon" class="fas fa-chevron-down text-gray-400 transition-transform duration-300"></i>
+                </button>
+                
+                <div id="novel-1" class="overflow-hidden transition-all duration-500 max-h-[800px]">
+                    <div class="mt-2 ml-2 space-y-1 border-l-2 border-theme-primary/10 pl-2">
+                        <!-- 
+                            ================================================
+                            【修改教學 1：如何新增章節按鈕】
+                            若要新增章節，請複製下方的 <a> 標籤結構。
+                            1. 將 'n1_c4' 改成新的 ID (例如 'n1_c5')。
+                            2. 修改顯示文字 (例如 '05 新的章節名稱')。
+                            3. 確保 ID 與下方 JavaScript 中的 NOVEL_DATA 對應。
+                            ================================================
+                        -->
+                        <a href="javascript:void(0)" onclick="loadChapter('n1_c1')" class="nav-item n1_c1 block py-3 px-4 text-sm text-gray-500 font-medium rounded-xl hover:bg-white/50">
+                            <span class="mr-2 opacity-40 font-mono">01</span>一切的開始
+                        </a>
+                        <a href="javascript:void(0)" onclick="loadChapter('n1_c2')" class="nav-item n1_c2 block py-3 px-4 text-sm text-gray-500 font-medium rounded-xl hover:bg-white/50">
+                            <span class="mr-2 opacity-40 font-mono">02</span>神
+                        </a>
+                        <a href="javascript:void(0)" onclick="loadChapter('n1_c3')" class="nav-item n1_c3 block py-3 px-4 text-sm text-gray-500 font-medium rounded-xl hover:bg-white/50">
+                            <span class="mr-2 opacity-40 font-mono">03</span>初戰
+                        </a>
+                        <a href="javascript:void(0)" onclick="loadChapter('n1_c4')" class="nav-item n1_c4 block py-3 px-4 text-sm text-gray-500 font-medium rounded-xl hover:bg-white/50 relative">
+                            <!-- 閃爍紅點代表最新 -->
+                            <span class="absolute right-3 top-1/2 -translate-y-1/2 w-1.5 h-1.5 bg-theme-primary rounded-full animate-pulse"></span>
+                            <span class="mr-2 opacity-40 font-mono">04</span>A級和B級的差距
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 
+                ================================================
+                【修改教學 2：如何新增小說分類】
+                若要新增一本小說，請複製上方的 "小說 1" 整個 div 區塊。
+                1. 修改 ID：將 'novel-1' 改為 'novel-2'。
+                2. 修改標題與圖示。
+                3. 清空並放入新的章節連結 (記得改章節 ID，如 'n2_c1')。
+                ================================================
+            -->
+            
+            <!-- 未解鎖的小說 -->
+            <div class="opacity-60 grayscale hover:grayscale-0 transition-all duration-300">
+                <button class="w-full text-left p-4 flex justify-between items-center bg-gray-50/50 border-2 border-dashed border-gray-200 rounded-2xl cursor-not-allowed">
+                    <span class="font-cute text-sm text-gray-400 flex items-center gap-3">
+                        <span class="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center text-white"><i class="fas fa-lock text-xs"></i></span>
+                        怪物遊戲
+                    </span>
+                    <span class="text-[10px] bg-gray-200 text-gray-500 px-2 py-1 rounded-full font-bold tracking-wider">LOCKED</span>
+                </button>
+            </div>
+        </nav>
+
+        <!-- 側邊欄底部 -->
+        <div class="p-6 border-t border-white/40 bg-white/30 backdrop-blur-md">
+            <div class="flex items-center gap-4 p-2 bg-white/40 rounded-2xl border border-white/50 shadow-sm">
+                <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-theme-secondary to-blue-100 flex items-center justify-center text-white shadow-inner">
+                    <i class="fas fa-user-astronaut"></i>
+                </div>
+                <div>
+                    <p class="font-bold text-gray-700 text-sm">虛映</p>
+                    <p class="text-[10px] text-green-500 font-bold flex items-center gap-1">
+                        <span class="w-1.5 h-1.5 bg-green-500 rounded-full"></span> ONLINE
+                    </p>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- 主內容區 -->
+    <main class="flex-1 flex flex-col min-w-0 h-full relative overflow-hidden z-10">
+        <!-- 頂部狀態列 -->
+        <header class="h-16 flex items-center justify-between px-6 md:px-10">
+            <div class="text-[10px] font-bold text-gray-500 flex items-center gap-2 bg-white/40 backdrop-blur-md px-3 py-1.5 rounded-full shadow-sm border border-white/50 transition-all hover:bg-white/60">
+                <span class="w-1.5 h-1.5 bg-theme-secondary rounded-full animate-pulse"></span>
+                <span>LINK STABILITY: 100%</span>
+            </div>
+            <div class="text-xs font-cute text-gray-400 font-bold tracking-widest font-mono" id="current-time">00:00:00</div>
+        </header>
+
+        <!-- 內容容器 -->
+        <div id="content-container" class="flex-1 overflow-y-auto p-4 md:p-10 custom-scrollbar scroll-smooth">
+            
+            <!-- 首頁視圖 -->
+            <div id="default-view" class="max-w-4xl mx-auto py-6 animate-slide-in">
+                <!-- 歡迎卡片 -->
+                <div class="glass-card p-8 md:p-16 mb-8 relative overflow-hidden group">
+                    <div class="absolute -right-12 -bottom-12 opacity-10 text-[14rem] text-theme-primary rotate-12 transition-transform duration-700 group-hover:rotate-6 group-hover:scale-110">
+                        <i class="fas fa-paw"></i>
+                    </div>
+                    
+                    <div class="relative z-10 animate-fade-in">
+                        <div class="inline-flex items-center gap-2 px-3 py-1 bg-theme-primary/10 text-theme-primary rounded-full text-xs font-bold mb-6">
+                            <i class="fas fa-heart animate-bounce"></i> Welcome Back
+                        </div>
+                        <h2 class="text-4xl md:text-6xl font-black mb-6 text-gray-800 font-cute leading-tight">
+                            Archive <br>
+                            <span class="text-transparent bg-clip-text bg-gradient-to-r from-theme-primary to-theme-secondary">Terminal</span>
+                        </h2>
+                        <p class="text-gray-500 text-lg leading-relaxed max-w-xl">
+                            檔案已同步 (///▽///)<br>
+                            請點擊左側目錄開始閱讀吧！>///<
+                        </p>
+                    </div>
+                </div>
+
+                <!-- 資訊卡片網格 -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 stagger-animation">
+                    <div class="glass-card p-6 md:p-8 hover:bg-white/90">
+                        <h4 class="text-theme-secondary font-bold mb-4 font-cute flex items-center gap-2 text-lg">
+                            <i class="fas fa-history"></i> 更新日誌
+                        </h4>
+                        <ul class="text-sm text-gray-500 space-y-4">
+                            <li class="flex items-start gap-3">
+                                <span class="mt-1.5 w-1.5 h-1.5 rounded-full bg-blue-300 shadow-[0_0_8px_rgba(147,197,253,0.8)]"></span>
+                                <span>2026.01.01 - 換換風格<br><span class="text-xs opacity-60">owo</span></span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span class="mt-1.5 w-1.5 h-1.5 rounded-full bg-pink-300 shadow-[0_0_8px_rgba(253,164,175,0.8)]"></span>
+                                <span>2025.12.28 - 載入《神代理》第四章</span>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="glass-card p-6 md:p-8 hover:bg-white/90">
+                        <h4 class="text-theme-primary font-bold mb-4 font-cute flex items-center gap-2 text-lg">
+                            <i class="fas fa-envelope"></i> 聯絡作者(Gmail)
+                        </h4>
+                        <div class="bg-gray-50/80 rounded-xl p-4 mb-4 text-center border border-dashed border-gray-200">
+                            <code class="text-xs text-gray-500 select-all font-mono">MriaWisp@mirawisp.dpdns.org</code>
+                        </div>
+                        <button onclick="copyEmail()" class="w-full cute-btn py-3 text-sm text-gray-600 font-bold flex justify-center items-center gap-2 group">
+                            <i class="far fa-copy group-hover:scale-110 transition-transform"></i> 複製信箱連結
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 閱讀模式視圖 -->
+            <article id="reader-view" class="hidden max-w-3xl mx-auto pb-32">
+                <div id="chapter-content-wrapper" class="transition-all duration-500 opacity-0 translate-y-8">
+                    <!-- 標題區 -->
+                    <div class="mb-12 pb-8 border-b border-dashed border-theme-primary/30 text-center relative">
+                        <span class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-full text-[100px] text-theme-primary/5 font-black font-cute pointer-events-none select-none">NOVEL</span>
+                        <h1 id="chapter-title" class="text-3xl md:text-5xl font-black text-gray-800 tracking-wide font-cute min-h-[1.5em] typing-cursor relative z-10"></h1>
+                    </div>
+
+                    <!-- 內文區 -->
+                    <div id="chapter-body" class="glass-card p-8 md:p-14 mb-10 text-lg leading-relaxed shadow-lg"></div>
+
+                    <!-- 底部導航 -->
+                    <div class="flex flex-col md:flex-row gap-4 justify-between pt-8">
+                        <button id="prev-btn" onclick="goPrev()" class="cute-btn px-8 py-4 flex-1 font-bold text-gray-600 flex items-center justify-center gap-3 disabled:opacity-40 disabled:cursor-not-allowed group">
+                            <i class="fas fa-arrow-left transition-transform group-hover:-translate-x-1"></i> 上一章
+                        </button>
+                        <button id="next-btn" onclick="goNext()" class="cute-btn px-8 py-4 flex-1 font-bold text-gray-600 flex items-center justify-center gap-3 disabled:opacity-40 disabled:cursor-not-allowed group">
+                            下一章 <i class="fas fa-arrow-right transition-transform group-hover:translate-x-1"></i>
+                        </button>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </main>
+
+    <script>
+        /* * =================================================================
+         * 資料庫區域 (NOVEL_DATA)
+         * =================================================================
+         * 【修改教學 3：如何新增章節內容】
+         * 這裡存放所有小說的標題與內文。
+         * 格式： 'ID': { title: '標題', content: 'HTML內容' }
+         * * 若要新增章節：
+         * 1. 在最後一個章節的大括號 } 後面加上逗號 ,
+         * 2. 新起一行，輸入新的 ID (如 'n1_c5')
+         * 3. 填入標題與內容。注意內容要用反引號 ` 包起來。
+         * * 若要新增小說：
+         * 建議使用新的前綴，例如 'n2_c1' 代表第二本小說第一章。
+         * =================================================================
+         */
+        const NOVEL_DATA = {
+            'n1_c1': { title: '一切的開始', content: `<p>抗爭元年，地球上開始會在某些地方憑空出現一些怪物，那些怪物稱為「白豔」。白豔的破壞力極強，且普通人是看不到白豔的，只有某些覺醒了特殊能力的人才能看到。</p><p>這些有特殊能力的人稱為「能力者」，擁有能夠跟白豔對戰的能力。各國政府也立刻採取了行動，研發讓普通人也看得到白豔的裝置，同時將年號改為抗爭。</p><p>時間回到現代抗爭曆1583年。白豔的出現極大程度上改變了都市的分部，人類跟白豔的戰爭仍在繼續。</p><p>時間：10點 地點：T國。</p><p>都市，美麗的夜景如同牛奶一般……我幹嘛拿牛奶來形容夜色？看著手中的牛奶，久遠晴深深的嘆了一口氣，隨後將牛奶一飲而盡。</p><p>明天是他國中三年級的開學，晴抱著沒有很開心的心情就寢，畢竟都是幾乎都不會出現白豔，所以不會停課。</p><p>隔天——開學日，過了一個暑假，作息紊亂、日夜顛倒的晴顯得非常不適應。</p><p>雖然可以看到他久違的朋友，但是本來跟晴是青梅竹馬的白川悠由於在暑假時覺醒了能力，所以轉到了政府設立的「國立能力者專業學院」，不再就讀晴的普通學校。</p><p>其實晴剛接到這消息的時候是抱有一絲他自己也覺得沒良心的期待的，因為能力者的能力等級由低到高分為D、C、B、A、S級，要是覺醒的是D級或C級這種比較爛的能力，有些人還是可以去讀普通學校的，可惜悠的天賦驚人，未能如晴所願。</p><p>想到這裡的晴更抑鬱了。</p><p>終於，他快撐到放學了。</p><p>啊……好累啊，最後一節課是什麼？白豔介紹課？又來，每個學期的開學時都有，而且內容還不會變，怎麼辦？下節課我能睡整節嗎？</p><p>此時上課鐘響，老師走進教室，並張貼了手上的資料。</p><p>晴看著資料，是他已經看了無數次的「白豔分級表」</p><p>白豔依照強度分成六級——</p><p>LV.1 一級 無害</p><p>LV.2 二級 一位普通成年人拿棍棒可以打到</p><p>LV.3 三級 好幾位軍人拿槍可以打到</p><p>LV.4 四級 需要一隊軍隊的火力</p><p>LV.5 五級 需要動員全國一半以上的絕對才行</p><p>LV.6 六級 可能導致一個國家滅亡</p><p>看到這的晴，終於支撐不住強烈的睡意，閉上了眼睛。</p><p>意識一片朦朧中，晴看到了一個人的形體，飄忽不定，無法判定性別。</p><p>「你是誰？」Who are you? 我問。</p><p>「我是神」我得到了 I am god。</p><p>「蛤？？？」</p><p>（第一章完）` },
+            'n1_c2': { title: '神', content: `<p>「神？」我驚疑不定的問。</p><p>「沒錯，人類，我是神，你渴望力量嗎？我可以給你力量。」</p><p>「為什麼聽起來像跟惡魔簽賣身契？」</p><p>「……我給你力量吧。」頓了一下的神決定忽視我的問題。</p><p>下課鐘聲響起的一瞬間，我也驚醒了。</p><p>直到回到了家，走進了我的房間，我都沒想明白這個問題。</p><p>「在想什麼？這麼後知後覺。」一道聲音突然響起。</p><p>「神？你在哪？」果然不是夢。</p><p>「低頭看一下你的脖子。」我低頭，脖子上掛著一條紅線，一路延伸到我的衣服裡.扯出來一看，我發現上面掛著一個黑色的、摸起來像玉的珠子。</p><p>突然我覺得眼前場景一晃，瞬間，我來到了一座森林。</p><p>「這是第一森林。」神用一種非常平靜的語氣回答了我的問題。</p><p>「吼！！！」一聲怪獸吼聲傳來，緊接著出現了一隻長相奇特的白豔。我想也不想直接就跑。</p><p>「哎呀，看起來是一隻3級白豔……人類你跑什麼，快去打倒他啊。」神提出了一個不可能的要求。</p><p>「辦不到啊啊啊啊啊啊啊。」</p><p>在這怪物滿天下的時代，很多學校都非常重視跑步速度的訓練，晴在這方面的表現也不錯，所以他漸漸和白豔拉開了距離……的話就太誇張了，距離沒拉遠，還越來越近了。</p><p>「沒有能力的人類這麼爛喔。」神說完，頓了頓又道。</p><p>「好吧，我給你能力吧。」</p><p>「什……？」瞬間，我獲得了能力，這個能力的資訊灌入了我的腦袋裡，這感覺……還挺奇妙的。</p><p>「誒，人類，我都給你能力了你還跑什麼。」</p><p>「物理上允許了，精神上不允許啊。」我會怕啊啊啊啊啊。</p><p>「放心吧人類，我給你的能力很強，更何況還有我在。」</p><p>「你保證，我不會受傷嗎？」我放慢腳步。</p><p>「我保證。」神說道。</p><p>我停下腳步，內心艱難做出決定。</p><p>我面向白豔。</p><p>（第二章完）` },
+            'n1_c3': { title: '初戰', content: `<p>神贈與我的能力是 A 級的體術，A 級體術指的是武術＋體內得到等級為 A 的增強。我朝白豔衝去，飛身一腳朝白豔的頭踢去，白豔被我一踢直接往一旁飛去，一時半會還爬不起來。</p><p>哇！效果竟然這麼好！不愧是 A 級體術。等一下，我突然想到……</p><p>「神，我要怎麼幹掉他？」</p><p>「直接殺了他啊。」神理所當然地說。</p><p>「怎麼殺？我不想用拳頭打死他。」我有心理上的障礙，我相信很多人都跟我一樣。</p><p>「嗯……你也沒有武器耶，不然你拿這個代替一下。」</p><p>我面前出現了一顆浮在空中的石頭，我伸手抓了過來。</p><p>「你要我用石頭丟他？」我應該沒理解錯神的意思吧？但怎麼想都怪怪的。</p><p>「嗯，沒錯，上面附了我的力量。」神說道這裡，白豔剛好也緩了過來，並再次朝我奔來。</p><p>聽了神的話的我，也是馬上擺了個棒球投手的姿勢，將石頭朝白豔的頭丟去。在 A 級體術＋神力的威力下，我只聽到了一聲頭蓋骨碎裂的聲音。</p><p>喔喔喔，聽到這聲音，我覺得我的頭也好痛，啊啊啊他腦袋爆了。</p><p>一時間場面過於血腥，我決定轉過頭不再看他。</p><p>「恭喜你幹掉了你人生中第一隻白豔。」神說道。</p><p>「這感覺不是值得慶祝的事情……所以你到底帶我來第一森林幹嘛？」想起這事的我質問神。</p><p>「當然是帶你來訓練的。」</p><p>「訓練？」我疑問。</p><p>「對，身為跟我連結的你，身份是神的代理人，實力自然不能差。」</p><p>「蛤？我是神的代理人？什麼時候變的？」</p><p>「從你跟我連結的那一刻開始。」</p><p>「那為什麼選我？」</p><p>「這個我還不能告訴你。」</p><p>「為什麼？」</p><p>「因為時機未到。」神看起來沒有要解釋的意思。</p><p>「好，就算這樣也不用跑到第一森林裡吧。」詢問無果的我決定回到原本的話題。</p><p>「為了讓你快速成長，實戰是必須的。放心，有我在，你死不了。」</p><p>「物理上沒問題了，那精神上的呢？」重視一下人權啊。</p><p>「精神上的誰管你啊。」看來神不適用人權。</p><p>冷靜冷靜，別生氣，算了，只要不會死就好。</p><p>晴調整得很快，迅速冷靜了下來。</p><p>「小心喔，白豔出現了，就在不遠處，正朝這裡靠近。」神提醒道。</p><p>「幾級？」我問。</p><p>「四。」神回答。</p><p>「四級？快，再給我一顆石頭。」我趕緊道。</p><p>別以為三級和四級只差了一級，差距好像很小，在白豔中，差一級就是天和地了。</p><p>「不，這次你要獨自打倒他，我不幫忙。」</p><p>「我自己？」我指著自己。</p><p>「對，你自己.放心，你快死時我會救你的。」</p><p>聽到自己性命無憂，我突然開始有點躍躍欲試了，畢竟我可是得到了 A 級能力啊。</p><p>「你要s贏了，我再多送你兩個能力。」神加了個獎勵。</p><p>「好。」我毫不猶豫答道。</p><p>這時，神口中的白豔終於現身，是一隻兩腳站立、長相恐怖的貓。</p><p>不只如此，這隻貓手上拿著一把……刀。</p><p>我：「刀……？」</p><p>（第三章完）` },
+            'n1_c4': { title: 'A級和B級的差距', content: `
+<p>抗爭曆元年之後，地球上出現了一種擁有特殊效果的武器，稱為「神器」。神器所擁有的效果五花八門，而且數量少、價格高。</p>
+<p>神器的獲得方式有兩種：一、由相關能力者打造；二、有些四級以上的白豔出現時會自帶神器，就比方說我眼前這隻……。</p>
+<p>「喔，有趣了，仔細看才發現他有……你們稱為『神器』的東西吧，你知道這是什麼吧？」神發出如此感嘆。</p>
+<p>「我知道，學校有教，不過我真的打得過他嗎？」糟糕，現在心理沒底。</p>
+<p>「對了，這隻白豔有B級的體術能力喔。」神補了一刀。</p>
+<p>不要打擊我的信心啊！</p>
+<p>與此同時，那隻白豔已經逐漸靠近。</p>
+<p>「放心，雖然他有神器，但其實A級和B級的能力差距非常大。」神解釋道。</p>
+<p>「真的嗎？我不要唬爛我喔。」</p>
+<p>「真的，再告訴你兩件事，第一：他的弱點在背部中央；第二：他來了。」</p>
+<p>「哇啊啊啊啊！」我回過神，急忙往後一跳，剛剛的地方被一把刀砍中，留下了四道砍痕。</p>
+<p>「喔，看來是增加攻擊次數的神器呢。你仔細注意不要被砍到就行，只要不被砍到就不會觸發多次攻擊。」看起來無所不知的神這麼說道。</p>
+<p>此時貓型白豔也朝我瘋狂揮砍，我將注意力放在刀上，開始閃躲。</p>
+<p>唔，雖然看起來很猛，但白豔的攻擊意外的好閃耶，難道這就是神口中的差距？</p>
+<p>面對白豔的攻擊，晴顯得游刃有餘，他撿起了一顆石頭，運用能力優勢繞到白豔的身後，朝著背部中央全力丟去。</p>
+<p>石頭命中目標，白豔受了傷哀嚎了一聲，晴沒有放棄這個機會，一連又連丟了三顆石頭，白豔背部一片血肉模糊，並倒在地上沒有再爬起。</p>
+<p>「贏……贏了？就這樣？」</p>
+<p>「對啊，不然你想怎樣？」神道。</p>
+<p>「不是，我打得還滿輕鬆的耶，那他真得是4級嗎？」</p>
+<p>「第一，普通人並不知道他的弱點在背部，你也是我告訴你才知道的吧；第二，其實他背很硬，子彈也打不穿。」</p>
+<p>「意思是，我用石頭丟出了比子彈強的威力？」</p>
+<p>「對。」神給予肯定。</p>
+<p>「……」我無言。</p>
+<p>「你可以去拿他的刀。」神提醒。</p>
+<p>我走了過去，從白豔手中拿起刀。</p>
+<p>「這把刀的效果是砍中目標後會造成四道傷害。」神給了說明。</p>
+<p>我揮了揮，手感不錯。</p>
+<p>「可以回家了。」神說。</p>
+<p>「等等，這個要放哪？我總不能帶著一把刀回家吧。」</p>
+<p>「你把刀往珠子裡插。」</p>
+<p>我一臉問號的照做了，神奇的是，刀碰到珠子的地方消失了，我驚奇的用力一插，刀整把消失了。</p>
+<p>「收進珠子裡了？」我問道。</p>
+<p>「對，你心念一動就能拿出來。」</p>
+<p>「這麼方便！」</p>
+<p>「好了回家吧。」神一說完，我便出現在了我房間，我看了眼時鐘，只過了30分鐘。爸爸還在工作尚未回家，妹妹應該在自己的房間裡吧。</p>
+<p>「對了，你不是說要再送我兩個能力嗎？」我問道。</p>
+<p>「沒問題，我馬上給。」聽到這的我打起精神。</p>
+<p>「你要送我什麼能力？」我興奮的問。</p>
+<p>「我要送你……」</p>
+<p>（第四章完）` }
         };
 
-        // 章節順序配置
-        const CHAPTER_ORDER = Object.keys(NOVEL_DATA);
-        // 如果未來開啟了 n1_c4，確保 CHAPTER_ORDER 會自動包含它 (如果它在 NOVEL_DATA 內)
-        // 這裡我們暫時只使用當前有效的 keys
+        /* ================================================================= */
 
+        const CHAPTER_ORDER = Object.keys(NOVEL_DATA);
         let currentChapterKey = null;
         let typingTimer = null;
-        let isAnimating = false;
 
-        // --- 粒子動畫 (Canvas Optimization) ---
-        const canvas = document.getElementById('particle-canvas');
-        const ctx = canvas.getContext('2d');
-        let width, height, particles = [];
+        // --- 櫻花特效引擎 (優化版) ---
+        const canvas = document.getElementById('sakura-canvas');
+        const ctx = canvas.getContext('2d', { alpha: true }); // 優化透明度渲染
+        let width, height, petals = [];
         let animationFrameId;
 
-        function initParticles() {
+        class Petal {
+            constructor() { this.reset(); }
+            reset() {
+                this.x = Math.random() * width;
+                this.y = Math.random() * height - height;
+                this.size = Math.random() * 5 + 3; // 稍微調小一點，更精緻
+                this.speed = Math.random() * 1 + 0.5;
+                this.angle = Math.random() * Math.PI * 2;
+                this.spin = Math.random() * 0.02 - 0.01;
+                // 使用更夢幻的顏色
+                const colors = ['#ffb7b2', '#ffdac1', '#e2f0cb', '#ffffff'];
+                this.color = colors[Math.floor(Math.random() * colors.length)];
+                this.opacity = Math.random() * 0.5 + 0.1;
+            }
+            update() {
+                this.y += this.speed;
+                this.x += Math.sin(this.angle) * 0.3; // 減少橫向擺動幅度，更自然
+                this.angle += this.spin;
+                if (this.y > height) this.reset();
+            }
+            draw() {
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                ctx.rotate(this.angle);
+                ctx.globalAlpha = this.opacity;
+                ctx.fillStyle = this.color;
+                ctx.beginPath();
+                // 繪製花瓣形狀
+                ctx.ellipse(0, 0, this.size, this.size/1.8, 0, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.restore();
+            }
+        }
+
+        function initSakura() {
             width = canvas.width = window.innerWidth;
             height = canvas.height = window.innerHeight;
-            // 優化：根據螢幕大小調整粒子數量，避免手機過熱
-            const particleCount = window.innerWidth < 768 ? 30 : 60;
-            
-            particles = Array.from({length: particleCount}, () => ({
-                x: Math.random() * width,
-                y: Math.random() * height,
-                vx: (Math.random() - 0.5) * 0.4, // 稍微降低速度以減少視覺干擾
-                vy: (Math.random() - 0.5) * 0.4,
-                size: Math.random() * 2,
-                alpha: Math.random() * 0.5 + 0.1
-            }));
+            // 根據螢幕寬度調整粒子數量，優化性能
+            const count = width < 768 ? 30 : 60; 
+            petals = Array.from({ length: count }, () => new Petal());
         }
 
         function animate() {
-            // 效能優化：如果頁面不可見，停止渲染
-            if (document.hidden) {
-                animationFrameId = requestAnimationFrame(animate);
-                return;
-            }
-
             ctx.clearRect(0, 0, width, height);
-            
-            particles.forEach(p => {
-                p.x = (p.x + p.vx + width) % width;
-                p.y = (p.y + p.vy + height) % height;
-                
-                // 優化：減少 fillStyle 的切換頻率
-                ctx.beginPath();
-                ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-                ctx.fillStyle = `rgba(0, 242, 255, ${p.alpha})`;
-                ctx.fill();
-            });
+            petals.forEach(p => { p.update(); p.draw(); });
             animationFrameId = requestAnimationFrame(animate);
         }
 
-        // --- 功能邏輯 ---
+        // --- 介面邏輯 ---
         function toggleMenu(id) {
             const el = document.getElementById(id);
             const icon = document.getElementById(id + '-icon');
-            const isHidden = el.classList.contains('hidden');
-            el.classList.toggle('hidden');
-            icon.style.transform = isHidden ? 'rotate(90deg)' : 'rotate(0deg)';
+            if (el.style.maxHeight && el.style.maxHeight !== '0px') {
+                el.style.maxHeight = '0px';
+                icon.style.transform = 'rotate(0deg)';
+            } else {
+                el.style.maxHeight = '800px'; // 增加最大高度以容納更多章節
+                icon.style.transform = 'rotate(180deg)';
+            }
         }
 
         function toggleSidebar() {
             const sidebar = document.getElementById('sidebar');
             const overlay = document.getElementById('mobile-overlay');
-            const isClosed = sidebar.classList.contains('-translate-x-full');
+            const isOpen = !sidebar.classList.contains('-translate-x-full');
             
-            if (isClosed) {
-                sidebar.classList.remove('-translate-x-full');
-                overlay.classList.remove('hidden');
-                setTimeout(() => overlay.classList.remove('opacity-0'), 10);
-            } else {
+            if (isOpen) {
+                // 關閉
                 sidebar.classList.add('-translate-x-full');
+                overlay.classList.remove('opacity-100');
                 overlay.classList.add('opacity-0');
                 setTimeout(() => overlay.classList.add('hidden'), 300);
+            } else {
+                // 開啟
+                sidebar.classList.remove('-translate-x-full');
+                overlay.classList.remove('hidden');
+                // 強制重繪以觸發過渡
+                void overlay.offsetWidth; 
+                overlay.classList.remove('opacity-0');
+                overlay.classList.add('opacity-100');
             }
         }
 
         function loadChapter(key) {
-            if (!NOVEL_DATA[key]) return; // 安全檢查
-            if (currentChapterKey === key) return; // 避免重複加載
+            // 防呆機制：如果章節不存在或已在當前章節，則不執行
+            if (!NOVEL_DATA[key] || currentChapterKey === key) return;
 
-            // 1. 更新選單激活狀態
-            document.querySelectorAll('.chapter-link').forEach(el => el.classList.remove('active', 'text-white'));
+            // 更新導航選中狀態
+            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
             const activeLink = document.querySelector(`.${key}`);
-            if (activeLink) {
-                activeLink.classList.add('active', 'text-white');
-            }
+            if (activeLink) activeLink.classList.add('active');
 
-            // 2. 清除舊的打字機效果
             if (typingTimer) clearTimeout(typingTimer);
-            
             currentChapterKey = key;
-            const data = NOVEL_DATA[key];
             
-            // 3. 切換視圖
-            document.getElementById('default-view').classList.add('hidden');
+            const contentContainer = document.getElementById('content-container');
             const reader = document.getElementById('reader-view');
-            reader.classList.remove('hidden');
-            
-            // 4. 重置動畫狀態
+            const defaultView = document.getElementById('default-view');
             const wrapper = document.getElementById('chapter-content-wrapper');
             const titleEl = document.getElementById('chapter-title');
-            
-            wrapper.style.opacity = '0';
-            wrapper.classList.remove('animate-fade-in-up');
-            
-            // 5. 填充內容
-            document.getElementById('chapter-body').innerHTML = data.content;
-            titleEl.textContent = ''; // 清空標題準備打字
-            
-            // 6. 滾動到頂部 (修復切換章節時位置不正確的 Bug)
-            const container = document.getElementById('content-container');
-            container.scrollTop = 0;
 
-            // 7. 啟動進場動畫
-            // 微小延遲確保 DOM 更新後動畫觸發
+            // 1. 先淡出舊內容
+            wrapper.classList.add('opacity-0', 'translate-y-8');
+            
             setTimeout(() => {
-                wrapper.style.opacity = '1';
-                wrapper.classList.add('animate-fade-in-up');
+                // 2. 切換 DOM 顯示
+                defaultView.classList.add('hidden');
+                reader.classList.remove('hidden');
                 
-                // 標題打字機效果 (優化版)
+                // 3. 注入新內容
+                document.getElementById('chapter-body').innerHTML = NOVEL_DATA[key].content;
+                titleEl.textContent = ''; // 清空標題準備打字特效
+                
+                // 4. 滾動到頂部
+                contentContainer.scrollTo({ top: 0, behavior: 'smooth' });
+                
+                // 5. 淡入新內容
+                wrapper.classList.remove('opacity-0', 'translate-y-8');
+                
+                // 6. 標題打字特效
                 let i = 0;
+                const text = NOVEL_DATA[key].title;
                 function type() {
-                    // 如果用戶已經切換到其他章節，停止當前打字
-                    if (currentChapterKey !== key) return;
-                    
-                    if (i < data.title.length) {
-                        titleEl.textContent += data.title[i++];
-                        // 隨機打字速度，更有機械感
-                        typingTimer = setTimeout(type, 30 + Math.random() * 50);
+                    if (currentChapterKey !== key) return; // 防止快速切換時重疊
+                    if (i < text.length) {
+                        titleEl.textContent += text[i++];
+                        typingTimer = setTimeout(type, 80); // 稍微加快打字速度
                     }
                 }
                 type();
-            }, 50);
+            }, 500); // 配合 CSS transition 時間
 
-            // 8. 更新按鈕狀態
+            // 更新按鈕狀態
             const idx = CHAPTER_ORDER.indexOf(key);
-            const prevBtn = document.getElementById('prev-btn');
-            const nextBtn = document.getElementById('next-btn');
+            document.getElementById('prev-btn').disabled = (idx <= 0);
+            document.getElementById('next-btn').disabled = (idx >= CHAPTER_ORDER.length - 1);
 
-            prevBtn.disabled = (idx === 0);
-            nextBtn.disabled = (idx === CHAPTER_ORDER.length - 1);
-
-            // 手機版自動收起側邊欄
+            // 手機版點擊後自動收起側邊欄
             if (window.innerWidth < 768) {
                 const sidebar = document.getElementById('sidebar');
                 if (!sidebar.classList.contains('-translate-x-full')) {
@@ -579,32 +616,47 @@
         }
 
         function copyEmail() {
+            // 使用 Clipboard API
             navigator.clipboard.writeText('MriaWisp@mirawisp.dpdns.org').then(() => {
                 const btn = document.querySelector('button[onclick="copyEmail()"]');
-                const originalText = btn.innerHTML;
-                btn.innerHTML = '<i class="fas fa-check"></i> COPIED';
-                btn.classList.add('text-cyber-blue', 'border-cyber-blue');
+                const originalHtml = btn.innerHTML; // 保存原始按鈕內容(包含icon)
+                
+                btn.innerHTML = '<i class="fas fa-check"></i> 複製成功！✨';
+                btn.classList.add('bg-green-50', 'text-green-600', 'border-green-200');
+                
                 setTimeout(() => {
-                    btn.innerHTML = originalText;
-                    btn.classList.remove('text-cyber-blue', 'border-cyber-blue');
+                    btn.innerHTML = originalHtml;
+                    btn.classList.remove('bg-green-50', 'text-green-600', 'border-green-200');
                 }, 2000);
+            }).catch(err => {
+                console.error('複製失敗:', err);
+                alert('複製失敗，請手動複製');
             });
         }
 
         function updateTime() {
             const now = new Date();
-            const timeString = now.toLocaleTimeString('en-GB', {hour12: false});
-            document.getElementById('current-time').textContent = timeString;
+            // 使用更易讀的時間格式
+            document.getElementById('current-time').textContent = now.toLocaleTimeString('en-GB', {hour12: false});
         }
+
+        // 監聽視窗大小變化，防抖動優化
+        let resizeTimeout;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(initSakura, 200);
+        });
 
         // 初始化
         document.addEventListener('DOMContentLoaded', () => {
-            window.addEventListener('resize', initParticles);
-            initParticles();
+            initSakura();
             animate();
             setInterval(updateTime, 1000);
             updateTime();
+            // 預設展開第一個小說目錄
+            toggleMenu('novel-1');
         });
     </script>
 </body>
 </html>
+
