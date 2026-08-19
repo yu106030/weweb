@@ -4,46 +4,52 @@
     <meta charset="UTF-8">
     <!-- 優化視口設置，解決移動端點擊延遲與佈局問題 -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>幻境小說庫</title>
-    
+    <title>我在代理神 | 幻境檔案庫</title>
+
     <!-- 字體資源 -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Quicksand:wght@500;700&family=Varela+Round&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&family=Noto+Serif+TC:wght@500;700;900&family=Cinzel:wght@600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-    
+
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
                         theme: {
-                            bg: '#fdfbf7', // 更加柔和的米白底色
-                            primary: '#ffb7b2',
-                            secondary: '#a2d2ff',
-                            accent: '#ffef96',
-                            text: '#4a4a4a',
-                            dark: '#2d3436',
+                            bg: '#0a0c1e',        // 夜幕深空底色
+                            bg2: '#131737',       // 次層底色
+                            primary: '#e3b873',   // 神諭金
+                            secondary: '#9b8cff', // 靈契紫
+                            accent: '#6fd6c7',    // 微光青
+                            text: '#e8e6f5',
+                            dim: '#8b88ab',
+                            dark: '#05060f',
                         }
                     },
                     fontFamily: {
                         sans: ['"Noto Sans TC"', 'sans-serif'],
-                        cute: ['"Varela Round"', '"Quicksand"', 'sans-serif'],
+                        serif: ['"Noto Serif TC"', 'serif'],
+                        cinzel: ['"Cinzel"', '"Noto Serif TC"', 'serif'],
                     },
                     animation: {
-                        'float': 'float 6s ease-in-out infinite',
-                        'float-delayed': 'float 6s ease-in-out 3s infinite',
+                        'float': 'float 7s ease-in-out infinite',
+                        'float-delayed': 'float 7s ease-in-out 3.5s infinite',
                         'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-                        'slide-in': 'slideIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards',
-                        'fade-in': 'fadeIn 0.6s ease-out forwards',
+                        'slide-in': 'slideIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+                        'fade-in': 'fadeIn 0.7s ease-out forwards',
                         'scale-in': 'scaleIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards',
+                        'spin-slow': 'spin 18s linear infinite',
+                        'spin-reverse-slow': 'spinReverse 24s linear infinite',
                     },
                     keyframes: {
-                        float: { '0%, 100%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(-10px)' } },
+                        float: { '0%, 100%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(-12px)' } },
                         slideIn: { '0%': { opacity: '0', transform: 'translateY(20px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } },
                         fadeIn: { '0%': { opacity: '0' }, '100%': { opacity: '1' } },
                         scaleIn: { '0%': { opacity: '0', transform: 'scale(0.95)' }, '100%': { opacity: '1', transform: 'scale(1)' } },
+                        spinReverse: { '0%': { transform: 'rotate(360deg)' }, '100%': { transform: 'rotate(0deg)' } },
                     }
                 }
             }
@@ -53,18 +59,24 @@
     <style>
         /* 全局變數與基礎設定 */
         :root {
-            --glass-bg: rgba(255, 255, 255, 0.65);
-            --glass-border: rgba(255, 255, 255, 0.5);
-            --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
+            --glass-bg: rgba(19, 23, 55, 0.55);
+            --glass-border: rgba(227, 184, 115, 0.18);
+            --glass-shadow: 0 8px 40px 0 rgba(0, 0, 0, 0.45);
+            --gold: #e3b873;
+            --violet: #9b8cff;
         }
 
+        * { scrollbar-width: thin; }
+
         body {
-            /* 更加夢幻的漸層背景 */
-            background: linear-gradient(120deg, #fdfbf7 0%, #ffe4e1 50%, #e0f7fa 100%);
+            /* 深空夜幕漸層，帶一絲極光流動感 */
+            background:
+                radial-gradient(circle at 15% 20%, rgba(155, 140, 255, 0.14) 0%, transparent 45%),
+                radial-gradient(circle at 85% 75%, rgba(227, 184, 115, 0.12) 0%, transparent 45%),
+                linear-gradient(160deg, #05060f 0%, #0a0c1e 45%, #131737 100%);
             background-size: 200% 200%;
-            animation: gradientBG 15s ease infinite;
-            color: #4a4a4a;
-            /* 使用 dvh 適配所有移動端瀏覽器的高度 */
+            animation: gradientBG 22s ease infinite;
+            color: #e8e6f5;
             height: 100dvh;
             width: 100vw;
             overflow: hidden;
@@ -77,8 +89,8 @@
             100% { background-position: 0% 50%; }
         }
 
-        /* 背景畫布優化 */
-        #sakura-canvas {
+        /* 背景畫布 */
+        #bg-canvas {
             position: fixed;
             top: 0; left: 0;
             width: 100%; height: 100%;
@@ -86,65 +98,85 @@
             pointer-events: none;
         }
 
-        /* 毛玻璃特效組件 */
+        /* 毛玻璃特效組件（夜幕版） */
         .glass-panel {
             background: var(--glass-bg);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             border-right: 1px solid var(--glass-border);
             box-shadow: var(--glass-shadow);
         }
 
         .glass-card {
-            background: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.8);
+            background: rgba(19, 23, 55, 0.5);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(227, 184, 115, 0.15);
             border-radius: 24px;
-            box-shadow: 0 10px 40px -10px rgba(0,0,0,0.05);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 10px 50px -12px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.03);
+            transition: transform 0.4s cubic-bezier(0.16,1,0.3,1), box-shadow 0.4s ease, border-color 0.4s ease;
+        }
+
+        .glass-card:hover {
+            border-color: rgba(227, 184, 115, 0.35);
+            box-shadow: 0 14px 60px -12px rgba(227, 184, 115, 0.12), inset 0 1px 0 rgba(255,255,255,0.05);
         }
 
         /* 滾動條美化 */
         .custom-scrollbar::-webkit-scrollbar { width: 5px; }
         .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
-        .custom-scrollbar::-webkit-scrollbar-thumb { 
-            background: rgba(162, 210, 255, 0.5);
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: rgba(227, 184, 115, 0.35);
             border-radius: 10px;
         }
-        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: rgba(162, 210, 255, 0.8); }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: rgba(227, 184, 115, 0.6); }
 
         /* 文章內容樣式優化 */
         #chapter-body {
-            font-size: 1.05rem; /* 稍微加大字體 */
-            color: #374151;
+            font-size: 1.05rem;
+            color: #d8d6ea;
         }
-        
+
         #chapter-body p {
             margin-bottom: 1.8em;
-            line-height: 1.9;
-            text-align: justify; /* 兩端對齊 */
+            line-height: 1.95;
+            text-align: justify;
             letter-spacing: 0.02em;
         }
 
-        /* 按鈕與互動元素 */
+        #chapter-body p:first-of-type::first-letter {
+            font-family: 'Noto Serif TC', serif;
+            font-size: 2.6em;
+            font-weight: 900;
+            float: left;
+            line-height: 0.85;
+            margin-right: 0.12em;
+            margin-top: 0.06em;
+            background: linear-gradient(160deg, var(--gold), var(--violet));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        /* 導航元素 */
         .nav-item {
             position: relative;
             overflow: hidden;
             transition: all 0.3s ease;
         }
-        
+
         .nav-item::before {
             content: '';
             position: absolute;
-            left: 0; top: 0; bottom: 0; width: 4px;
-            background: #ffb7b2;
+            left: 0; top: 0; bottom: 0; width: 3px;
+            background: linear-gradient(180deg, var(--gold), var(--violet));
             transform: scaleY(0);
             transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1);
         }
 
         .nav-item.active {
-            background: linear-gradient(90deg, rgba(255, 183, 178, 0.15) 0%, transparent 100%);
-            color: #e88680;
+            background: linear-gradient(90deg, rgba(227, 184, 115, 0.12) 0%, transparent 100%);
+            color: var(--gold) !important;
         }
 
         .nav-item.active::before {
@@ -152,17 +184,19 @@
         }
 
         .cute-btn {
-            background: white;
+            background: rgba(19, 23, 55, 0.6);
             border-radius: 16px;
-            transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
-            box-shadow: 0 4px 12px rgba(162, 210, 255, 0.2);
-            border: 1px solid rgba(255,255,255,0.8);
+            transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 4px 18px rgba(0,0,0,0.35);
+            border: 1px solid rgba(227, 184, 115, 0.2);
+            color: #e8e6f5;
         }
-        
+
         .cute-btn:hover:not(:disabled) {
             transform: translateY(-2px) scale(1.02);
-            box-shadow: 0 8px 16px rgba(162, 210, 255, 0.3);
-            background: #f0f9ff;
+            box-shadow: 0 10px 24px rgba(227, 184, 115, 0.18);
+            background: rgba(227, 184, 115, 0.08);
+            border-color: rgba(227, 184, 115, 0.45);
         }
 
         .cute-btn:active:not(:disabled) {
@@ -173,28 +207,48 @@
             content: '|';
             margin-left: 4px;
             animation: blink 1s step-start infinite;
-            color: #ffb7b2;
+            color: var(--gold);
         }
         @keyframes blink { 50% { opacity: 0; } }
 
         /* 章節過渡動畫 */
         .chapter-enter { animation: slideIn 0.5s ease forwards; }
+
+        /* 神諭紋章（首頁招牌視覺） */
+        .sigil-ring {
+            border: 1px dashed rgba(227, 184, 115, 0.25);
+            border-radius: 9999px;
+        }
+        .sigil-ring-inner {
+            border: 1px dashed rgba(155, 140, 255, 0.3);
+            border-radius: 9999px;
+        }
+
+        /* 標題發光文字 */
+        .glow-text {
+            text-shadow: 0 0 30px rgba(227, 184, 115, 0.35);
+        }
+
+        /* 頂部狀態徽章微光 */
+        .status-dot {
+            box-shadow: 0 0 8px currentColor;
+        }
     </style>
 </head>
 <body class="flex flex-col md:flex-row font-sans">
 
-    <!-- 背景畫布 -->
-    <canvas id="sakura-canvas"></canvas>
-    
+    <!-- 背景畫布：星塵與神契光絲 -->
+    <canvas id="bg-canvas"></canvas>
+
     <!-- 手機版遮罩 -->
-    <div id="mobile-overlay" class="fixed inset-0 bg-black/20 backdrop-blur-[2px] z-40 hidden transition-opacity duration-300 opacity-0" onclick="toggleSidebar()"></div>
+    <div id="mobile-overlay" class="fixed inset-0 bg-black/40 backdrop-blur-[2px] z-40 hidden transition-opacity duration-300 opacity-0" onclick="toggleSidebar()"></div>
 
     <!-- 手機版頂部導航 -->
-    <div class="md:hidden flex items-center justify-between p-4 bg-white/70 border-b border-white/50 z-50 backdrop-blur-md shadow-sm sticky top-0 pt-[max(env(safe-area-inset-top),1rem)]">
-        <h1 class="text-lg font-bold font-cute text-gray-700 flex items-center gap-2">
-            <i class="fas fa-book-open text-theme-primary"></i> 幻境檔案庫
+    <div class="md:hidden flex items-center justify-between p-4 bg-theme-bg2/70 border-b border-theme-primary/10 z-50 backdrop-blur-md shadow-sm sticky top-0 pt-[max(env(safe-area-inset-top),1rem)]">
+        <h1 class="text-lg font-bold font-serif text-theme-text flex items-center gap-2">
+            <i class="fas fa-scroll text-theme-primary"></i> 幻境檔案庫
         </h1>
-        <button onclick="toggleSidebar()" class="text-gray-500 text-xl p-2 active:scale-90 transition-transform">
+        <button onclick="toggleSidebar()" class="text-theme-dim text-xl p-2 active:scale-90 transition-transform">
             <i class="fas fa-bars"></i>
         </button>
     </div>
@@ -202,88 +256,110 @@
     <!-- 側邊欄 -->
     <aside id="sidebar" class="fixed md:relative inset-y-0 left-0 w-[280px] md:w-[320px] transform -translate-x-full md:translate-x-0 z-50 flex flex-col glass-panel transition-transform duration-500 cubic-bezier(0.16, 1, 0.3, 1) h-full">
         <!-- 側邊欄頂部 -->
-        <div class="p-8 border-b border-white/40 bg-gradient-to-b from-white/40 to-transparent">
-            <h1 class="text-2xl font-black tracking-widest font-cute text-gray-700 drop-shadow-sm">幻境檔案庫</h1>
-            <div class="flex items-center gap-2 mt-3 bg-white/50 w-fit px-3 py-1 rounded-full border border-white/60 shadow-sm">
-                <span class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
-                <p class="text-[10px] text-gray-500 font-bold tracking-wider">SYSTEM V6.0 STARRY</p>
+        <div class="p-8 border-b border-theme-primary/10 bg-gradient-to-b from-theme-primary/5 to-transparent">
+            <h1 class="text-2xl font-black tracking-widest font-serif text-theme-text glow-text">幻境檔案庫</h1>
+            <div class="flex items-center gap-2 mt-3 bg-theme-bg2/60 w-fit px-3 py-1 rounded-full border border-theme-primary/20 shadow-sm">
+                <span class="w-2 h-2 bg-theme-accent rounded-full animate-pulse status-dot text-theme-accent"></span>
+                <p class="text-[10px] text-theme-dim font-bold tracking-wider">SYSTEM V7.0 ORACLE</p>
             </div>
         </div>
 
         <!-- 導航列表 -->
         <nav class="flex-1 overflow-y-auto p-4 space-y-4 custom-scrollbar">
-            
-            <!-- 小說 1 -->
+
+            <!-- 小說：我在代理神 -->
             <div class="group">
-                <button onclick="toggleMenu('novel-1')" class="w-full text-left p-4 flex justify-between items-center bg-white/60 hover:bg-white/80 border border-white/60 rounded-2xl shadow-sm transition-all duration-300 group-hover:shadow-md">
-                    <span class="font-cute font-bold text-gray-600 flex items-center gap-3">
-                        <span class="w-8 h-8 rounded-full bg-theme-primary/20 flex items-center justify-center text-theme-primary"><i class="fas fa-star text-xs"></i></span>
-                        神代理
+                <button onclick="toggleMenu('novel-1')" class="w-full text-left p-4 flex justify-between items-center bg-theme-bg2/50 hover:bg-theme-bg2/80 border border-theme-primary/15 rounded-2xl shadow-sm transition-all duration-300 group-hover:border-theme-primary/30">
+                    <span class="font-serif font-bold text-theme-text flex items-center gap-3">
+                        <span class="w-8 h-8 rounded-full bg-theme-primary/15 flex items-center justify-center text-theme-primary"><i class="fas fa-star text-xs"></i></span>
+                        我在代理神
                     </span>
-                    <i id="novel-1-icon" class="fas fa-chevron-down text-gray-400 transition-transform duration-300"></i>
+                    <i id="novel-1-icon" class="fas fa-chevron-down text-theme-dim transition-transform duration-300" style="transform: rotate(180deg);"></i>
                 </button>
-                
-                <div id="novel-1" class="overflow-hidden transition-all duration-500 max-h-[800px]">
-                    <div class="mt-2 ml-2 space-y-1 border-l-2 border-theme-primary/10 pl-2">
-                        <!-- 
+
+                <div id="novel-1" class="overflow-hidden transition-all duration-500" style="max-height: 3000px;">
+                    <div class="mt-2 ml-2 space-y-1 border-l-2 border-theme-primary/15 pl-2">
+
+                        <!--
                             ================================================
-                            【修改教學 1：如何新增章節按鈕】
-                            若要新增章節，請複製下方的 <a> 標籤結構。
-                            1. 將 'n1_c4' 改成新的 ID (例如 'n1_c5')。
-                            2. 修改顯示文字 (例如 '05 新的章節名稱')。
-                            3. 確保 ID 與下方 JavaScript 中的 NOVEL_DATA 對應。
+                            【修改教學 1：如何新增卷】
+                            複製下方「卷標籤」區塊，修改卷名文字即可新增新卷。
                             ================================================
                         -->
-                        <a href="javascript:void(0)" onclick="loadChapter('n1_c1')" class="nav-item n1_c1 block py-3 px-4 text-sm text-gray-500 font-medium rounded-xl hover:bg-white/50">
-                            <span class="mr-2 opacity-40 font-mono">01</span>一切的開始
-                        </a>
-                        <a href="javascript:void(0)" onclick="loadChapter('n1_c2')" class="nav-item n1_c2 block py-3 px-4 text-sm text-gray-500 font-medium rounded-xl hover:bg-white/50">
-                            <span class="mr-2 opacity-40 font-mono">02</span>神
-                        </a>
-                        <a href="javascript:void(0)" onclick="loadChapter('n1_c3')" class="nav-item n1_c3 block py-3 px-4 text-sm text-gray-500 font-medium rounded-xl hover:bg-white/50">
-                            <span class="mr-2 opacity-40 font-mono">03</span>初戰
-                        </a>
-                        <a href="javascript:void(0)" onclick="loadChapter('n1_c4')" class="nav-item n1_c4 block py-3 px-4 text-sm text-gray-500 font-medium rounded-xl hover:bg-white/50 relative">
-                            <!-- 閃爍紅點代表最新 -->
-                            <span class="absolute right-3 top-1/2 -translate-y-1/2 w-1.5 h-1.5 bg-theme-primary rounded-full animate-pulse"></span>
-                            <span class="mr-2 opacity-40 font-mono">04</span>A級和B級的差距
-                        </a>
+                        <div class="flex items-center gap-2 px-4 pt-3 pb-1 text-theme-primary/80">
+                            <i class="fas fa-bookmark text-[10px]"></i>
+                            <span class="text-xs font-bold tracking-widest font-serif">第一卷：伴神行</span>
+                        </div>
+
+                        <!--
+                            ================================================
+                            【修改教學 2：如何新增章節按鈕】
+                            複製下方 <a> 標籤結構，將 ID (n1_cX) 與顯示文字
+                            改成新章節，並確保 ID 與 NOVEL_DATA 對應。
+                            ================================================
+                        -->
+                        <a href="javascript:void(0)" onclick="loadChapter('n1_c1')" class="nav-item n1_c1 block py-2.5 px-4 text-sm text-theme-dim font-medium rounded-xl hover:bg-white/5 hover:text-theme-text transition-colors"><span class="mr-2 opacity-50 font-mono text-theme-primary/70">01</span>第一章：神選之人</a>
+                        <a href="javascript:void(0)" onclick="loadChapter('n1_c2')" class="nav-item n1_c2 block py-2.5 px-4 text-sm text-theme-dim font-medium rounded-xl hover:bg-white/5 hover:text-theme-text transition-colors"><span class="mr-2 opacity-50 font-mono text-theme-primary/70">02</span>第二章：能力？</a>
+                        <a href="javascript:void(0)" onclick="loadChapter('n1_c3')" class="nav-item n1_c3 block py-2.5 px-4 text-sm text-theme-dim font-medium rounded-xl hover:bg-white/5 hover:text-theme-text transition-colors"><span class="mr-2 opacity-50 font-mono text-theme-primary/70">03</span>第三章：天賦</a>
+                        <a href="javascript:void(0)" onclick="loadChapter('n1_c4')" class="nav-item n1_c4 block py-2.5 px-4 text-sm text-theme-dim font-medium rounded-xl hover:bg-white/5 hover:text-theme-text transition-colors"><span class="mr-2 opacity-50 font-mono text-theme-primary/70">04</span>第四章：父子局</a>
+                        <a href="javascript:void(0)" onclick="loadChapter('n1_c5')" class="nav-item n1_c5 block py-2.5 px-4 text-sm text-theme-dim font-medium rounded-xl hover:bg-white/5 hover:text-theme-text transition-colors"><span class="mr-2 opacity-50 font-mono text-theme-primary/70">05</span>第五章：入學（一）</a>
+                        <a href="javascript:void(0)" onclick="loadChapter('n1_c6')" class="nav-item n1_c6 block py-2.5 px-4 text-sm text-theme-dim font-medium rounded-xl hover:bg-white/5 hover:text-theme-text transition-colors"><span class="mr-2 opacity-50 font-mono text-theme-primary/70">06</span>第六章：入學（二）</a>
+                        <a href="javascript:void(0)" onclick="loadChapter('n1_c7')" class="nav-item n1_c7 block py-2.5 px-4 text-sm text-theme-dim font-medium rounded-xl hover:bg-white/5 hover:text-theme-text transition-colors"><span class="mr-2 opacity-50 font-mono text-theme-primary/70">07</span>第七章：入學（三）</a>
+                        <a href="javascript:void(0)" onclick="loadChapter('n1_c8')" class="nav-item n1_c8 block py-2.5 px-4 text-sm text-theme-dim font-medium rounded-xl hover:bg-white/5 hover:text-theme-text transition-colors"><span class="mr-2 opacity-50 font-mono text-theme-primary/70">08</span>第八章：入學（四）</a>
+                        <a href="javascript:void(0)" onclick="loadChapter('n1_c9')" class="nav-item n1_c9 block py-2.5 px-4 text-sm text-theme-dim font-medium rounded-xl hover:bg-white/5 hover:text-theme-text transition-colors"><span class="mr-2 opacity-50 font-mono text-theme-primary/70">09</span>第九章：一萬公尺？那不是隨便跑嗎？</a>
+                        <a href="javascript:void(0)" onclick="loadChapter('n1_c10')" class="nav-item n1_c10 block py-2.5 px-4 text-sm text-theme-dim font-medium rounded-xl hover:bg-white/5 hover:text-theme-text transition-colors"><span class="mr-2 opacity-50 font-mono text-theme-primary/70">10</span>第十章：你那是腳滑？</a>
+                        <a href="javascript:void(0)" onclick="loadChapter('n1_c11')" class="nav-item n1_c11 block py-2.5 px-4 text-sm text-theme-dim font-medium rounded-xl hover:bg-white/5 hover:text-theme-text transition-colors"><span class="mr-2 opacity-50 font-mono text-theme-primary/70">11</span>第十一章：拖延戰術</a>
+                        <a href="javascript:void(0)" onclick="loadChapter('n1_c12')" class="nav-item n1_c12 block py-2.5 px-4 text-sm text-theme-dim font-medium rounded-xl hover:bg-white/5 hover:text-theme-text transition-colors"><span class="mr-2 opacity-50 font-mono text-theme-primary/70">12</span>第十二章：家和萬事興</a>
+                        <a href="javascript:void(0)" onclick="loadChapter('n1_c13')" class="nav-item n1_c13 block py-2.5 px-4 text-sm text-theme-dim font-medium rounded-xl hover:bg-white/5 hover:text-theme-text transition-colors"><span class="mr-2 opacity-50 font-mono text-theme-primary/70">13</span>第十三章：晴 VS 老唐</a>
+                        <a href="javascript:void(0)" onclick="loadChapter('n1_c14')" class="nav-item n1_c14 block py-2.5 px-4 text-sm text-theme-dim font-medium rounded-xl hover:bg-white/5 hover:text-theme-text transition-colors"><span class="mr-2 opacity-50 font-mono text-theme-primary/70">14</span>第十四章：晴 VS 秋林</a>
+                        <a href="javascript:void(0)" onclick="loadChapter('n1_c15')" class="nav-item n1_c15 block py-2.5 px-4 text-sm text-theme-dim font-medium rounded-xl hover:bg-white/5 hover:text-theme-text transition-colors"><span class="mr-2 opacity-50 font-mono text-theme-primary/70">15</span>第十五章：拉雅（一）</a>
+                        <a href="javascript:void(0)" onclick="loadChapter('n1_c16')" class="nav-item n1_c16 block py-2.5 px-4 text-sm text-theme-dim font-medium rounded-xl hover:bg-white/5 hover:text-theme-text transition-colors"><span class="mr-2 opacity-50 font-mono text-theme-primary/70">16</span>第十六章：拉雅（二）</a>
+                        <a href="javascript:void(0)" onclick="loadChapter('n1_c17')" class="nav-item n1_c17 block py-2.5 px-4 text-sm text-theme-dim font-medium rounded-xl hover:bg-white/5 hover:text-theme-text transition-colors"><span class="mr-2 opacity-50 font-mono text-theme-primary/70">17</span>第十七章：第二森林</a>
+                        <a href="javascript:void(0)" onclick="loadChapter('n1_c18')" class="nav-item n1_c18 block py-2.5 px-4 text-sm text-theme-dim font-medium rounded-xl hover:bg-white/5 hover:text-theme-text transition-colors"><span class="mr-2 opacity-50 font-mono text-theme-primary/70">18</span>第十八章：綁架</a>
+                        <a href="javascript:void(0)" onclick="loadChapter('n1_c19')" class="nav-item n1_c19 block py-2.5 px-4 text-sm text-theme-dim font-medium rounded-xl hover:bg-white/5 hover:text-theme-text transition-colors"><span class="mr-2 opacity-50 font-mono text-theme-primary/70">19</span>第十九章：黑網</a>
+                        <a href="javascript:void(0)" onclick="loadChapter('n1_c20')" class="nav-item n1_c20 block py-2.5 px-4 text-sm text-theme-dim font-medium rounded-xl hover:bg-white/5 hover:text-theme-text transition-colors"><span class="mr-2 opacity-50 font-mono text-theme-primary/70">20</span>第二十章：赫爾西亞</a>
+                        <a href="javascript:void(0)" onclick="loadChapter('n1_c21')" class="nav-item n1_c21 block py-2.5 px-4 text-sm text-theme-dim font-medium rounded-xl hover:bg-white/5 hover:text-theme-text transition-colors"><span class="mr-2 opacity-50 font-mono text-theme-primary/70">21</span>第二十一章：有這號人物嗎？</a>
+                        <a href="javascript:void(0)" onclick="loadChapter('n1_c22')" class="nav-item n1_c22 block py-2.5 px-4 text-sm text-theme-dim font-medium rounded-xl hover:bg-white/5 hover:text-theme-text transition-colors"><span class="mr-2 opacity-50 font-mono text-theme-primary/70">22</span>第二十二章：過目不忘</a>
+                        <a href="javascript:void(0)" onclick="loadChapter('n1_c23')" class="nav-item n1_c23 block py-2.5 px-4 text-sm text-theme-dim font-medium rounded-xl hover:bg-white/5 hover:text-theme-text transition-colors"><span class="mr-2 opacity-50 font-mono text-theme-primary/70">23</span>第二十三章：100分</a>
+                        <a href="javascript:void(0)" onclick="loadChapter('n1_c24')" class="nav-item n1_c24 block py-2.5 px-4 text-sm text-theme-dim font-medium rounded-xl hover:bg-white/5 hover:text-theme-text transition-colors"><span class="mr-2 opacity-50 font-mono text-theme-primary/70">24</span>第二十四章：說話要看場合</a>
+                        <a href="javascript:void(0)" onclick="loadChapter('n1_c25')" class="nav-item n1_c25 block py-2.5 px-4 text-sm text-theme-dim font-medium rounded-xl hover:bg-white/5 hover:text-theme-text transition-colors"><span class="mr-2 opacity-50 font-mono text-theme-primary/70">25</span>第二十五章：情侶裝</a>
+                        <a href="javascript:void(0)" onclick="loadChapter('n1_c26')" class="nav-item n1_c26 block py-2.5 px-4 text-sm text-theme-dim font-medium rounded-xl hover:bg-white/5 hover:text-theme-text transition-colors"><span class="mr-2 opacity-50 font-mono text-theme-primary/70">26</span>第二十六章：我沒偷懶</a>
                     </div>
                 </div>
             </div>
-            
-            <!-- 
+
+            <!--
                 ================================================
-                【修改教學 2：如何新增小說分類】
-                若要新增一本小說，請複製上方的 "小說 1" 整個 div 區塊。
+                【修改教學 3：如何新增小說分類】
+                複製「小說：我在代理神」整個 div 區塊。
                 1. 修改 ID：將 'novel-1' 改為 'novel-2'。
                 2. 修改標題與圖示。
-                3. 清空並放入新的章節連結 (記得改章節 ID，如 'n2_c1')。
+                3. 清空並放入新的卷與章節連結 (記得改章節 ID，如 'n2_c1')。
                 ================================================
             -->
-            
+
             <!-- 未解鎖的小說 -->
-            <div class="opacity-60 grayscale hover:grayscale-0 transition-all duration-300">
-                <button class="w-full text-left p-4 flex justify-between items-center bg-gray-50/50 border-2 border-dashed border-gray-200 rounded-2xl cursor-not-allowed">
-                    <span class="font-cute text-sm text-gray-400 flex items-center gap-3">
-                        <span class="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center text-white"><i class="fas fa-lock text-xs"></i></span>
+            <div class="opacity-50 grayscale hover:grayscale-0 hover:opacity-80 transition-all duration-300">
+                <button class="w-full text-left p-4 flex justify-between items-center bg-theme-bg2/30 border-2 border-dashed border-theme-dim/20 rounded-2xl cursor-not-allowed">
+                    <span class="font-serif text-sm text-theme-dim flex items-center gap-3">
+                        <span class="w-8 h-8 rounded-full bg-theme-dim/20 flex items-center justify-center text-theme-text/60"><i class="fas fa-lock text-xs"></i></span>
                         怪物遊戲
                     </span>
-                    <span class="text-[10px] bg-gray-200 text-gray-500 px-2 py-1 rounded-full font-bold tracking-wider">LOCKED</span>
+                    <span class="text-[10px] bg-theme-dim/20 text-theme-dim px-2 py-1 rounded-full font-bold tracking-wider">LOCKED</span>
                 </button>
             </div>
         </nav>
 
         <!-- 側邊欄底部 -->
-        <div class="p-6 border-t border-white/40 bg-white/30 backdrop-blur-md">
-            <div class="flex items-center gap-4 p-2 bg-white/40 rounded-2xl border border-white/50 shadow-sm">
-                <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-theme-secondary to-blue-100 flex items-center justify-center text-white shadow-inner">
+        <div class="p-6 border-t border-theme-primary/10 bg-theme-bg2/30 backdrop-blur-md">
+            <div class="flex items-center gap-4 p-2 bg-theme-bg2/50 rounded-2xl border border-theme-primary/15 shadow-sm">
+                <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-theme-secondary to-theme-primary flex items-center justify-center text-theme-dark shadow-inner">
                     <i class="fas fa-user-astronaut"></i>
                 </div>
                 <div>
-                    <p class="font-bold text-gray-700 text-sm">虛映</p>
-                    <p class="text-[10px] text-green-500 font-bold flex items-center gap-1">
-                        <span class="w-1.5 h-1.5 bg-green-500 rounded-full"></span> ONLINE
+                    <p class="font-bold text-theme-text text-sm">虛映</p>
+                    <p class="text-[10px] text-theme-accent font-bold flex items-center gap-1">
+                        <span class="w-1.5 h-1.5 bg-theme-accent rounded-full status-dot"></span> ONLINE
                     </p>
                 </div>
             </div>
@@ -294,65 +370,68 @@
     <main class="flex-1 flex flex-col min-w-0 h-full relative overflow-hidden z-10">
         <!-- 頂部狀態列 -->
         <header class="h-16 flex items-center justify-between px-6 md:px-10">
-            <div class="text-[10px] font-bold text-gray-500 flex items-center gap-2 bg-white/40 backdrop-blur-md px-3 py-1.5 rounded-full shadow-sm border border-white/50 transition-all hover:bg-white/60">
-                <span class="w-1.5 h-1.5 bg-theme-secondary rounded-full animate-pulse"></span>
+            <div class="text-[10px] font-bold text-theme-dim flex items-center gap-2 bg-theme-bg2/50 backdrop-blur-md px-3 py-1.5 rounded-full shadow-sm border border-theme-primary/15 transition-all hover:border-theme-primary/30">
+                <span class="w-1.5 h-1.5 bg-theme-secondary rounded-full animate-pulse status-dot text-theme-secondary"></span>
                 <span>LINK STABILITY: 100%</span>
             </div>
-            <div class="text-xs font-cute text-gray-400 font-bold tracking-widest font-mono" id="current-time">00:00:00</div>
+            <div class="text-xs font-serif text-theme-dim font-bold tracking-widest font-mono" id="current-time">00:00:00</div>
         </header>
 
         <!-- 內容容器 -->
         <div id="content-container" class="flex-1 overflow-y-auto p-4 md:p-10 custom-scrollbar scroll-smooth">
-            
+
             <!-- 首頁視圖 -->
             <div id="default-view" class="max-w-4xl mx-auto py-6 animate-slide-in">
-                <!-- 歡迎卡片 -->
+                <!-- 歡迎卡片（招牌視覺：神諭紋章） -->
                 <div class="glass-card p-8 md:p-16 mb-8 relative overflow-hidden group">
-                    <div class="absolute -right-12 -bottom-12 opacity-10 text-[14rem] text-theme-primary rotate-12 transition-transform duration-700 group-hover:rotate-6 group-hover:scale-110">
-                        <i class="fas fa-paw"></i>
+                    <!-- 招牌元素：旋轉神諭紋章 -->
+                    <div class="absolute -right-16 -bottom-16 w-72 h-72 pointer-events-none select-none opacity-60">
+                        <div class="sigil-ring absolute inset-0 animate-spin-slow"></div>
+                        <div class="sigil-ring-inner absolute inset-6 animate-spin-reverse-slow"></div>
+                        <i class="fas fa-om absolute inset-0 flex items-center justify-center text-[6rem] text-theme-primary/10"></i>
                     </div>
-                    
+
                     <div class="relative z-10 animate-fade-in">
-                        <div class="inline-flex items-center gap-2 px-3 py-1 bg-theme-primary/10 text-theme-primary rounded-full text-xs font-bold mb-6">
-                            <i class="fas fa-heart animate-bounce"></i> Welcome Back
+                        <div class="inline-flex items-center gap-2 px-3 py-1 bg-theme-primary/10 text-theme-primary rounded-full text-xs font-bold mb-6 border border-theme-primary/20">
+                            <i class="fas fa-link animate-pulse"></i> 神契已連結
                         </div>
-                        <h2 class="text-4xl md:text-6xl font-black mb-6 text-gray-800 font-cute leading-tight">
-                            Archive <br>
-                            <span class="text-transparent bg-clip-text bg-gradient-to-r from-theme-primary to-theme-secondary">Terminal</span>
+                        <h2 class="text-4xl md:text-6xl font-black mb-6 text-theme-text font-serif leading-tight glow-text">
+                            我在<br>
+                            <span class="text-transparent bg-clip-text bg-gradient-to-r from-theme-primary to-theme-secondary">代理神</span>
                         </h2>
-                        <p class="text-gray-500 text-lg leading-relaxed max-w-xl">
-                            檔案已同步 (///▽///)<br>
-                            請點擊左側目錄開始閱讀吧！>///<
+                        <p class="text-theme-dim text-lg leading-relaxed max-w-xl">
+                            紅線已繫上，神諭已同步。<br>
+                            請點擊左側目錄，開始你的代理人之路。
                         </p>
                     </div>
                 </div>
 
                 <!-- 資訊卡片網格 -->
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 stagger-animation">
-                    <div class="glass-card p-6 md:p-8 hover:bg-white/90">
-                        <h4 class="text-theme-secondary font-bold mb-4 font-cute flex items-center gap-2 text-lg">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="glass-card p-6 md:p-8">
+                        <h4 class="text-theme-secondary font-bold mb-4 font-serif flex items-center gap-2 text-lg">
                             <i class="fas fa-history"></i> 更新日誌
                         </h4>
-                        <ul class="text-sm text-gray-500 space-y-4">
+                        <ul class="text-sm text-theme-dim space-y-4">
                             <li class="flex items-start gap-3">
-                                <span class="mt-1.5 w-1.5 h-1.5 rounded-full bg-blue-300 shadow-[0_0_8px_rgba(147,197,253,0.8)]"></span>
-                                <span>2026.01.01 - 換換風格<br><span class="text-xs opacity-60">owo</span></span>
+                                <span class="mt-1.5 w-1.5 h-1.5 rounded-full bg-theme-primary shadow-[0_0_8px_rgba(227,184,115,0.8)]"></span>
+                                <span>2026.08.19 - 網站全面改版，換上神諭夜幕主題<br><span class="text-xs opacity-60">願神契與你同行</span></span>
                             </li>
                             <li class="flex items-start gap-3">
-                                <span class="mt-1.5 w-1.5 h-1.5 rounded-full bg-pink-300 shadow-[0_0_8px_rgba(253,164,175,0.8)]"></span>
-                                <span>2025.12.28 - 載入《神代理》第四章</span>
+                                <span class="mt-1.5 w-1.5 h-1.5 rounded-full bg-theme-secondary shadow-[0_0_8px_rgba(155,140,255,0.8)]"></span>
+                                <span>2026.08.19 - 上線《我在代理神》第一卷「伴神行」，收錄第 1～26 章</span>
                             </li>
                         </ul>
                     </div>
-                    
-                    <div class="glass-card p-6 md:p-8 hover:bg-white/90">
-                        <h4 class="text-theme-primary font-bold mb-4 font-cute flex items-center gap-2 text-lg">
+
+                    <div class="glass-card p-6 md:p-8">
+                        <h4 class="text-theme-primary font-bold mb-4 font-serif flex items-center gap-2 text-lg">
                             <i class="fas fa-envelope"></i> 聯絡作者(Gmail)
                         </h4>
-                        <div class="bg-gray-50/80 rounded-xl p-4 mb-4 text-center border border-dashed border-gray-200">
-                            <code class="text-xs text-gray-500 select-all font-mono">MriaWisp@mirawisp.dpdns.org</code>
+                        <div class="bg-theme-bg2/50 rounded-xl p-4 mb-4 text-center border border-dashed border-theme-primary/20">
+                            <code class="text-xs text-theme-dim select-all font-mono">MriaWisp@mirawisp.dpdns.org</code>
                         </div>
-                        <button onclick="copyEmail()" class="w-full cute-btn py-3 text-sm text-gray-600 font-bold flex justify-center items-center gap-2 group">
+                        <button onclick="copyEmail()" class="w-full cute-btn py-3 text-sm text-theme-text font-bold flex justify-center items-center gap-2 group">
                             <i class="far fa-copy group-hover:scale-110 transition-transform"></i> 複製信箱連結
                         </button>
                     </div>
@@ -363,9 +442,10 @@
             <article id="reader-view" class="hidden max-w-3xl mx-auto pb-32">
                 <div id="chapter-content-wrapper" class="transition-all duration-500 opacity-0 translate-y-8">
                     <!-- 標題區 -->
-                    <div class="mb-12 pb-8 border-b border-dashed border-theme-primary/30 text-center relative">
-                        <span class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-full text-[100px] text-theme-primary/5 font-black font-cute pointer-events-none select-none">NOVEL</span>
-                        <h1 id="chapter-title" class="text-3xl md:text-5xl font-black text-gray-800 tracking-wide font-cute min-h-[1.5em] typing-cursor relative z-10"></h1>
+                    <div class="mb-12 pb-8 border-b border-dashed border-theme-primary/25 text-center relative">
+                        <span class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-full text-[100px] text-theme-primary/[0.04] font-black font-cinzel pointer-events-none select-none">NOVEL</span>
+                        <p id="chapter-volume" class="text-xs tracking-[0.3em] text-theme-primary/70 font-bold mb-3 uppercase"></p>
+                        <h1 id="chapter-title" class="text-3xl md:text-5xl font-black text-theme-text tracking-wide font-serif min-h-[1.5em] typing-cursor relative z-10"></h1>
                     </div>
 
                     <!-- 內文區 -->
@@ -373,10 +453,10 @@
 
                     <!-- 底部導航 -->
                     <div class="flex flex-col md:flex-row gap-4 justify-between pt-8">
-                        <button id="prev-btn" onclick="goPrev()" class="cute-btn px-8 py-4 flex-1 font-bold text-gray-600 flex items-center justify-center gap-3 disabled:opacity-40 disabled:cursor-not-allowed group">
+                        <button id="prev-btn" onclick="goPrev()" class="cute-btn px-8 py-4 flex-1 font-bold text-theme-text flex items-center justify-center gap-3 disabled:opacity-30 disabled:cursor-not-allowed group">
                             <i class="fas fa-arrow-left transition-transform group-hover:-translate-x-1"></i> 上一章
                         </button>
-                        <button id="next-btn" onclick="goNext()" class="cute-btn px-8 py-4 flex-1 font-bold text-gray-600 flex items-center justify-center gap-3 disabled:opacity-40 disabled:cursor-not-allowed group">
+                        <button id="next-btn" onclick="goNext()" class="cute-btn px-8 py-4 flex-1 font-bold text-theme-text flex items-center justify-center gap-3 disabled:opacity-30 disabled:cursor-not-allowed group">
                             下一章 <i class="fas fa-arrow-right transition-transform group-hover:translate-x-1"></i>
                         </button>
                     </div>
@@ -386,124 +466,143 @@
     </main>
 
     <script>
+
         /* * =================================================================
          * 資料庫區域 (NOVEL_DATA)
          * =================================================================
-         * 【修改教學 3：如何新增章節內容】
-         * 這裡存放所有小說的標題與內文。
-         * 格式： 'ID': { title: '標題', content: 'HTML內容' }
+         * 【修改教學 4：如何新增章節內容】
+         * 這裡存放所有小說的卷名、標題與內文。
+         * 格式： 'ID': { volume: '卷代號', title: '標題', content: 'HTML內容' }
          * * 若要新增章節：
          * 1. 在最後一個章節的大括號 } 後面加上逗號 ,
-         * 2. 新起一行，輸入新的 ID (如 'n1_c5')
-         * 3. 填入標題與內容。注意內容要用反引號 ` 包起來。
+         * 2. 新起一行，輸入新的 ID (如 'n1_c27')
+         * 3. 填入卷代號、標題與內容。注意內容要用反引號 ` 包起來。
+         * * 若要新增卷：
+         * 1. 幫新章節的 volume 填入新代號 (如 'v2')
+         * 2. 到下方 VOLUME_NAMES 加入該代號對應的顯示名稱
+         * 3. 別忘了在側邊欄 HTML 也加上對應的卷標籤與章節連結
          * * 若要新增小說：
          * 建議使用新的前綴，例如 'n2_c1' 代表第二本小說第一章。
          * =================================================================
          */
+
         const NOVEL_DATA = {
-            'n1_c1': { title: '一切的開始', content: `<p>抗爭元年，地球上開始會在某些地方憑空出現一些怪物，那些怪物稱為「白豔」。白豔的破壞力極強，且普通人是看不到白豔的，只有某些覺醒了特殊能力的人才能看到。</p><p>這些有特殊能力的人稱為「能力者」，擁有能夠跟白豔對戰的能力。各國政府也立刻採取了行動，研發讓普通人也看得到白豔的裝置，同時將年號改為抗爭。</p><p>時間回到現代抗爭曆1583年。白豔的出現極大程度上改變了都市的分部，人類跟白豔的戰爭仍在繼續。</p><p>時間：10點 地點：T國。</p><p>都市，美麗的夜景如同牛奶一般……我幹嘛拿牛奶來形容夜色？看著手中的牛奶，久遠晴深深的嘆了一口氣，隨後將牛奶一飲而盡。</p><p>明天是他國中三年級的開學，晴抱著沒有很開心的心情就寢，畢竟都是幾乎都不會出現白豔，所以不會停課。</p><p>隔天——開學日，過了一個暑假，作息紊亂、日夜顛倒的晴顯得非常不適應。</p><p>雖然可以看到他久違的朋友，但是本來跟晴是青梅竹馬的白川悠由於在暑假時覺醒了能力，所以轉到了政府設立的「國立能力者專業學院」，不再就讀晴的普通學校。</p><p>其實晴剛接到這消息的時候是抱有一絲他自己也覺得沒良心的期待的，因為能力者的能力等級由低到高分為D、C、B、A、S級，要是覺醒的是D級或C級這種比較爛的能力，有些人還是可以去讀普通學校的，可惜悠的天賦驚人，未能如晴所願。</p><p>想到這裡的晴更抑鬱了。</p><p>終於，他快撐到放學了。</p><p>啊……好累啊，最後一節課是什麼？白豔介紹課？又來，每個學期的開學時都有，而且內容還不會變，怎麼辦？下節課我能睡整節嗎？</p><p>此時上課鐘響，老師走進教室，並張貼了手上的資料。</p><p>晴看著資料，是他已經看了無數次的「白豔分級表」</p><p>白豔依照強度分成六級——</p><p>LV.1 一級 無害</p><p>LV.2 二級 一位普通成年人拿棍棒可以打到</p><p>LV.3 三級 好幾位軍人拿槍可以打到</p><p>LV.4 四級 需要一隊軍隊的火力</p><p>LV.5 五級 需要動員全國一半以上的絕對才行</p><p>LV.6 六級 可能導致一個國家滅亡</p><p>看到這的晴，終於支撐不住強烈的睡意，閉上了眼睛。</p><p>意識一片朦朧中，晴看到了一個人的形體，飄忽不定，無法判定性別。</p><p>「你是誰？」Who are you? 我問。</p><p>「我是神」我得到了 I am god。</p><p>「蛤？？？」</p><p>（第一章完）` },
-            'n1_c2': { title: '神', content: `<p>「神？」我驚疑不定的問。</p><p>「沒錯，人類，我是神，你渴望力量嗎？我可以給你力量。」</p><p>「為什麼聽起來像跟惡魔簽賣身契？」</p><p>「……我給你力量吧。」頓了一下的神決定忽視我的問題。</p><p>下課鐘聲響起的一瞬間，我也驚醒了。</p><p>直到回到了家，走進了我的房間，我都沒想明白這個問題。</p><p>「在想什麼？這麼後知後覺。」一道聲音突然響起。</p><p>「神？你在哪？」果然不是夢。</p><p>「低頭看一下你的脖子。」我低頭，脖子上掛著一條紅線，一路延伸到我的衣服裡.扯出來一看，我發現上面掛著一個黑色的、摸起來像玉的珠子。</p><p>突然我覺得眼前場景一晃，瞬間，我來到了一座森林。</p><p>「這是第一森林。」神用一種非常平靜的語氣回答了我的問題。</p><p>「吼！！！」一聲怪獸吼聲傳來，緊接著出現了一隻長相奇特的白豔。我想也不想直接就跑。</p><p>「哎呀，看起來是一隻3級白豔……人類你跑什麼，快去打倒他啊。」神提出了一個不可能的要求。</p><p>「辦不到啊啊啊啊啊啊啊。」</p><p>在這怪物滿天下的時代，很多學校都非常重視跑步速度的訓練，晴在這方面的表現也不錯，所以他漸漸和白豔拉開了距離……的話就太誇張了，距離沒拉遠，還越來越近了。</p><p>「沒有能力的人類這麼爛喔。」神說完，頓了頓又道。</p><p>「好吧，我給你能力吧。」</p><p>「什……？」瞬間，我獲得了能力，這個能力的資訊灌入了我的腦袋裡，這感覺……還挺奇妙的。</p><p>「誒，人類，我都給你能力了你還跑什麼。」</p><p>「物理上允許了，精神上不允許啊。」我會怕啊啊啊啊啊。</p><p>「放心吧人類，我給你的能力很強，更何況還有我在。」</p><p>「你保證，我不會受傷嗎？」我放慢腳步。</p><p>「我保證。」神說道。</p><p>我停下腳步，內心艱難做出決定。</p><p>我面向白豔。</p><p>（第二章完）` },
-            'n1_c3': { title: '初戰', content: `<p>神贈與我的能力是 A 級的體術，A 級體術指的是武術＋體內得到等級為 A 的增強。我朝白豔衝去，飛身一腳朝白豔的頭踢去，白豔被我一踢直接往一旁飛去，一時半會還爬不起來。</p><p>哇！效果竟然這麼好！不愧是 A 級體術。等一下，我突然想到……</p><p>「神，我要怎麼幹掉他？」</p><p>「直接殺了他啊。」神理所當然地說。</p><p>「怎麼殺？我不想用拳頭打死他。」我有心理上的障礙，我相信很多人都跟我一樣。</p><p>「嗯……你也沒有武器耶，不然你拿這個代替一下。」</p><p>我面前出現了一顆浮在空中的石頭，我伸手抓了過來。</p><p>「你要我用石頭丟他？」我應該沒理解錯神的意思吧？但怎麼想都怪怪的。</p><p>「嗯，沒錯，上面附了我的力量。」神說道這裡，白豔剛好也緩了過來，並再次朝我奔來。</p><p>聽了神的話的我，也是馬上擺了個棒球投手的姿勢，將石頭朝白豔的頭丟去。在 A 級體術＋神力的威力下，我只聽到了一聲頭蓋骨碎裂的聲音。</p><p>喔喔喔，聽到這聲音，我覺得我的頭也好痛，啊啊啊他腦袋爆了。</p><p>一時間場面過於血腥，我決定轉過頭不再看他。</p><p>「恭喜你幹掉了你人生中第一隻白豔。」神說道。</p><p>「這感覺不是值得慶祝的事情……所以你到底帶我來第一森林幹嘛？」想起這事的我質問神。</p><p>「當然是帶你來訓練的。」</p><p>「訓練？」我疑問。</p><p>「對，身為跟我連結的你，身份是神的代理人，實力自然不能差。」</p><p>「蛤？我是神的代理人？什麼時候變的？」</p><p>「從你跟我連結的那一刻開始。」</p><p>「那為什麼選我？」</p><p>「這個我還不能告訴你。」</p><p>「為什麼？」</p><p>「因為時機未到。」神看起來沒有要解釋的意思。</p><p>「好，就算這樣也不用跑到第一森林裡吧。」詢問無果的我決定回到原本的話題。</p><p>「為了讓你快速成長，實戰是必須的。放心，有我在，你死不了。」</p><p>「物理上沒問題了，那精神上的呢？」重視一下人權啊。</p><p>「精神上的誰管你啊。」看來神不適用人權。</p><p>冷靜冷靜，別生氣，算了，只要不會死就好。</p><p>晴調整得很快，迅速冷靜了下來。</p><p>「小心喔，白豔出現了，就在不遠處，正朝這裡靠近。」神提醒道。</p><p>「幾級？」我問。</p><p>「四。」神回答。</p><p>「四級？快，再給我一顆石頭。」我趕緊道。</p><p>別以為三級和四級只差了一級，差距好像很小，在白豔中，差一級就是天和地了。</p><p>「不，這次你要獨自打倒他，我不幫忙。」</p><p>「我自己？」我指著自己。</p><p>「對，你自己.放心，你快死時我會救你的。」</p><p>聽到自己性命無憂，我突然開始有點躍躍欲試了，畢竟我可是得到了 A 級能力啊。</p><p>「你要s贏了，我再多送你兩個能力。」神加了個獎勵。</p><p>「好。」我毫不猶豫答道。</p><p>這時，神口中的白豔終於現身，是一隻兩腳站立、長相恐怖的貓。</p><p>不只如此，這隻貓手上拿著一把……刀。</p><p>我：「刀……？」</p><p>（第三章完）` },
-            'n1_c4': { title: 'A級和B級的差距', content: `
-<p>抗爭曆元年之後，地球上出現了一種擁有特殊效果的武器，稱為「神器」。神器所擁有的效果五花八門，而且數量少、價格高。</p>
-<p>神器的獲得方式有兩種：一、由相關能力者打造；二、有些四級以上的白豔出現時會自帶神器，就比方說我眼前這隻……。</p>
-<p>「喔，有趣了，仔細看才發現他有……你們稱為『神器』的東西吧，你知道這是什麼吧？」神發出如此感嘆。</p>
-<p>「我知道，學校有教，不過我真的打得過他嗎？」糟糕，現在心理沒底。</p>
-<p>「對了，這隻白豔有B級的體術能力喔。」神補了一刀。</p>
-<p>不要打擊我的信心啊！</p>
-<p>與此同時，那隻白豔已經逐漸靠近。</p>
-<p>「放心，雖然他有神器，但其實A級和B級的能力差距非常大。」神解釋道。</p>
-<p>「真的嗎？我不要唬爛我喔。」</p>
-<p>「真的，再告訴你兩件事，第一：他的弱點在背部中央；第二：他來了。」</p>
-<p>「哇啊啊啊啊！」我回過神，急忙往後一跳，剛剛的地方被一把刀砍中，留下了四道砍痕。</p>
-<p>「喔，看來是增加攻擊次數的神器呢。你仔細注意不要被砍到就行，只要不被砍到就不會觸發多次攻擊。」看起來無所不知的神這麼說道。</p>
-<p>此時貓型白豔也朝我瘋狂揮砍，我將注意力放在刀上，開始閃躲。</p>
-<p>唔，雖然看起來很猛，但白豔的攻擊意外的好閃耶，難道這就是神口中的差距？</p>
-<p>面對白豔的攻擊，晴顯得游刃有餘，他撿起了一顆石頭，運用能力優勢繞到白豔的身後，朝著背部中央全力丟去。</p>
-<p>石頭命中目標，白豔受了傷哀嚎了一聲，晴沒有放棄這個機會，一連又連丟了三顆石頭，白豔背部一片血肉模糊，並倒在地上沒有再爬起。</p>
-<p>「贏……贏了？就這樣？」</p>
-<p>「對啊，不然你想怎樣？」神道。</p>
-<p>「不是，我打得還滿輕鬆的耶，那他真得是4級嗎？」</p>
-<p>「第一，普通人並不知道他的弱點在背部，你也是我告訴你才知道的吧；第二，其實他背很硬，子彈也打不穿。」</p>
-<p>「意思是，我用石頭丟出了比子彈強的威力？」</p>
-<p>「對。」神給予肯定。</p>
-<p>「……」我無言。</p>
-<p>「你可以去拿他的刀。」神提醒。</p>
-<p>我走了過去，從白豔手中拿起刀。</p>
-<p>「這把刀的效果是砍中目標後會造成四道傷害。」神給了說明。</p>
-<p>我揮了揮，手感不錯。</p>
-<p>「可以回家了。」神說。</p>
-<p>「等等，這個要放哪？我總不能帶著一把刀回家吧。」</p>
-<p>「你把刀往珠子裡插。」</p>
-<p>我一臉問號的照做了，神奇的是，刀碰到珠子的地方消失了，我驚奇的用力一插，刀整把消失了。</p>
-<p>「收進珠子裡了？」我問道。</p>
-<p>「對，你心念一動就能拿出來。」</p>
-<p>「這麼方便！」</p>
-<p>「好了回家吧。」神一說完，我便出現在了我房間，我看了眼時鐘，只過了30分鐘。爸爸還在工作尚未回家，妹妹應該在自己的房間裡吧。</p>
-<p>「對了，你不是說要再送我兩個能力嗎？」我問道。</p>
-<p>「沒問題，我馬上給。」聽到這的我打起精神。</p>
-<p>「你要送我什麼能力？」我興奮的問。</p>
-<p>「我要送你……」</p>
-<p>（第四章完）` }
+            'n1_c1': { volume: 'v1', title: `第一章：神選之人`, content: `<p>時間：西元2327年 地點：T國</p><p>夜晚，華燈初上的都市閃著絢麗的光。</p><p>粉色的長髮輕輕搖擺著。</p><p>這是一個不太平穩的時代，西元2027年，一種名為白豔的生物會在世界各地憑空出現，每一隻白豔的擁有極強的戰鬥力，且極具攻擊性。</p><p>大部分白豔都擁有抵擋子彈的能力，所以極難應付。</p><p>人類也不是完全沒有活路，白豔出現的同時，有許多的人突然能使用一些超自然、科學無法解釋的能力。</p><p>但由於一開始覺醒能力的人不多且能力使用上又不熟練，短短5年，地球還是蒸發了三十億人口。</p><p>後來隨著掌握能力的人越來越多，死亡人數日漸平緩。</p><p>人們開始在極少有白豔出現的地方重建起了都市。</p><p>時間回到現代。</p><p>久遠晴看著時鐘，心情沉重。</p><p>明天是高一開學的日子。</p><p>望著那張彷彿靈魂出竅般、一去不復返的暑假行事曆，我由衷地祈禱明天能有一隻白豔突然降臨，順便帶著學校一起炸成宇宙的塵埃。</p><p>當然，這純粹是個社畜學生的終極妄想。</p><p>這座都市安全得像個保險箱，過去300年裡，連一隻白豔的影子都沒出現過。</p><p>我嘆了口氣，絕望地把自己砸進床鋪裡。</p><p>其實我原本沒有很討厭上學，只是暑假期間，我的青梅竹馬，白川悠，她突然覺醒了能力，還是很強的那種。</p><p>我只是個普通人，能力者和普通人讀的是不同學校啊！</p><p>在這裡我必須嚴正澄清：我沒覺醒能力，絕對、百分之百、不是因為我天賦差！根據統計，能力者和普通人的比例是一半一半，我只是剛好在命運的硬幣投擲中，非常精準地落在了那平凡的50%而已！這叫機率，不叫菜！</p><p>「啊啊啊啊啊啊啊！但是明天在學校就見不到悠了啊！」</p><p>我把頭埋在枕頭裡慘叫。</p><p>從小學到國中，我們連上廁所（雖然性別不同）都差點要一起去，現在她居然背叛了我們的「平凡聯盟」，獨自去讀那種制服看起來超帥的能力者學校，留下我一個人在普通高中面對萬惡的數學。</p><p>這合理嗎？這不科學！我和她國小國中都同一所學校的。</p><p>翌日，我拖著沉重的步伐來到學校。走在走廊上，周圍傳來的目光熾熱得差點把我灼傷。</p><p>我媽是個實力頂尖的能力者，我爸是個普通人。</p><p>不得不說，我媽的基因強大到簡直像是開了推土機，把我爸那平庸的基因直接推乾淨了。</p><p>結果就是——我明明是個貨真價實的帶把少年，卻遺傳了一頭招搖的粉色長髮，和精緻得如同人偶般的五官。</p><p>「老師早安。」迎面走來班導師，我禮貌性地開口。</p><p>嘴裡發出的聲音，是那種能直接去配音動漫女主角、清脆悅耳的少女音。</p><p>班導師的眼神瞬間漂移了一下，露出了「雖然看過學生資料但視覺衝擊還是太大」的複雜表情。</p><p>國中時，不管是男生還是女生都特別喜歡找我說話。</p><p>男生把我當女神，女生把我當姐妹，而我..........有點想逃。</p><p>算了，專心上課。</p><p>高中的知識難度簡直是斷崖式........呃........上升，最後一節數學課，看著教學螢幕上那些彷彿外星符號的數學，我的大腦果斷選擇格式化。</p><p>沒多久，我便帶著對數學的安詳詛咒，閉上了雙眼。</p><p>意識一片朦朧中，我來到了一個空間裡。</p><p>隨著目光漸漸聚焦，我才發現我現在是在一座建築物裡。</p><p>中央有一張由一整塊現代黑色大理石切削而成的低矮茶几，檯面光滑如鏡，線條俐落。</p><p>茶几兩側沒有擺設沙發，而是規整地放著兩張圈椅，但這椅子的材質並非傳統紅木，而是用冷冽的不鏽鋼金屬結構勾勒出中式的圓潤弧度，椅墊部分則嵌上了質地柔軟的細編藺草墊。</p><p>陽光穿過木格柵拉門與大片落地窗，將條狀的光影精準地灑在茶几與圈椅上。</p><p>轉過身，就能透過整面無邊框的落地窗，看到外頭種滿紅玫瑰的玫瑰園。</p><p>「嘿！」一聲輕快的女聲在寂靜中響起。</p><p>我整個人差點從金屬圈椅上彈起來，做出了高度戒備的防禦姿勢（雖然毫無戰鬥力）。</p><p>不知何時，對面的椅子上坐了一個女生。</p><p>白髮、針織衫露肩、光腳踩在榻榻米上，散發著一種「今天星期天老娘不想努力」的貓咪鬆弛感。</p><p>「妳誰啊？這裡是什麼高檔建案的樣品屋？」我脫口而出。</p><p>我記得我一秒前還在和數學公式決一死戰啊！</p><p>「我是神，這是我家。」她悠悠開口。</p><p>?</p><p>「妳是神？我怎麼會在這？」我一下拋出兩個問題。</p><p>「我想找個在人間的代理人。」她說。</p><p>我指著自己問「我？」</p><p>她點了點頭，開口「對。」</p><p>「等下！等下！等下！」我擺手說。</p><p>我腦袋有點亂！</p><p>她是神？代理人？</p><p>我腦海裡有無數個問題。</p><p>「啊！你差不多要準備醒了。」她說著，頓了頓又說「等一下記得看看你左邊口袋。」</p><p>說完她朝我擺了擺手。</p><p>我醒了。</p><p>我趴在課桌上，聽到了放學的鐘聲，隨著老師宣布放學，我走出了校門。</p><p>走在回家路上，我一邊揉着睡落枕的脖子一邊嘀咕：「真是個真實得過頭的春夢……不對，是怪夢。」</p><p>抱著好玩的心態，我的左手往口袋裡一摸。指尖傳來粗糙的觸感。</p><p>我僵住了。</p><p>這一定是考卷。</p><p>這一定是隔壁同學惡作劇塞給我的零分考卷！</p><p>我顫抖著抽出來一看，上面用精美的花體字寫著：【這裡什麼都沒有，驚不驚喜？意不意外？】</p><p>我的大腦瞬間炸成了煙火。</p><p>先不說這行字有多欠扁，難道……剛剛那個不是微積分引發的幻覺，是真的？</p><p>「不然呢？難道本神還會閒到去你的夢裡當背景NPC？」</p>` },
+            'n1_c2': { volume: 'v1', title: `第二章：能力？`, content: `<p>一道熟悉的清脆女聲突然在耳邊——不，是在腦海中央炸響。</p><p>「哇啊啊啊！妳在哪？光天化日不要鬧鬼啊！」我在馬路中央原地轉了三圈，引來路過大媽看智障的眼神。</p><p>「在你腦袋裡，別轉了。直接用意識跟我講話就行。」神明嫌棄地嘖了一聲。</p><p>「所以妳到底想幹嘛？」我深呼吸，試圖用意識傳達我的震驚「為什麼選我？我又不是那種能徒手拆鋼筋的能力者。」</p><p>「你是不是能力者很重要嗎？這就像課金手遊，老娘直接把你的帳號改滿等、送神裝不就行了？」</p><p>課金手遊？</p><p>聽到這個充滿歷史滄桑感的詞彙，我嘴角忍不住抽搐了一下。因為白豔那群怪物動不動就憑空出現拆基地台，這三百年來人類光是活著就拼盡全力了，科技樹直接卡死在西元2027年。</p><p>我至今手上拿的還是有著厚重黑邊的古董智慧型手機。</p><p>沒想到這位神明的比喻，居然跟我們這個科技倒退的時代意外地合拍。</p><p>喔……直接送能力啊，那沒事了……等等，咦？！</p><p>「給、給我能力？！」我可恥地心動了。</p><p>難道我也能去讀悠那所學校了？</p><p>「真的？那我具體要做什麼？拯救世界？還是去當魔法少女？（雖然我是男的）」</p><p>「具體要做什麼……嗯，我之後再告訴你。」神明的聲音聽起來非常可疑地飄移了一下。</p><p>（……這傢伙絕對是根本還沒想好吧？！純粹是隨興挑人的吧？！）我內心瘋狂吐槽。</p><p>「閉嘴！本神這叫高瞻遠矚、隨機應變！還有，不准在心裡叫我『這傢伙』！」神明羞憤地大喊。</p><p>「我剛剛什麼話都沒說啊！」我慌張地在馬路上大喊，二度引來旁邊路人的側目。</p><p>「你腦袋想了！還想得超大聲，像裝了擴音器一樣！」神明哼了一聲。</p><p>我愣了一下，隨後震驚地在意念裡大叫：「妳、妳會讀心？？？」</p><p>「我是神耶，怎麼可能連這麼簡單的事都不會？」神明的語氣充滿了『愚蠢的人類啊』的同情。</p><p>好像……很合理。</p><p>糟了，如果她會讀心，那我昨晚夢到悠穿女僕裝、還有剛剛偷吐槽她沒大腦的事情，不就全被看光了？</p><p>「你.......」神語氣變得很危險</p><p>「哇！對不起」我差點就在馬路上給神下跪了。</p><p>神說「算了，你想要什麼能力？」</p><p>讓我選？</p><p>「對。」神說。</p><p>我還沒說話呢，妳就回答了？</p><p>不過選能力嗎？我想想.............</p><p>在這個世界，能力者的超自然力量由弱到強，被科學家們嚴格分成了E、D、C、B、A、S六個等級。</p><p>而A級，那基本上就是各大都市搶著要、年薪千萬起跳、出門自帶聚光燈的出類拔萃強者。</p><p>聽說悠那個傢伙一覺醒就是罕見的A級，已經被學校當成稀有精英在培養了。</p><p>至於S級……那種怪物全地球一隻手都數得過來，我做人很低調的，不敢奢望。</p><p>所以，既然是免費的羊毛，不拔白不拔。</p><p>「那我希望能有A級的能力。」我在心裡默默許願，甚至開始幻想自己拿到烈火或雷電之類的帥氣招式，回頭閃瞎悠的眼睛。</p><p>「行。」神明答得異常乾脆。</p><p>乾脆到讓我有一種在菜市場買菜，老闆連一塊錢都不跟妳殺的空虛感。</p><p>「行。」神說。</p><p>我愣了一下，沒等我反應過來，能力的資訊便在我腦海裡炸開</p><p>【風行者：Ａ級，極大程度上提升能力者速度。】</p><p>【體術：Ａ級，極大程度上提升徒手或兵器格鬥的武術技巧。】</p><p>腦海中突然被硬塞進這兩行閃閃發光的金色大字，伴隨而來的，是我原本缺乏運動的雙腿肌肉一陣酥麻，腦袋裡也莫名多出了好幾百種把人過肩摔的姿勢。</p><p>欸？等等？</p><p>「不是，妳動作太快了吧！而且好歹讓我選一下屬性啊！」我崩潰地用意識大喊。</p><p>「這叫效率！」神明在腦海裡得意地哼哼兩聲，「而且這兩個能力多適合你啊，一個負責跑得快，一個負責打得準。完美的保命組合！」</p><p>「但我想要的是那種揮揮手就能招來滿天雷電的法師流派啊！妳給我這個，不就是要我提著拳頭上去跟怪物肉搏嗎？我這張精緻的人偶臉要是被打腫了怎麼辦！」我崩潰地用意識大喊。</p><p>「少囉嗦，試試看就知道好不好了。前面右轉不是你回家的捷徑嗎？那條巷子現在快塌了喔。」</p><p>「蛤？」</p><p>我愣了一下，身體卻在意識到危險之前先動了起來。</p><p>那是家裡附近的一條舊公寓巷弄。因為300年來科技沒進步，大樓砌牆技術還停留在21世紀初，加上白豔偶爾引發的微小震動，許多老舊建築的頂樓外牆早就搖搖欲墜。</p><p>「轟隆！」</p><p>一聲刺耳的碎裂聲響起。斜前方一棟五層樓高的老公寓頂層，一塊足足有冰箱大小的水泥外牆裝飾突然剝落，筆直地往巷口砸了下去！</p><p>而此時，巷口正坐著一隻正在舔毛的流浪三花貓，完全沒意識到大難臨頭。</p><p>「哇靠！」</p><p>我大腦甚至來不及下達「跑步」的指令，雙腿的肌肉便在瞬間緊繃。</p><p>風行者！</p><p>一陣狂暴卻又極度溫和的微風在腳底炸開。如果是普通人突然獲得A級速度，大概會像失控的跑車一樣直接一頭撞進牆壁裡，把自己撞成貼紙。</p><p>但我沒有。</p><p>在我的視野裡，世界彷彿被按下了慢速鍵。落下的碎石、風中飄盪的塑料袋、甚至是那隻貓驚恐瞪大的瞳孔，全都清晰可見。</p><p>我的大腦以一種不可思議的高速運轉著，精準地計算著風阻、重力以及落腳點。</p><p>「左腳跨出42公分，踩在青苔上需要補足3%的抓地力……右腳偏轉15度，完美避開水窪……」</p><p>我像是一隻優雅的芭蕾舞者，在狹窄且凹凸不平的巷道間拉出一道粉紅色的殘影。</p>` },
+            'n1_c3': { volume: 'v1', title: `第三章：天賦`, content: `<p>在水泥塊距離地面只剩一公尺的瞬間，我一個滑壘切入，右手精準地撈起那隻體重超標的三花貓，左手順勢撐地，藉著【體術：A級】帶來的完美重心轉移，一個俐落的側空翻，在空中劃出完美的弧度。</p><p>「碰——！！」</p><p>巨響傳來，水泥塊在我們身後砸得粉碎，激起漫天漫天的塵土。</p><p>而我，已經安穩地落在了十公尺開外的地方，單手抱著貓，連一根粉色頭髮都沒亂。</p><p>「喵？（發生了什麼事？）」胖貓一臉懵逼地看著我。</p><p>「呼……」我吐出一口氣，把驚魂未定的胖貓放到地上。看著自己毫髮無傷的雙手，連我自己都震驚了。</p><p>剛剛那套動作，簡直就像是在腦海裡演練過幾萬次一樣流暢。</p><p>「天啊……我原來這麼天才嗎？」我忍不住在心裡沾沾自喜。</p><p>「不，你誤會了。」神明的聲音適時地澆了一盆冷水，語氣帶著一絲驚訝與玩味。</p><p>「什麼意思？我剛剛表現得不完美嗎？」</p><p>「完美，簡直完美得像個機器人。」神明悠悠地說道，「本神活了這麼久，這還是第二次見到你這種奇葩。你知道為什麼全地球有一半的人沒辦法覺醒能力嗎？」</p><p>「等一下！」我敏銳地捕捉到了關鍵字，在腦海裡大喊：「妳剛剛說『第二次』？第一個是誰？」</p><p>「……」腦海裡突然一陣詭異的沉默。</p><p>「喂？神明大人？斷線了嗎？」</p><p>「咳，不重要，這不重要！」神明的聲音聽起來非常可疑地拔高了幾度，硬生生轉移了話題：「重點是，普通人是因為身體就像個漏水的水桶，根本存不住超自然能量。你也是這種『漏水桶』體質，所以我說你完全沒有獲得能力的天賦。」</p><p>切，居然裝傻。我在心裡翻了個白眼，但還是順著她的話問：「那為什麼我剛才……」</p><p>「因為你雖然沒有天賦，卻擁有全人類、甚至連很多S級能力者都望塵莫及的——【頂尖操控天賦】。別人拿到A級能力，頂多只能發揮出七八成的威力，但你剛剛，居然把【風行者】和【體術】的能量，100%精準地分配到了每一塊肌肉上，連一絲一毫的浪費都沒有。</p><p>這就像是給你一台破爛的古董手機，你卻能用它流暢地跑動3D大作一樣。」</p><p>神明發出了愉悅的笑聲。</p><p>「簡單來說，你雖然是個『無魔者』，但只要給你按鈕，你就能把外掛開出藝術感。本神果然沒有看走眼！」</p><p>聽完神的解釋，我站在自家公寓門口，看著手裡那張寫著「這裡什麼都沒有」的欠扁字條，陷入了沉思。</p><p>所以……我現在算是一個開著頂級跑車，但油箱永遠是借來的高級普通人？</p><p>「好了，代理人同學，到家了就趕快進去煮飯吧，本神聞到你媽媽藏在冰箱裡的布丁香味了。」</p><p>「……喂！那是我留著當宵夜的！不准用妳的神力偷吃啊！」</p><p>我一邊在腦海裡大喊，一邊推開了家門。</p><p>「我回來了——」</p><p>玄關回應我的只有一片寂靜，這棟位於市中心精華地段、裝潢奢華的大平層高級住宅裡，此時空無一人。</p><p>看著空蕩蕩的客廳，我這才猛然驚醒，隨即在腦海裡沒好氣地對神明吐槽：「喂，神明大人，妳的雷達壞了吧？我媽早就死了。五年前在對抗白豔的國家特級任務裡……再也沒有回來。」</p><p>「啊……抱歉抱歉，本神剛剛只是掃到冰箱裡有貼著防偷吃標籤的布丁，就直覺以為是媽媽留的嘛。」神明的語氣難得少了一絲輕佻，帶著點歉意嘀咕著，「不過，這布丁確實很好吃……」</p><p>「妳已經在吃了對吧！絕對是用神力隔空吃掉了對吧！」</p><p>我一邊崩潰地走向屋裡，一邊嘆了口氣。</p><p>因為媽媽當年的功勳與高額抚恤金，加上政府的特殊照顧，我們家從不缺錢。</p><p>我爸有份公務員工作，但純粹是為了打發時間、保持與社會接軌，每天時間一到就準時打卡下班，完全沒有那種被生活摧殘的疲憊感。</p><p>自從五年前媽媽在任務中殉職後，為了不觸景傷情，我們家便形成了一種默契——極少談論關於「能力」的話題。</p><p>「噢，晴，你回來啦。」</p><p>廚房裡傳來老爸輕快的聲音。他身穿一件印著「家和萬事興」的圍裙，正熟練地揮舞著鍋鏟。</p><p>今天晚餐是香氣四翼的蔥爆豬肉和清炒時蔬。老爸雖然基因普通，但廚藝絕對是現象級的，豬肉在熱鍋裡與蔥段激盪出滋滋的交響樂，光是聞到味道就讓人狂流口水。</p><p>看著老爸輕鬆愉快的背影，我卻在玄關換鞋時陷入了天人交戰。</p><p>完了。</p><p>我得到能力了。</p><p>而且還是神明親授的雙A級能力。</p><p>雖然家裡不愛談能力，但這件事非說不可。因為在這個國家，普通高中與能力者學院的學制完全不同，一旦覺醒，就必須在三天內由家長簽署同意書，辦理轉學手續。</p><p>「……那個，老爸，我有件事想跟你說。」我揉著衣角，有些底氣不足地挪到飯桌旁。</p><p>「嗯？洗手準備吃飯囉，今天不等你妹妹了，她晚點才……啊，回來了。」</p><p>老爸話音剛落，大門「喀噠」一聲被推開。</p><p>我的親妹妹，久遠千，一臉淡定地走了進來。她今年國三，正處於極度冷酷的叛逆期，平常對我這個長得像女生的哥哥基本上只有「嘖」和「借過」兩種台詞。</p><p>不過今天，她換鞋的動作顯得有些僵硬。</p><p>洗完手後，我們三人圍坐在大理石飯桌前。</p><p>老爸熱情地幫大家盛飯，氣氛一如既往地溫馨。而我的內心則像是有幾萬隻螞蟻在爬，那句「我覺醒能力了」卡在喉嚨裡，沉重得像是一塊微積分課本。</p><p>我深吸了一口氣，握緊筷子，眼神無比認真地看向老爸。</p>` },
+            'n1_c4': { volume: 'v1', title: `第四章：父子局`, content: `<p>好！決定了！就在這條青菜吞下去之後，我就大聲說出來！</p><p>正當我終於結束內心交戰，準備張嘴的瞬間——</p><p>千突然放下了手中的筷子。</p><p>筷子與碗碰撞，發出「叮」的一聲清脆響聲。</p><p>她抬起那張面無表情的臉，語氣平淡得就像在討論明天早餐要吃蛋餅一樣，冷不防地扔出了一顆核彈：</p><p>「爸，哥。我剛剛覺醒能力了，明天要請假去辦轉學手續。」</p><p>我：「？？？？？？？？？？？？？？？？？？？？？？」</p><p>在我的大腦再度因為資訊量過大而當機的同時，腦海裡某位偷吃布丁的神明，非常不厚道地爆發出了一連串驚天動地的嘲笑聲。</p><p>我整個人僵在椅子上，嘴裡那根青菜差點滑出來。</p><p>老爸也愣住了，端著飯碗的手停在半空中，眨了眨眼：「千，妳說妳……覺醒了？什麼能力？」</p><p>千微微揚起下巴，雖然努力維持著那張冷酷的撲面臉，但眼神裡那抹藏不住的驕傲已經出賣了她。</p><p>她伸出右手，只見一縷細微卻極具壓迫感的青色電弧在她的指尖跳躍，發出劈啪的微響。</p><p>「B級，【青雷】。」千淡淡地說道「雖然比不上媽媽當年的S級，但班導說這已經是今年全校前三十的潛力了，明天能力者學院會派專車來接我辦轉學。」</p><p>「喔喔喔！真不愧是我的寶貝女兒！」老爸瞬間切換成笨蛋家長模式（咦咦咦？），感動得熱淚盈眶，「太好了，這下我們久遠家又要出一個大能力者了！晴，快幫妹妹拍手！」</p><p>我坐在一旁，默默地看著那縷電弧。</p><p>B級，【青雷】，遠程法師系，破壞力極強，確實是超一流的配置。</p><p>再看看我腦海裡那兩個跟肉搏綁定的A級能力............</p><p>「笑死我了，哈哈哈！」神明在我腦海裡瘋狂捶桌大笑，「代理人同學，你剛剛不是憋了很久要宣布嗎？結果風頭全被妹妹搶光了！現在是不是覺得自己像個多餘的背景板？」</p><p>（閉嘴，吃妳的布丁去。）我內心翻了個巨大的白眼。</p><p>說實話，看著千那副「愚蠢的哥哥你這輩子只能當普通人」的眼神，我體內那股屬於兄長的莫名勝負欲突然被點燃了。</p><p>但我不能直接說，現在開口說「其實我有雙A級」，聽起來就像是小學生在跟妹妹爭寵，太low了。</p><p>正當客廳裡充滿了老爸的歡呼聲和千的冷靜氣場時，意外發生了。</p><p>千因為太過興奮，指尖那縷剛覺醒、還極度不穩定的【青雷】突然失控！</p><p>「劈啪！」</p><p>一聲爆響，那道青色電弧突然化作一道手臂粗的雷光，直奔飯桌中央那盤剛出爐、還冒著熱氣的蔥爆豬肉而去！</p><p>「啊！」千驚呼一聲，根本來不及收回能力。</p><p>以那道B級雷擊的威力，這盤豬肉不僅會瞬間變成黑炭，整張大理石飯桌可能都會被炸成兩半。</p><p>這一切發生在電光石火之間，老爸和千根本連眨眼的反應時間都沒有。</p><p>但在我的視野裡，世界再度慢了下來。</p><p>風行者！</p><p>體術！</p><p>我完全沒有任何多餘的思考，甚至連位置都沒挪一下，只是安穩地坐在椅子上。</p><p>我的大腦瞬間將A級能量100%完美分配到了右手手臂的每一根纖維與神經中。</p><p>我右手化作一道紅色的殘影，以肉眼無法捕捉的極致速度探出。</p><p>我抄起桌上的不鏽鋼筷子，以教科書等級的完美角度，輕輕一挑——</p><p>「叮！」</p><p>筷子精準地搭在雷光的核心節點上。在【體術】帶來的絕高技巧下，我手腕以一個精妙的弧度畫了個小圓，將那股狂暴的B級雷力順著筷子引導向一旁，最後「嗤」的一聲，化作一縷微弱的白煙，消失在我的掌心裡。</p><p>與此同時，我的右手順勢從盤子裡夾起了一塊最肥嫩的蔥爆豬肉，優雅地放進嘴裡。</p><p>世界恢復正常。</p><p>蔥爆豬肉完好無損，大理石飯桌連個刮痕都沒有。</p><p>我一邊嚼著豬肉，一邊抽了一張衛生紙擦了擦嘴，神色自若地看著目瞪口呆的妹妹。</p><p>「嗯，老爸今天這道蔥爆豬肉火候剛好，很好吃。」我淡淡地說道，語氣平靜得像是在評價天氣，「對了千，恭喜妳覺醒。不過能力剛覺醒的時候控制力還不夠，記得多練習，不然以後在學校容易把別人的作業炸掉。」</p><p>千：「..................................」</p><p>老爸：「..................................」</p><p>飯桌上一片死寂。</p><p>千死死地盯著我手裡那雙還在冒著一絲絲餘溫白煙的不鏽鋼筷子，那張萬年不變的撲克臉徹底裂開了。</p><p>剛剛發生了什麼？</p><p>她那個連體育課跑個800公尺都會喘的粉髮廢柴哥哥，剛剛是不是用一雙普通筷子，把B級的【青雷】給……挑飛了？</p><p>「哇喔——」腦海裡，神明吹了個響亮的口哨，「滿分十分，本神給你十一分。這個裝B，藝術感直接拉滿！」</p><p>千死死地盯著我，那眼神就像是在看一個披著人皮的怪物。</p><p>她看了看我，又看了看那盤完好無損的蔥爆豬肉，最後看向自己還殘留著微弱電弧的右手。</p><p>「……不可能。」千的聲音微微顫抖，那張向來冷酷的臉上第一次露出了「這不科學」的表情，「你剛剛……只是個普通人……你連能力測試都沒過……」</p><p>「哦，妳說那個能力測試啊。」我優雅地放下筷子，拿手帕擦了擦嘴，語氣平淡得讓人想揍我「我是最近才覺醒的，還沒測。」</p><p>「最近？」千終於忍不住咆哮了出來，「你剛剛那是體術吧？那種反應速度和精準度……絕對是A級以上的體術！你到底瞞了我們多久！」</p>` },
+            'n1_c5': { volume: 'v1', title: `第五章：入學（一）`, content: `<p>「千，冷靜點。」老爸終於從當機中恢復過來，他看看千，又看看我，眼神裡充滿了複雜的情緒——有震驚、有不可置信，但更多的是一種「我兒子居然深藏不露」的狂喜：「晴……你真的……」</p><p>「嗯，就跟千一樣。我也覺醒了。」我淡淡地拋出這個重磅炸彈，「不過我的能力比較偏向……輔助和近戰。我也正打算跟老爸你說，明天要辦轉學手續。」</p><p>「什麼能力？」千和老爸異口同聲地問。</p><p>我微微一笑，這時候絕對不能傻傻地把【風行者】和【體術】的名字直接報上去，不然聽起來太像線上遊戲裡的基礎技能，一點神祕感都沒有。</p><p>真正的高手，都是不報招式名稱的。</p><p>神：？？？？？？？？？</p><p>「等級大概在A級左右。」我面不改色地略過能力的具體名稱，直接用實力等級壓死人，「基本上，就是能把身體能力發揮到極致的控制型能力。」</p><p>「A級……」千倒吸了一口氣，眼神裡的驕傲徹底被打碎。她辛辛苦苦覺醒個B級，以為自己是家裡唯一的救世主，結果回家發現哥哥居然是個無聲無息就達到A級的怪物。</p><p>「哈哈！我就知道！我們久遠家果然是基因強大！」老爸一把抱住我，激動得老淚縱橫，「晴，你媽在天之靈看到你們兩個都這麼優秀，一定會很開心的！」</p><p>看著老爸開心的樣子，我心裡突然有些愧疚。這能力是借來的，連這張精緻的臉都是遺傳媽媽的……我根本就是個披著A級外衣的超級凡人。</p><p>「笑死我了，哈哈哈！」神明在我腦海裡笑得直不起腰，「不愧是我的代理人，居然直接用等級呼弄過去。你這裝模作樣的天賦也是A級的吧？」</p><p>（閉嘴。這叫高人風範。）我內心反擊道。</p><p>飯桌上的氣氛變得有些奇妙。老爸沉浸在「雙喜臨門」的喜悅中，開始興致勃勃地討論明天要怎麼去兩所學校辦轉學。</p><p>而千則是一言不發，默默地低下頭吃飯。雖然她努力裝作不在乎，但我能感覺到，她那股不服輸的叛逆期少女心已經在熊熊燃燒。</p><p>這場原本應該是千一個人的主角秀，在我的無意識裝B下，變成了一個有些尷尬的兄妹競爭現場。</p><p>「好了，我吃飽了。」千放下碗筷，聲音依舊冷淡，但起身的速度比平常快了三倍，「我回房休息了。」</p><p>看著千公事公辦、連同手同腳都快露出來的僵硬背影，我知道她幼小的心靈今天受到了極大的震撼。估計今晚她的房間裡會不斷傳出「劈啪劈啪」的練雷聲吧。</p><p>「哈哈，這孩子真是不服輸。」老爸樂呵呵地收起碗筷，轉頭對我挑了補個眉毛，「不過晴啊，你隱藏得真深，連爸爸都差點被你騙了。既然你們兩個都覺醒了，明天一早爸爸就陪你們去辦轉學！」</p><p>「呃，爸，其實不用那麼麻煩……」</p><p>「不麻煩！爸爸明天直接請特休！這可是我們久遠家的大日子！」老爸興高采烈地哼著歌去洗碗了。</p><p>我嘆了口氣，轉身走回房間。一關上門，我整個人就毫無形象地呈大字型癱倒在床上。</p><p>「呼……累死我了。」</p><p>「代理人同學，幹得漂亮嘛。」神明的笑聲準時在腦海裡響起，「本神活了這麼久，第二次見到有人能把裝B表現得這麼清新脫俗。」</p><p>「閉嘴，這叫隨機應變。不然我要怎麼解釋我一雙筷子能夾斷雷電？」我翻了個身，把臉埋進枕頭裡，「話說回來，明天去能力者學院，不會穿幫吧？聽說那裡進門都要重新測試能力的。」</p><p>「安心啦。」神明悠哉地回答，「本神給你的外掛是直接寫入你靈魂的，雖然你的身體存不住能量，但只要你一動念，A級的【風行者】和【體術】就會瞬間到位。以你那變態的操控天賦，只要你想裝，沒人看得出來。」</p><p>聽她這麼說，我稍微鬆了一口氣。</p><p>「不過啊……」神明突然拉長了語調。</p><p>「幹嘛？妳又想幹嘛？」我警惕地在腦海裡問。</p><p>「明天去了新學校，你就能見到你心心念念的青梅竹馬了吧？本神很好奇，要是那個叫白川悠的小姑娘發現，原本只能在普通高中讀書的粉髮『好姐妹』，突然搖身一變成了A級的轉學生……她的表情會有多驚訝？」</p><p>聽到這話，我的腦海裡瞬間浮現出悠那張平時總是氣定神閒的臉。如果她看到我出現在能力者學院……</p><p>哇靠，突然有點小期待是怎麼回事？</p><p>「哼哼，小鬼，心跳加快了喔。」神明調侃道。</p><p>「少囉嗦！睡覺了！」</p><p>我一把扯過棉被蓋住頭，試圖屏蔽掉腦海裡那位八卦神明的聲音。</p><p>翌日清晨。</p><p>我和千並排站在客廳裡，身上依然穿著原本普通國高中的舊制服。老爸則是西裝革履，手裡拿著兩份厚厚的資料夾，眼神裡閃爍著比太陽還耀眼的光芒。</p><p>「很好！久遠家的天才們，我們出發去能力者學院！」老爸大手一揮。</p><p>當老爸開著那輛雖然是舊時代設計、但保養得亮麗如新的轎車停在校門口時，我才深刻體會到「能力者學校」與「普通學校」的物理差距。</p><p>這座名為「T國中央能力開發學院」的地方，與其說是學校，不如說是一座防禦森嚴的要塞城市。學院的外牆是用防彈複合材料加固過的，甚至還隱約能看見能量波動的痕跡。</p><p>「好了，爸爸就在這裡等你們的好消息！手續辦完記得傳簡訊給爸爸！」老爸在車裡瘋狂揮手，那副激動的樣子簡直像是在送孩子參加奧運。</p><p>我和千走在學院寬廣的大理石大道上。這座學院真的大得誇張，教學樓之間甚至有自動接駁車在跑，科技感雖然停留在三百年前的「極限」，但規模卻擴張到了極致。</p><p>「哥，我在初中部，辦事處在那邊。」千指了指左邊那棟銀色的圓型建築。她現在對我的態度變得很微妙，原本的蔑視消失了，取而代之的是一種想觀察我又不敢直視的彆扭。</p>` },
+            'n1_c6': { volume: 'v1', title: `第六章：入學（二）`, content: `<p>「喔，好。放學校門口見。」</p><p>「……嘖，別被其他男生搭訕到迷路了。」千丟下這句意義不明的話後，就快步走開了。</p><p>（這丫頭，是在擔心我還是嘲笑我？）我無奈地聳聳肩。</p><p>「她是在擔心你這張臉會引發校園犯罪。」神明在我腦海裡打了個哈欠，「不得不說，這裡的超自然能量濃度確實比外面高，連空氣都有一股『課金』的味道。」</p><p>在行政大樓辦理完一系列手續後，我拿到了一份電子學生證與班級分配表。</p><p>【久遠晴，高一 ２班】</p><p>我試著在終端機搜尋了一下悠的名字。</p><p>【白川悠，高一 １班】</p><p>果然。悠那種一覺醒就驚動教育部的天才，絕對是在那種「怪物雲集」的 １ 班。</p><p>「不在同一個班啊……」我心裡閃過一抹淡淡的失落，但隨即又覺得鬆了口氣。</p><p>要是第一天就跟她碰面，以她對我的了解，我這「借來」的能力感覺.............會被她盯出破綻。</p><p>「代理人同學，別呆了，你的班級在東側教學樓的頂層。」神明催促道。</p><p>當我好不容易找到教室門口時，已經稍微遲到了一點。</p><p>教室的門是厚重的合金自動門。我深吸一口氣，剛準備按開門鈕，門就自己開了。</p><p>教室裡原本吵雜的聲音瞬間安靜了下來。</p><p>講台上站著一名看起來精明幹練的女性導師，她推了推黑框眼鏡，低頭看了看資料，又抬頭看了看我，眼神裡閃過一抹驚艷。</p><p>「喔，你就是那位從普通中學轉過來的 A 級覺醒者，久遠同學吧？」老師的聲音很有磁性。</p><p>我禮貌地點了點頭，走上講台。</p><p>這一瞬間，我能感覺到台下幾十雙眼睛像雷射光一樣打在我身上。尤其是坐在前排的幾個男同學，嘴巴張得大大的，眼神裡那股「中大獎了」的狂喜簡直無法掩飾。</p><p>「好漂亮的女生……」</p><p>「喂，我們班居然有這種等級的美少女？轉學生萬歲！」</p><p>「這五官太犯規了吧，真的是 A 級覺醒者嗎？看起來像個人偶啊。」</p><p>台下的竊竊私語一字不漏地傳進我耳朵裡。我面無表情地看著天花板，心裡默默流淚——果然，無論到哪裡，這張臉都是災難的開始。</p><p>「好了，安靜！」老師拍了拍講桌，對著我示意了一下，「久遠同學，自我介紹一下吧。」</p><p>我走上前，看著台下那些滿臉期待、甚至有人已經在整理頭髮的男同學們。</p><p>「大家好，我叫久遠晴。」</p><p>我開口了。</p><p>一如既往，那宛如清晨風鈴般、悅耳動聽且極具女性魅力的聲音傳遍了整間教室。</p><p>台下的男同學們發出了一陣整齊劃一的抽氣聲，甚至有人已經拿出手機準備偷拍了。</p><p>「我喜歡數學（假的）和慢跑，雖然看起來不像是戰鬥型，但我覺醒的是身體強化類的能力。還有……」</p><p>我故意停頓了一下，眼神冷淡地掃過全場，接著用最平靜的語氣說出了那句毀滅夢想的話：</p><p>「我是男的。」</p><p>「…………………………」</p><p>教室裡安靜得連一根針掉在地上都能聽見。</p><p>前排那位剛才還在整理髮型的男同學，手僵在半空中，石化了。</p><p>後排幾位正準備吹口哨的男生，表情直接從「美夢成真」變成「世界末日」。</p><p>「哈哈哈哈哈哈！」神明在我腦海裡瘋狂捶地，「代理人同學，你看看他們的臉！那種靈魂從嘴巴裡飄出來的表情，真是本神看過最精彩的轉學戲碼！」</p><p>我視而不見地走下講台，在老師指給我的空位坐下。</p><p>「好了，既然大家都認識了……雖然是以一種震撼的方式，」班導師揉了揉發痛的太陽穴，敲了敲講桌，「下課！久遠同學，妳……你先熟悉一下環境。」</p><p>自動門一開，班導師幾乎是以逃跑的速度離開了教室。</p><p>而教室裡那群剛經歷了「世界毀滅」的男同學們，此時正用一種極度複雜、欲言又止的眼神偷偷瞄著我。</p><p>「嗨！兄弟！你剛才簡直絕了！」</p><p>一聲充滿活力的厚實嗓音打破了尷尬的寂靜。</p><p>一個長相帥氣、身材高大，渾身散發著「陽光開朗大男孩」氣息的男生猛地湊到我桌前。他笑得露出一口白牙，眼睛亮晶晶的，完全沒有其他人的扭捏。</p><p>「我叫唐晚成，叫我晚成堂哥或者老唐都行！」他自來熟地拍了拍我的肩膀「說實話，你剛才說出『我是男的』那一秒，後面那幾排心碎的聲音大到我以為是白豔發動空襲了呢！」</p><p>「……你好，我叫久遠晴。」看著他那毫無心機的燦爛笑容，我也忍不住放鬆下來。</p><p>「走走走！我看你第一天轉來，肯定不知道這學校有多大。堂哥我帶你這個『新晉校花』……啊不，『新晉兄弟』去熟悉熟悉校園！」晚成熱情地勾住我的脖子，拉著我就往外走。</p><p>「喂，代理人同學，這小子體力很好喔，而且靈魂相當純淨，也就是單細胞生物。」神明在我腦海裡一邊嚼著不知道從哪來的爆米花，一邊銳利地評斷著。</p><p>（別人在幫我，妳少在那裡看戲。）我內心吐槽。</p><p>跟著晚成走在校園裡，這傢伙簡直是個活地圖，一路上嘴巴就沒停過。</p><p>「你看那棟黑色的建築，那是實戰模擬室，用的還是兩百多年前開發的全息投影技術，因為科技卡死，那畫面糊得跟馬賽克一樣，但湊合著能用……還有那邊，那是特大食堂……」</p><p>晚成一邊走一邊指指點點，突然，他像是看到了什麼不得了的人物，整個人猛地煞車，眼睛瞬間瞪大，拉著我退到路邊的樹蔭下。</p><p>「哇靠，晴，你看前面！那是我們這一屆真正的頂點，風雲人物啊！」晚成壓低聲音，語氣裡滿是崇拜。</p><p>我順著他的目光看過去。</p><p>在不遠處的中庭大道上，幾名高年級的學長正簇擁著一名少女。</p>` },
+            'n1_c7': { volume: 'v1', title: `第七章：入學（三）`, content: `<p>那名少女留著一頭及腰的黑亮長髮，隨著她的步伐在風中優雅地飄動。最引人注目的是她那雙如同水銀般純淨、散發著淡淡微光的銀色眼睛。她神色清冷，面對周圍的討好與讚美只是禮貌性地微微點頭，自帶一種讓人不敢直視的強大氣場。</p><p>高一１班，白川悠。</p><p>「聽說她明面上就覺醒了足足五種A級能力，是百年難得一見的複合型天才，直接保送王牌班級。」晚成在旁邊興奮地碎碎念，「簡直就是高嶺之花啊，跟我們這種普通C級完全不是一個次元的……」</p><p>正當晚成還在滔滔不絕時，原本目不斜視向前走的白川悠，似乎感應到了什麼，腳步微微一頓。</p><p>她那雙銀色的眼睛在空中轉了個圈，最後精準無比地鎖定在了躲在樹蔭下的——我。</p><p>那一瞬間，她那張原本冷若冰霜的臉，罕見地抽搐了一下。</p><p>「噗——」</p><p>腦海裡，神明直接把嘴裡的爆米花噴了出來，爆發出幸災樂禍的大笑：「哈哈哈哈！代理人同學！快看快看！妳的好姐妹注意到妳了！這表情，不給滿分都說不過去啊！」</p><p>白川悠死死盯著我那一頭招搖的粉色長髮，清冷的銀色眼眸裡暴露出極致的震撼與迷茫。</p><p>那眼神彷彿在說『這傢伙為什麼會在這裡？他不是普通人嗎？！』</p><p>「咦？晴，你怎麼在流冷汗？」晚成疑惑地轉頭看我「而且……白川同學好像一直在朝我們這裡看？天啊，她是在看我嗎？還是我今天制服沒穿好？」</p><p>「不……老唐，我覺得我們現在最好立刻、馬上離開這裡。」我僵硬地扯了扯嘴角。</p><p>因為在我的視線裡，悠已經推開了旁邊圍著的學長，踩著一雙黑色的學院皮鞋，用極具壓迫感的的走姿向我而來。</p><p>那雙銀色的眼睛裡閃爍的光芒，簡直像是要把我當場生吞活剝。</p><p>「晴？你怎麼了？你臉色白得像張紙……哇靠！白川同學走過來了！她真的走過來了啊啊啊！」晚成在一旁激動得快要原地往生，雙手不知道該往哪裡擺。</p><p>眼看悠距離我只剩不到二十公尺，直覺告訴我，現在快跑，不然會出事。</p><p>風行者！</p><p>一瞬間，微風在腳底炸開。</p><p>「老唐祝你今天過得順利，我先走了。」</p><p>接著，我整個人化作一道粉紅色的殘影，瞬間「唰」的一聲從樹蔭下彈射出去，直奔教學樓。</p><p>「……啊？」晚成還保持著迎接高嶺之花的完美笑容，眼前的粉髮少年卻已經憑空蒸發，只剩幾片落葉在他面前孤獨地打轉。</p><p>周圍圍觀的學生們也集體傻眼。</p><p>「剛才那是什麼？粉紅色的流星嗎？」</p><p>「速度好快！那是高一新生？這速度起碼是A級以上的速度系能力吧！」</p><p>然而，還沒等眾人從震驚中回過神來，更驚悚的一幕發生了。</p><p>白川悠看著我逃跑的方向，眉毛一挑，冷哼一聲。</p><p>只見她周身瞬間亮起兩道不同顏色的能量光圈——A級【微風】、A級【重力輕量化】！</p><p>明面上擁有五種A級能力的頂級天才，複合疊加開起來根本不講道理。</p><p>「久、遠、晴！你給我站住！」</p><p>悠清脆的聲音帶著咬牙切齒的怒意，整個人宛如一道黑色閃電，帶起一陣狂暴的烈風，緊隨其後地追了進去。</p><p>中庭的所有人瞬間炸開了鍋。</p><p>「我的天！白川女神居然在追那個學生？」</p><p>「那兩個人是什麼關係？這難道是新一輪的強者決鬥嗎？！」</p><p>晚成呆滯地站在原地，看著兩道殘影一前一後消失在迷宮深處，喃喃自語：「晴…………你這傢伙，到底是…………？」</p><p>「喂喂喂！她快追上來了！複數能力者了不起啊！開外掛啊！」我在心裡瘋狂大喊。</p><p>「哈哈哈！人家那是自己修煉的天賦，你這個才是真外掛好嗎？左轉！前面有個死角，那裡有一個300年前設計學院時故意留下來的『祕密避難空間』，一般人找不到！」神明在我腦海裡興奮地指揮著。</p><p>我一個急煞車，接著【體術】帶來的完美平衡，在地面上滑出一道弧度，右手精準地按在了一面爬滿藤蔓的舊石牆上。</p><p>按下去的瞬間，原本看似堅硬的石牆竟然像是全息投影般晃動了一下，露出了一個僅供一人通過的狹小暗門。</p><p>我毫不猶豫地側身鑽了進去。</p><p>這是一個隱密的小天台，四周被高大的格柵遮擋，陽光透過縫隙灑下來。這裡擺著幾張長滿青苔的舊長椅，因為科技停滯，這裡的隱形屏蔽裝置還是兩百年前的老型號，但用來躲避探測綽綽有餘。</p><p>我剛鬆了一口氣，背後的暗門一陣波動。</p><p>黑長直的少女氣喘吁吁地衝了進來，少女得臉上裡還帶著一絲追逐後的潮紅。</p><p>她反手關上暗門，剛才在外面那副高不可攀、清冷孤傲的「女神氣場」在看到我的一瞬間徹底崩塌。她一把衝過來，狠狠地揉著我的臉頰。</p><p>「久遠晴！你這傢伙果然沒死…………不對，你為什麼會在這裡？你不是普通人嗎？剛才那個速度是怎麼回事？還有這頭粉毛是想招搖給誰看啊！」</p><p>一連串的問題砸得我頭暈眼花。</p><p>「痛痛痛！悠，妳先放手！」我用那悅耳的女聲哀求著，好不容易才把她那雙魔爪從我臉上移開。</p><p>悠沒好氣地在舊長椅上坐下，毫無形象地翻了個白眼，整個人顯得無比開朗和隨性——這才是她面對熟人時最真實的模樣。</p><p>「快說！到底是怎麼回事？我暑假傳訊息給你，你都已讀不回，我還以為你因為沒覺醒能力，躲在棉被裡哭著不肯見我呢。」悠一邊拍著制服上的灰塵，一邊好奇地打量著我。</p><p>「我哪有哭啊……」我有些心虛地揉了揉臉頰，坐到她旁邊，腦袋裡開始飛速運轉該怎麼解釋。</p>` },
+            'n1_c8': { volume: 'v1', title: `第八章：入學（四）`, content: `<p>「哼哼，代理人同學，需要本神幫你編個更厲害的名字嗎？這次叫『神之右手』怎麼樣？」神明在腦海裡幸災樂禍地問。</p><p>（閉嘴，妳別添亂就行了！）</p><p>我深吸了一口氣，看著悠那雙亮晶晶、充滿期待的銀色眼睛，無奈地開口「其實……我前幾天突然覺醒了。」我抓了抓頭髮，決定實話實說，但在措辭上巧妙地隱瞞了某位神明的存在「大概是在睡覺的時候吧，突然感覺有一股能量融入靈魂裡，然後就莫名其妙擁有了A級的體術和速度。」</p><p>「真的假的？」悠一臉狐疑地湊過來，銀色的眼睛死死盯著我，「你該不會是為了追上我，偷偷吃了什麼禁藥吧？」</p><p>「怎麼可能！能力者學院的入學檢查有多嚴格妳又不是不知道。」我沒好氣地敲了一下她的額頭，「而且，我可是高一A班正兒八經的轉學生，手續都是老爸親自帶我辦的。」</p><p>「哇喔，A級的體術和速度啊……」悠吃痛地揉了揉額頭，隨即有些興奮地笑了起來，原本清冷的高嶺之花瞬間變回了那個熟悉的大刺刺青梅竹馬「不過這樣也好，虧我暑假還擔心了很久，怕你一個普通人在原本的高中被欺負。這下好了，我們又在同一所學校了！」</p><p>她高興地拍了拍我的肩膀，力道大得差點沒把我拍進地裡。</p><p>「對了，那妳呢？明面上五種A級能力，妳是打算一個人去單挑白豔嗎？」我揉著發酸的肩膀吐槽。</p><p>「嘿嘿，那只是對外的說法啦，複合能力操作起來超累人的。」悠得意地揚了揚下巴，接著有些神祕地湊到我耳邊，「不過既然你也是A級了，以後有什麼實戰課或者聯誼，你可得當我的固定隊友，不准拋下我去找其他女生……不對，是以你的長相，不准找其他男生搭訕！」</p><p>「我剛才在班上已經澄清我是男的了！」我崩潰地大喊。</p><p>「哈哈哈哈！可以想像那些純情少男心碎的畫面了。」悠笑得花枝亂顫。</p><p>看著她燦爛的笑容，我暗自鬆了一口氣。看來能力的事情算是順利瞞過去了，而且也沒有對她說謊，我確實是「在睡覺時靈魂融入了能量」才覺醒的。</p><p>「哼哼，隱瞞得挺完美的嘛，代理人同學。」神明的聲音再次悠悠地在腦海中響起，帶著一絲玩味，「不過，你的小青梅竹馬似乎對你很有佔有慾喔？」</p><p>（妳安靜看戲就好，別在關鍵時刻突然出聲嚇我！）我用意志狠狠地回擊。</p><p>「好啦，敘舊結束！」悠拍拍裙子站了起來，拉起我的手往暗門走去，「再不出去，你那個陽光開朗的哈士奇同學大概要報警說你被我綁架了，走吧，帶你回教室！」</p><p>當我被悠一路拉著手回到東側教學樓時，正好遇上剛從中庭「案發現場」飄回來的唐晚成。</p><p>他此時整個人處於一種靈魂出竅的狀態，雙眼無神。但在看到我和悠並肩走來、甚至手還拉在一起的那一瞬間，他的瞳孔猛地地震，嘴巴張得能塞下一整顆蘋果。</p><p>「晴……你、你……白川同學……」晚成指著我們，手指顫抖得像是在指著什麼外星生物。</p><p>「好啦，人我完好無損地還給你了。」悠對著晚成露出招牌的清冷微笑（雖然剛才在祕密空間裡笑得跟老唐沒兩樣）接著轉頭對我挑了挑眉毛，「放學等我，不准先溜。」</p><p>說完，她便帶著一陣風，優雅地轉身走向頂級班級所在的S棟。</p><p>中庭和走廊上無數路過的同學此時都用一種「這小子死定了」或者「這傢伙到底是誰」的審視眼神死死瞪著我。</p><p>「晴啊——！！」</p><p>悠一走，晚成猛地撲過來，一雙大眼瞪得老大「你老實交代！你跟白川女神到底是甚麼關係？你剛才那個速度是怎麼回事？你不是剛從普通中學轉來的嗎？為什麼能讓女神親自去追你啊啊啊！」</p><p>「呃，冷靜點，老唐。」我有些尷尬地用悅耳的女聲安撫著這隻快要拆家的哈士奇，「我們是青梅竹馬，從小一起長大的，剛才只是開個玩笑。」</p><p>「青梅竹馬？！」晚成倒吸了一口氣，隨即露出痛心疾首的表情，「也就是說……我失戀了兩次？一次是發現你是男的，第二次是發現我的女神有青梅竹馬了！」</p><p>「你本來就沒戀愛過好嗎！」我忍不住吐槽。</p><p>「笑死我了，這小子的內心戲真多。」神明在我腦海裡瘋狂滾動，發出愉悅的笑聲。</p><p>好不容易把晚成安撫回座位，上課鐘聲也隨之響起。</p><p>這節是實戰體能課。走進教室的是一名身材魁梧、整條手臂都是機械改造義肢的硬漢老師。因為科技停滯，那條機械臂上還能看到笨重的齒輪與液壓管，但散發出來的威壓感卻一點也不假。</p><p>「聽好了，菜鳥們！」硬漢老師一巴掌拍在合金講桌上，震得整間教室嗡嗡作響，「我知道你們在原本的學校都是天才，但在這裡，你們什麼都不是！為了測試你們的耐力極限，這節課的內容很簡單——」</p><p>老師冷笑了一聲，點開了螢幕。</p><p>「操場，一萬公尺耐力跑。不准使用大型破壞性能力，只允許肉體強化。跑不完的人，今天放學就留下來打掃整棟實戰模擬室！」</p><p>「一、一萬公尺？！」</p><p>「開玩笑吧！這操場一圈一千公尺，要跑十圈？！」</p><p>教室裡頓時哀鴻遍野，甚至有幾個法師系的能力者當場臉色發白。</p><p>就在全班一片哀怨聲中，原本還一臉天崩地裂的唐晚成突然雙眼一亮，轉過頭來，十分義氣地拍了拍胸脯。</p><p>「晴，別擔心！堂哥我罩你！」晚成壓低聲音，有些小得意地眨了眨眼。</p><p>「雖然我明面上的主能力是近戰，但我其實還藏了一個B級的速度型能力【瞬步】，一萬公尺對我來說小菜一碟，等一下跑步的時候我放慢速度，帶著你一起跑，保證不讓你墊底！」</p>` },
+            'n1_c9': { volume: 'v1', title: `第九章：一萬公尺？那不是隨便跑嗎？`, content: `<p>看著他那張寫滿了「快崇拜我吧」的陽光笑臉，我一時間陷入了沉思。</p><p>（……不是，老唐，你是不是選擇性失憶了？你難道忘了三分鐘前，我是怎麼在中庭用風行者試圖甩開悠的嗎？）我內心瘋狂吐槽。</p><p>「哈哈哈哈！這小子太逗了！」神明在我腦海裡笑得直揉肚子，「他居然想用B級能力來帶你這個雙A級的外掛大佬？代理人同學，答應他！本神已經迫不及待想看他等一下懷疑人生的表情了！」</p><p>我無奈地扯了扯嘴角，對晚成露出一抹看破不說破的微笑：「那就先謝謝老唐了，等一下請多指教啊。」</p><p>上課............</p><p>「預備——跑！」</p><p>隨著硬漢老師一聲令下，幾十名學生瞬間如同脫韁的野馬般衝出起跑線。</p><p>這座學院的操場大得不科學，一圈足足有一千公尺。一開始，大家都還能擠成一團，但第一圈甚至還沒跑完，隊伍就開始出現了嚴重的斷層。</p><p>大部分缺乏體能訓練的法師系和輔助系同學很快就落在了後面，開始氣喘吁吁；而一小部分擁有肉體強化或速度型能力的學生，則輕輕鬆鬆地與後方拉開了巨大的差距，形成第一梯隊。</p><p>而我和唐晚成，此時就氣定神閒地待在這第一梯隊裡。</p><p>「呼……呼……怎麼樣，晴？這個速度還跟得上一吧？」晚成一邊調整著呼吸，一邊轉頭看我。</p><p>我轉過頭，連一絲喘息都沒有，用那悅耳的女聲輕鬆回道：「嗯，還挺舒服的。」</p><p>為了不讓老唐太受打擊，我這才剛動用【風行者】不到0.01%的微弱風元素，配合【體術】微調肌肉的發力，將速度精準地壓在和老唐一模一樣的水平線上。</p><p>「那就好……你這體力比我想象的要好太多了！」晚成有些驚訝，隨即朝著最前方努了努嘴，「你看，跑在最前面的那傢伙。」</p><p>我順著他的目光看去。</p><p>跑在最前頭的是一個留著清爽短髮、眼神銳利的男生。他的腳步極快，每一步踏出都伴隨著一陣微弱的空氣爆鳴聲，與第二名的我們拉開了將近三十公尺的距離。</p><p>「他叫秋林。」晚成收起平時嘻嘻哈哈的表情，有些不甘心地咬了咬牙，「跟我一樣，覺醒的也是B級速度型能力【瞬步】。但那傢伙對能力的操控熟練度比我高，從國中開始，每次測驗我都跑不過他。」</p><p>「秋林嗎？」我看著那個平穩前進的背影。</p><p>確實，那個叫秋林的男生，步伐踩得非常有節奏，能量的釋放也沒有多餘的浪費。但在我這個擁有頂尖操控天賦的人眼裡，他的動作還是太過粗糙，每一步都逸散了至少兩成的風能。</p><p>「笑死我了，這就是凡人眼中的天才嗎？」神明在我腦海裡翻了個身，一邊剔著牙一邊吐槽，「代理人同學，只要你稍微動一下腳趾頭，就能把那傢伙甩到連車尾燈都看不到喔。」</p><p>（妳別催，老唐正在激發他的男兒熱血呢。）我內心回應。</p><p>「晴，我決定了！」晚成突然深吸了一口氣，眼神裡燃燒起熊熊的勝負欲，「這是一萬公尺，考驗的是耐力。前面九圈我都跟著他的節奏跑，等到最後一圈……我會突然把【瞬步】全開加速！這次我一定要超越那傢伙，讓他看看我老唐的厲害！」</p><p>「哦？聽起來很有幹勁呢。」我笑了笑。</p><p>「到時候你可別勉强，要是跟不上就保持原速，等堂哥我拿個第一回來罩你！」晚成哈哈一笑，再次加快了一點步伐。</p><p>九圈半過去了。</p><p>操場上哀鴻遍野，大部隊早已散成零星的黑點，只有第一梯隊還保持著可怕的速度。</p><p>我和晚成、秋林依然穩穩地佔據著前三名的位置。</p><p>「就是現在！」</p><p>就在第十圈剩下最後四百公尺的瞬間，晚成猛地發出一聲怒吼。</p><p>他周身的空氣瞬間劇烈波動，B級能力【瞬步】被他催動到了極致。</p><p>他的腳步在地面上踩出砰砰的悶響，整個人如同離弦之箭，速度在剎那間提升了一倍不止！</p><p>這突如其來的爆發，讓跑在最前面的秋林臉色一變。</p><p>晚成帶著一股不顧一切的氣勢，在短短五十公尺內就縮短了差距，並且在三百公尺處成功「唰」的一聲超越了秋林！</p><p>「喔喔喔！老唐爆發了！」</p><p>「唐晚成居然超越了秋林？！這是在做夢嗎？」</p><p>後方那些已經套圈的同學們發出一陣驚呼。</p><p>我看著晚成的背影，雖然他的能量控制依然粗糙，但那股拚了命也要贏一次的鬥志，確實挺讓人動容的。</p><p>「切，強弩之末。」神明在我腦海裡不屑地哼哼兩聲，「他的能量消耗太快了，撐不到終點。」</p><p>（閉嘴。看下去。）我依然漫不經心地跟在後面，速度不快不慢，完美地保持在第三名，連一滴汗都沒流。</p><p>果然，正如神明所言。在超越秋林後的兩百公尺，晚成的腳步開始變得沉重，【瞬步】的空氣爆鳴聲也變得斷斷續續。</p><p>秋林不愧是老對手，他敏銳地捕捉到了晚成的頹勢。</p><p>「唐晚成，你想贏我，還早了一百年！」</p><p>秋林冷哼一聲，雖然他也到了極限，但他對能量的控制比晚成更精細。他將僅存的【瞬步】能量集中在腳底，在最後兩百公尺處，硬生生地、一點一點地將差距縮短，最後在一百五十公尺處，再次完成了反超！</p><p>「可惡……」晚成看著秋林再次遠去的背影，眼神裡滿是不甘，但他的雙腿就像灌了鉛一樣，再也擠不出半點力氣。</p><p>一百公尺。</p><p>終點線就在眼前。秋林露出勝利的微笑，他知道，唐晚成已經不可能再追上來了。</p><p>就在這所有人都以為大局已定、甚至連硬漢老師都準備拿起計時器的這一瞬間。</p><p>原本一直漫悠悠待在第三名、彷彿是在散步的那個粉髮少男——也就是我。</p><p>動了。</p>` },
+            'n1_c10': { volume: 'v1', title: `第十章：你那是腳滑？`, content: `<p>風行者！</p><p>體術！</p><p>不需要【瞬步】那種華麗的空氣爆鳴，也沒有那種拚死拚活的嘶吼。</p><p>我只是默默地將大腦內部的操控頻率拉滿，將【風行者】與【體術】的能量完美的、100%精準分配到了雙腿的每一根肌腱、每一條神經上。</p><p>世界在我眼中再次變慢。</p><p>老唐那絕望的表情僵在臉上。</p><p>秋林那勝利的微笑凝固在嘴角。</p><p>我就像是一道無聲無息、卻快到不科學的粉色幽靈。</p><p>沒有任何預兆，沒有任何聲音。</p><p>秋林只感覺到一陣微風從耳邊拂過，一道有些熟悉的粉紅髮尾在他的視野邊緣一閃而逝。</p><p>甚至連一秒鐘都不到。</p><p>「碰！」</p><p>當世界恢復正常時，我已經站在了終點線後面，姿態優雅地拍了拍制服上的灰塵，連一根粉色頭髮都沒亂。</p><p>計時器上停留在一個不可思議的數字。</p><p>一萬公尺，第一名：久遠晴。</p><p>「……啊？」</p><p>原本還在為反超晚成而沾沾自喜的秋林，整個人猛地煞車，僵在終點線前五十公尺的地方。他揉了揉眼睛，又看了看站在終點後面的我，臉上的表情徹底裂解成了迷茫。</p><p>發生了什麼事？</p><p>剛才那是什麼？</p><p>為什麼……那個粉髮……會站在終點後面？</p><p>「晴……你……你……」晚成氣喘吁吁地跑到終點，整個人直接癱倒在地上，一邊大口喘氣，一邊用看怪物的眼神瞪著我，「你剛剛……那是甚麼鬼速度……你到底是怎麼……」</p><p>他一臉絕望，因為他突然意識到，他剛才那番「帶你一起跑」的發言，簡直就像是一個小學生在跟F1賽車手說「我騎腳踏車載你」一樣滑稽。</p><p>「哇喔——」腦海裡，神明吹了個響亮的口哨，「代理人同學，最後這一百公尺的爆發，表現不錯！你看看那些凡人懷疑人生的表情，真是本神最完美的下酒菜！」</p><p>我轉過頭，對著癱在地上懷疑人生的老唐，以及僵在半路一臉懵逼的秋林，露出了一個無辜且悅耳的微笑。</p><p>「不好意思啊，兩位。我剛剛……好像不小心腳滑了一下。」</p><p>操場上，一片死寂。只有風吹過樹葉的沙沙聲，以及那些法師系同學下巴掉在地上的聲音。</p><p>「你那是腳滑？你那叫裝了噴射引擎吧！」</p><p>老唐在地上躺了足足五分鐘才緩過氣來。當他終於能站起來時，看我的眼神已經從「需要照顧的弱小新同學」變成了「深藏不露的粉毛大佬」。</p><p>至於秋林，這名原本的「高一速度第一人」此時正面色複雜地站在一旁。他本來是個驕傲的天才，但在看到我連一滴汗都沒流、髮型都沒亂地站在終點後，他的驕傲瞬間被粉碎得連渣都不剩。</p><p>「那個……久遠同學，」秋林走了過來，深吸了一口氣，努力讓自己的聲音聽起來平靜，「剛才那不是【瞬步】吧？那是更高級的速度能力？妳……你到底是哪一家的繼承人？」</p><p>顯然，他也差點被我的外貌和聲音給騙了，中途硬生生改了口。</p><p>「都不是，我只是個普通轉學生。」我有些無奈地用悅耳的女聲回答，「而且老唐，我剛剛就想說了，我真的跑得挺快的。」</p><p>「你那是挺快？你那是快到不科學！」老唐崩潰地抓著頭髮，隨即又像是想到了什麼，大大咧咧地勾住秋林的肩膀，「算了！反正我們今天都沒第一！走走走，秋林，今天多了一位大佬，我們三個一起去食堂，我請客！」</p><p>秋林看了看我，又看了看老唐，最後點了點頭：「好吧，我也想多了解一下……久遠同學的能力。」</p><p>三人來到食堂。雖然這裡的點餐系統還是300年前那種笨重的觸控螢幕，甚至偶爾還會因為能源不穩而閃爍，但菜色卻意外地豐盛。老唐一邊狼吞虎嚥地吃著大份排骨飯，一邊用看外星人的眼神打量我。</p><p>「晴，你老實說，你剛才在校門口能從白川女神手裡逃掉，是不是也是靠這個能力？」老唐一邊嚼著肉一邊八卦。</p><p>「嗯，差不多吧（有逃掉嗎…………?）。」我一邊優雅地喝著湯，一邊應付著。</p><p>秋林在旁邊聽得眼角抽搐：「你……你居然能從那個白川悠手裡逃掉？她明面上可是有五種A級能力，其中包括兩種速度疊加……」</p><p>「好啦秋林，別研究大佬的世界了，快吃快吃！」老唐笑嘻嘻地打斷他，氣氛在老唐這隻哈士奇的帶動下，倒也變得輕鬆融洽起來。</p><p>吃完飯後，老唐和秋林提議去實戰模擬室消磨時間，我藉口體力消耗太大需要休息，便跟他們道別，獨自一人憑著記憶，再次來到了那個隱密的「祕密避難空間」。</p><p>穿過那面全息投影的舊石牆，窄門後的舊天台依然安靜，溫暖的陽光透過格柵灑在長滿青苔的舊長椅上，形成一條條俐落的光影。</p><p>這裡沒有教官的咆哮，也沒有同學們探究的視線，安靜得讓人放鬆。</p><p>我走到最裡面的長椅躺了下來，雙手枕在腦後，看著被格柵切碎的藍天。</p><p>長跑過後的肌肉在【體術】的自我調節下感到一陣舒適的微麻。沒多久，我的意識便在和煦的微風中漸漸朦朧，安詳地閉上了眼。</p><p>當我的目光再次聚焦時，熟悉的場景映入眼簾。</p><p>那張由一整塊現代黑色大理石切削而成的低矮茶几，檯面光滑如鏡。</p><p>陽光穿過木格柵拉門與大片落地窗，將光影精準地灑在不鏽鋼中式圈椅與藺草墊上。</p><p>轉過身，外頭依然是那片開得無比絢爛、種滿紅玫瑰的玫瑰園。</p><p>我又來到了神明的家。</p><p>「嗨，代理人同學，今天在學校玩得開心嗎？」</p><p>一聲輕快的女聲響起。</p><p>我轉過頭，那名盯著一頭白色長髮的神明正赤著腳坐在圈椅上。她身上依然是那件寬鬆的米色針織衫，領口微微傾斜，露出精緻的肩膀，下半身則是垂墜感極佳的灰色寬褲。</p>` },
+            'n1_c11': { volume: 'v1', title: `第十一章：拖延戰術`, content: `<p>此時的她雙腿交疊，手裡竟然拿著一個印有我名字標籤的布丁空殼，正優雅地舔著湯匙，散發著一種貓一樣、隨心所欲的鬆弛感。</p><p>「妳……妳居然真的把我的宵夜布丁帶到神界來吃了？！」我瞪大眼睛，指著那個空殼叫出聲。</p><p>「這叫代理人的供奉。」神明悠悠地開口，完全沒有身為神明的自覺，反而嫌棄地嘖了一聲，「不過，你最後那一百公尺的控制力確實很漂亮，本神給你的能力，你用得比我想象中還要好呢。」</p><p>「放輕鬆，代理人同學。」神明微微前傾身體，嘴角勾起一抹玩味的笑容，「既然你已經成功混進了能力者學院，那麼……我們的第一步，就從明天開始吧。」</p><p>我走上前，在另一張圈椅上坐了下來：「妳根本沒說有什麼任務，今天到底想交代什麼？」</p><p>神明放下湯匙，將空布丁盒隨手一放，那雙慵懶的眼神在大理石茶几的光影投射下，顯得有些神祕莫測，「本神今天找你，主要有兩件事要通知你。」</p><p>她豎起一根白皙的手指：</p><p>「第一，是關於『能力的熟練度』。你今天那個叫秋林的同學，對【瞬步】的開發大概只有六成。在這個世界，能力等級雖然決定了威力的上限，但『熟練度』才是決定實戰發揮的關鍵。熟練度越高，能量逸散就越少。」</p><p>神明眨了眨眼，帶著讚賞的笑意看著我：</p><p>「不過呢，這對你來說完全不是問題。因為你的【頂尖操控天賦】，不管拿到什麼能力，熟練度一律是突破天際的100%完美掌控！所以你才能用同樣的能量，把他們甩得連車尾燈都看不到。」</p><p>聽完她的解釋，我心裡稍微有些底氣了。這意思就是，別人的招式還在浪費能量，我的外掛已經是無懈可擊的優化版。</p><p>「那第二件事呢？」我問。</p><p>神明豎起第二根手指，嘴角的笑容變得有些不懷好意：「第二，明天陪本神去一趟『第二森林』實戰一下，活動活動筋骨。」</p><p>「什麼？！第二森林？！」我差點從圈椅上跳起來。</p><p>那可是號稱世界上第二危險的原始禁區！自從西元2027年白豔憑空出現以來，那些極具攻擊性、連子彈都打不穿的怪物就大量聚集在這種深山密林裡。</p><p>人類將白豔的危險程度由弱到強嚴格劃分為1到20級。平時城市周邊出現個3、4級的白豔就已經算大新聞了，而像第二森林那種鬼地方，聽說深處甚至盤踞著雙位數級別、能輕易毀滅一座小鎮的恐怖白豔！</p><p>「妳瘋啦？我去那裡根本是給白豔送點心吧！」我崩潰地大喊。</p><p>「哎呀，本神怎麼可能讓我的代理人去送死呢？」神明拍了拍手，笑瞇瞇地說道，「為了讓你去那裡能玩得開心點，本神這次特地幫你追加了全新的外掛配置。這可是針對遠程和偵查量身打造的喔！」</p><p>說完，她的指尖輕輕在空中一點，三行閃爍著不同光芒的虛擬字樣瞬間硬塞進我的靈魂深處：</p><p>【音爆】（A級）： 聲能武器化。將體內能量轉化為高頻高壓的定向震盪波，透過聲音釋放，能在大範圍內引爆空氣，具備極強的碎甲與震懾效果。</p><p>【移物】（A級）： 空間念動力。能干涉物理常數，憑空操縱複數物體的運動軌跡與重力分配，無論是防禦流彈還是御物遠攻皆可隨心所欲。</p><p>【繪瞳】（S級）： 絕對動態神經視覺。凌駕於肉眼極限之上的神之眼，能完美捕捉微秒級的動態殘影，並將視線內的所有能量流向、弱點精準『描繪』於大腦中，也可顯示目標部分資訊。</p><p>看著這三個新能力的介紹，我徹底呆住了。</p><p>前兩個A級能力直接補足了我沒有遠程攻擊手段的短板，而那個S級的【繪瞳】……簡直就是把戰場開了動態視覺透視鎖定！</p><p>配上我100%的極致操控天賦，這三個能力加在一起的威力，我想想都覺得可怕。</p><p>「怎麼樣？這下有信心了吧？」神明得意地挺了挺胸口。</p><p>我深吸了一口氣，強行讓自己冷靜下來。能力是很香沒錯，但我一想到要跟那些雙位數級別的白豔肉搏，心裡還是直發毛。況且，我才剛轉學第一天啊！</p><p>「能力很棒，我很滿意。」我輕咳了一聲，擺出一副公事公辦的嚴肅表情，「但是！明天是平日，我還要上學。作為一個剛轉學的優秀高中生，我絕對不能無故缺課，否則會被老爸和悠懷疑的。」</p><p>神明愣了一下：「那你想怎麼樣？」</p><p>「要去也行，等週末放假再說！」我果斷使出了學生的終極大招——拖延戰術。</p><p>「切，真拿你沒辦法，那就週末吧。」神明撇了撇嘴，有些嫌棄地朝我擺了擺手，「好啦，你可以醒了，記得回學校後別把我的能力用來惡作劇喔。」</p><p>眼前的水晶大理石與玫瑰園開始如水面波紋般碎裂。</p><p>我猛地睜開眼。</p><p>陽光依舊透過舊天台的格柵灑在身上，四周靜悄悄的。我從長椅上坐了起來，揉了揉有些發脹的太陽穴，隨後試著眨了眨眼。</p><p>一瞬間，我的視野變得無比清晰，空氣中微小的塵埃運動軌跡、遠處教學樓隱隱流動的防禦屏障能量，全都以一種精準的線條呈現在我的腦海中。</p><p>S級，【繪瞳】。</p><p>這不是夢，外掛真的到賬了。</p><p>我苦笑了一聲，看著藍天，有些無力地嘆了口氣。</p><p>這個週末，看來註定不會太和平啊。</p><p>「放學了放學了！晴，今天別忘了你答應堂哥的，明天一定要繼續帶我飛啊！」</p><p>下課鐘聲一響，唐晚成一邊收拾書包，一邊對我大力揮手，那姿態活像一隻依依不捨的黃金獵犬（換品種了）。</p><p>旁邊的秋林雖然沒說話，但也對我點了點頭，眼神裡多了一絲對強者的敬意。</p><p>我一邊用悅耳的女聲和他們道別，一邊背起書包往校門口走去。</p><p>剛走出教學樓的大門，我就看到不遠處的中庭大道上，已經圍了一圈黑壓壓的人群。</p>` },
+            'n1_c12': { volume: 'v1', title: `第十二章：家和萬事興`, content: `<p>人群的中心，正是身為高一１班風雲人物的白川悠。她依然是那副清冷孤傲的模樣，黑長直的秀髮隨風飄逸，銀色的眼睛不帶一絲溫度，直接把周圍試圖搭訕的各路天才當成了空氣。</p><p>而在悠的身旁，居然還站著一個熟悉的身影——我那正處於叛逆期、一臉淡定的親妹妹，久遠千。</p><p>這兩個人站在一起，一個黑長直銀瞳，一個冷酷國三妹，殺傷力簡直成倍增長，路過的人無一不側目。</p><p>「哥，這裡。」千最先看到我，依然是用那種聽不出情緒的平淡語調喊了一聲。</p><p>這一喊，周圍無數道「殺人」的視線瞬間齊刷刷地射向了我。</p><p>「久遠晴，你很慢耶。」悠一看到我，那副高嶺之花的架子瞬間融化，有些不滿地鼓起臉頰，跨步走過來自然地接過我的書包，「我都跟千在這裡等你十分鐘了，身為一個A級速度系，你好意思嗎？」</p><p>「呃……這不是放學人潮擁擠嗎？」我有些心虛地揉了揉鼻子。</p><p>周圍那些男同學看到這一幕，靈魂差點又碎了一地。</p><p>「那、那個人是誰啊？居然能讓白川女神幫他拿書包？！」</p><p>「聽說是今天剛轉來２班的轉學生，長得超像女生，但聽說是個男的……」</p><p>「可惡，長得好看又能拿捏女神，這世界太不公平了！」</p><p>「嘖，招搖。」千在一旁雙手環胸，冷冷地吐出兩個字。</p><p>「好了啦，你們兩個別一見面就鬥嘴。」悠說。</p><p>我夾在兩個少女中間，只覺得壓力山大，腦海裡那位神明大人甚至還在不厚道地吹口哨看戲。</p><p>「嗶嗶——」</p><p>就在這個時候，校門口傳來一陣清脆的喇叭聲。</p><p>那輛保養得亮麗如新、充滿舊時代復古感的高級轎車穩穩地停在路邊。車窗搖下，穿著整齊西裝、繫著「家和萬事興」領帶的老爸正把頭探出來，一臉興奮地對著我們瘋狂揮手。</p><p>「晴！千！還有悠小姑娘！這裡這裡！爸爸來接你們放學囉！」</p><p>看著老爸那充滿活力的笨蛋家長模樣，原本緊繃的修羅場氣氛瞬間消失得無影無蹤。</p><p>「哇，久遠叔叔今天親自來接人啊！」悠雙眼一亮，立刻拉著我往車子的方向跑去，「那今晚是不是有叔叔做的特級料理可以吃了？我要吃上次那個炸豬排！」</p><p>「好好好，都有都有！」老爸樂呵呵地回應。</p><p>我無奈地被悠拉著跑，身後跟著一臉嫌棄但腳步很快的千。</p><p>「久遠叔叔，我開動了！」</p><p>悠雙手合十，看著滿桌子的菜餚，銀色的眼睛裡閃爍著比平常更耀眼的光芒。</p><p>回到家後，老爸二話不說換上圍裙，在廚房裡大展身手。今天晚上的餐桌依舊豐盛，金黃酥脆的日式炸豬排、熱氣騰騰的香菇燉雞湯，還有幾盤精緻的家常炒菜，陣陣香氣在客廳裡瀰漫。</p><p>「哈哈，悠小姑娘盡管吃，管夠！今天晴和千都順利辦完轉學，這可是我們家的大日子！」老爸樂呵呵地幫大家盛飯，臉上洋溢著滿足的笑容。</p><p>千默默地夾了一塊炸豬排，雖然嘴上沒說什麼，但吃得津津有味的樣子出賣了她。</p><p>自從昨天被我「一雙筷子」震撼到之後，她今天吃飯的動作顯得規矩了許多，偶爾還會用一種極其複雜的眼神偷偷瞄我。</p><p>「晴，你今天在２班怎麼樣？有沒有被欺負？」悠一邊嘴裡塞得鼓鼓的，一邊含糊不清地問我。</p><p>「怎麼可能被欺負……不如說，我差點把全班男生的心都給碎了。」我無奈地嘆了口氣，一想到自我介紹完後台下那片死寂的畫面，我就胃痛。</p><p>「哈哈哈哈！我就知道！」悠毫無形象地笑了出來，差點把湯噴出來，「誰叫你長得那麼精緻，不認識你的人絕對第一眼把你當成美少女。對了叔叔，晴今天在學校跑一萬公尺拿了第一名喔！把那些速度系的天才都甩在後面了！」</p><p>（妳消息真靈通）</p><p>「噢？真的嗎！」老爸驚喜地看向我，眼神裡滿是驕傲「真不愧是我的兒子！有媽媽當年的風範！」</p><p>提起媽媽，飯桌上的氣氛微微一頓，但隨即又被老爸爽朗的笑聲帶了過去。大家都長大了，那些悲傷的過去早已化作了彼此守護的默契。</p><p>「哼，只是運氣好罷了。我以後一定會超越他的。」千放下碗筷，輕輕哼了一聲，但那雙黑色的眼眸裡卻燃燒著不服輸的鬥志。</p><p>「好啊，那哥哥我等著妳。」我用女聲笑著回應，順手夾走了盤子裡最後一塊炸豬排。</p><p>「啊！哥你很卑鄙耶！」千難得地露出了國中生該有的氣惱表情。</p><p>「笑死我了，這就是人類的家庭日常嗎？」神明在我腦海裡幽悠地說道，一邊看著我們搶菜，一邊說，她的眼神閃過一絲追憶之色。</p><p>（知道了，妳這尊大佛就別在吃飯的時候煞風景了。）我內心翻了個白眼。</p><p>吃完飯後，悠留下來幫忙收拾了碗筷，又拉著我聊了半天學校的八卦，直到夜深了才依依不捨地回家。</p><p>送走悠後，我回到房間，再次呈大字型躺在床上。</p><p>洗完澡後的清爽感讓大腦放鬆下來。我眨了眨眼，稍微催動了一下【繪瞳】，只見視線內房間的物品線條瞬間變得無比清晰，連牆角一隻小蜘蛛的動作都像慢動作重播一樣。</p><p>翌日，清晨。</p><p>我依然是在神明與千的「雙重夾擊」下醒來的。一早到學校，東側教學樓的走廊上就瀰漫著一股比昨天更緊繃的氣氛。</p><p>「晴！你聽說了嗎？」</p><p>我剛走進高一２班的教室，唐晚成這隻哈士奇就一臉興奮地猛撲過來，雙手按在我的書桌上，眼睛亮得像是在發光。</p><p>「聽說什麼？」我放下書包，用那悅耳的女聲不解地問。</p><p>「實戰課啊！我們今天要去實戰模擬室，而且第一堂課就是『班內淘汰賽』！」晚成壓低聲音，神祕兮兮地說道。</p><p>「聽說班導師要用這場淘汰賽來重新編排班級的排名，甚至決定誰能拿到學校下個月的特殊資源配給！」</p>` },
+            'n1_c13': { volume: 'v1', title: `第十三章：晴 VS 老唐`, content: `<p>淘汰賽？</p><p>我愣了愣。這代表著，我即將迎來人生中的第一堂真正意義上的實戰課。</p><p>正當全班都在為接下來的淘汰賽興奮討論時，原本緊閉的教室合金大門「喀噠」一聲，毫無預兆地被推開了。</p><p>喧鬧的教室瞬間像被按下了靜音鍵，變得落針可聞。</p><p>一個身材高挑的女生緩緩走了進來。她留著一頭極具質感的霧灰色長髮，隨著步伐微動，最顯眼的是她那套筆挺的校服上，極其隨性地披著一件純白色的休閒外套。</p><p>她眼神冷漠，精緻的臉上沒有半點表情，整個人散發出一股讓人幾乎要窒息的恐怖壓迫感。</p><p>這名女生連看都沒看班上的其他人一眼，徑直走到教室最後方靠窗的角落坐下，雙手環胸，閉目養神。</p><p>「喂……晴……」</p><p>我感覺到衣服被死死拽住，轉過頭，只見身旁的老唐此時臉色慘白，連一向驕傲的秋林都下意識地嚥了口口水，眼神裡滿是難以掩飾的恐懼。</p><p>「她、她怎麼今天來上學了……」老唐聲音顫抖得像是快要哭出來，對著我極其小聲地介紹道，「晴，你剛轉來不知道。那個女人叫拉雅，是我們學校名副其實的『怪物』、戰力全校第一！」</p><p>秋林也面色無比凝重地補充：「她平時很少來上學，但因為家裡富可敵國，給學校捐了好幾棟大樓，所以校方直接把她丟到我們A班掛名，基本上採取放任態度，但是……她偶爾會出現在實戰課上。」</p><p>「只要她出現，淘汰賽的第一名就絕對是她的。」老唐打了個寒顫，用近乎蚊子叫的聲音說。</p><p>「最可怕的是，她出手極度殘暴，跟她對上的人常常直接被打殘。要不是我們學校的校醫能力太逆天，只要人沒死透就能完全恢復，這學校大概每年都要抬出去幾十個人……」</p><p>「哦？聽起來挺厲害的嘛。」我挑了挑眉毛。</p><p>「哈哈哈哈！有意思！」神明在我腦海裡瘋狂捶桌，雙眼發光，「代理人同學，這個霧灰色頭髮的小姑娘很有料喔！本神已經開始期待你等一下用新外掛跟她對上的畫面了！」</p><p>（妳少在那裡看熱鬧不嫌事大。）我內心無奈地回應，同時悄悄催動了S級的【繪瞳】。</p><p>在我的神之眼視覺下，那個叫拉雅的女生周身隱隱纏繞著令人戰慄的複合能量波動，那密密麻麻的能量線條，簡直多得像個移動的軍火庫。</p><p>「好啦，菜鳥們！全部給我到實戰模擬室集合！」</p><p>硬漢老師那沉重的機械義肢踩在地板上的「鏗鏘」聲在走廊響起。</p><p>全班同學，包括那位散發著冰冷氣息的拉雅，同時站起身往外走去。我的第一場校園實戰課，就在這頭恐怖猛獸的陰影籠罩下，正式拉開了序幕。</p><p>「好啦，菜鳥們！大螢幕開始抽籤！」</p><p>地下實戰模擬室內，硬漢老師在控制台上一拍，巨大的全息螢幕瞬間瘋狂閃爍起來。</p><p>片刻後，第一輪的對戰組合定格。</p><p>【久遠晴】 VS 【唐晚成】</p><p>「哇靠！晴，怎麼第一場就是我們兩個互打啊！」老唐一看到大螢幕，頓時哀號出聲。不過他很快就抓了抓頭髮，嘿嘿一笑：「雖然你昨天跑步快到不科學，但這可是實戰！大哥我近戰肉搏可不會放水喔！」</p><p>「請多指教了，老唐。」我微微一笑，活動了一下手腕，率先走上了被能量屏障包圍的模擬擂台。</p><p>擂台周圍的虛擬場景瞬間切換成了一片荒涼的亂石堆。</p><p>「對決開始！」</p><p>隨著硬漢老師一聲令下，老唐一改平時哈士奇般的搞笑模樣，眼神瞬間變得無比認真。他腳步猛地一踏，B級【瞬步】帶起一聲低沉的空氣爆鳴，整個人宛如一顆重砲般直奔我而來，右拳凝聚著雄厚的近戰能量，狠狠砸向我的肩膀！</p><p>他的速度在普通人眼裡確實快如閃電，但在我的S級【繪瞳】與A級【體術】疊加的視野下，他的動作簡直慢得像是在放PPT。</p><p>我不閃不躲，甚至連【風行者】都沒開，只是在拳頭距離我只有十公分時，上半身微微一側，以一個近乎擦身而過的精妙角度避開了這一拳。與此同時，我的右手順著他衝過來的慣性，輕輕在他手腕上一搭、一牽。</p><p>四兩撥千斤。</p><p>「哇啊啊啊！」老唐只覺得自己全力一拳砸在了棉花上，整個人重心瞬間失控，直接狗吃屎地往前飛了出去，極其滑稽地一路滾出了擂台邊界。</p><p>「久遠晴，勝！」</p><p>「……晴，你這根本是作弊吧！我連你的衣角都沒摸到！」老唐坐在場外，一臉懷疑人生地揉著屁股。</p><p>「哈哈，承讓承讓。」我用悅耳的女聲笑著向他伸出手。</p><p>第一輪結束後，淘汰賽的速度進行得極快。在【繪瞳】能看穿一切能量流向與弱點的作弊效果下，接下來的幾輪比賽，我幾乎都是站在原地，僅憑著精準到毫米的【體術】防禦和閃避，極其低調、漫不經心地一路打進了準決賽。</p><p>班上的同學們看我的眼神也徹底變成了「深不可測的太極大師」。</p><p>與此同時，擂台的另一邊。</p><p>「砰——！！」</p><p>一聲震耳欲聾的巨響徹整座地下模擬室。</p><p>只見另一組的擂台上，一尊高大的巨石防禦系同學此時雙眼翻白，整個人被硬生生砸進了合金地板裡，周圍的虛擬亂石被擴散的能量震得粉碎。</p><p>站在他面前的拉雅，依然將那件純白外套披在肩上。她甚至連手都沒從口袋裡拿出來，僅憑著周身散發出的恐怖複合能量衝擊，就把一名主修防禦的A班精銳打得全身骨折、不省人事。</p><p>「醫護班！快抬走！只要心臟還在跳就死不了！」硬漢老師大喊著。</p><p>拉雅冷漠地走下台，霧灰色的長髮在空中劃出冰冷的弧度。她路過我身邊時，那雙毫無感情的眼眸微微一偏，在我身上停留了一秒，隨後發出一聲若有似無的冷哼。</p>` },
+            'n1_c14': { volume: 'v1', title: `第十四章：晴 VS 秋林`, content: `<p>「哇喔，這小姑娘的脾氣比本神想像的還要暴躁呢。」神明在我腦海裡興奮地吹了個口哨，「代理人同學，下下一場就是她了，你可別被人家撕碎了喔。」</p><p>（……妳就不能盼我點好嗎？）</p><p>我深吸了一口氣，看向大螢幕。此時大螢幕上只剩下最後四個名字。</p><p>準決賽對戰組合：</p><p>【久遠晴】 VS 【秋林】</p><p>「久遠。」</p><p>秋林站在擂台對面，眼神裡燃燒著前所未有的凝重與戰意。他緩緩擺出格鬥姿勢，周身的空氣因為【瞬步】的凝聚而開始微微扭曲。</p><p>「我知道你很強，前面的比賽你甚至連一次正面的攻擊都沒出過。但這一場，我會逼你使出全力！」</p><p>「好啊。」我微微一笑，雙眼之中，S級【繪瞳】的光芒在眼底最深處悄然流轉。</p><p>看來在對上那位全校第一的「暴虐怪物」之前，得先陪這位驕傲的速度天才好好玩一玩了。</p><p>擂台上的虛擬場景切換成了一片空曠的廢棄工廠，斑駁的鐵銹與高聳的鋼骨結構讓氣氛更顯肅殺。</p><p>「對決開始！」</p><p>硬漢老師話音剛落，秋林的身影便在瞬間模糊。</p><p>「砰！砰！砰！」</p><p>沉悶的空氣爆鳴聲在工廠的各個角落同時響起，這是將【瞬步】催動到極致後的殘影。秋林不愧是A班的速度天才，他記取了老唐失敗的教訓，沒有盲目直線衝鋒，而是利用高速在我的四周不斷變換方位，試圖找出我的視覺死角。</p><p>「好快！不愧是秋林，這速度比剛才又提升了一個檔次！」台下的老唐一邊揉著屁股，一邊緊張地大喊。</p><p>然而，在我的S級【繪瞳】世界裡，那些看似密不透風的殘影，不過是一道道清晰交織的能量流向線條罷了。我甚至能看到他每一次踏步時，腳底能量逸散的具體百分比。</p><p>「唰！」</p><p>一道凌厲的風壓直逼我的後頸，秋林終於出手了，那是角度極其刁鑽的一記手刀。</p><p>我連頭都沒回，身形宛如風中柳絮般微微一飄，精準地讓那記手刀貼着我的耳廓劃過。緊接著，秋林的攻勢如同狂風暴雨般襲來，拳影、腿側、肘擊，每一招都帶着沉重的破空聲。</p><p>但我只是腳步輕移，在方寸之間化解了他所有的攻勢。在外人看來，我就像是在跳一場優雅的華爾茲，連一片衣角都沒讓秋林碰到。</p><p>「可惡……這怎麼可能！」秋林久攻不下，體力與能量開始劇烈消耗，眼神裡閃過一抹震驚與急躁。</p><p>打到中途，我一邊輕鬆地閃過他的左勾拳，一邊用那悅耳動聽的女聲，帶著一絲玩味的笑意開口。</p><p>「喂，秋林同學，問你個問題喔。」</p><p>「什麼……？！」秋林一拳揮空，有些喘息地瞪著我。</p><p>我一邊側身避開他隨後的飛踢，一邊指了指看台下方正雙手環胸、散發著冰冷殺氣的霧灰色長髮少女，眨了眨眼笑道。</p><p>「如果我現在直接舉手認輸，讓你拿下這一局的勝利……那你下一場，是不是就要去面對那位拉雅同學了啊？」</p><p>聽到「拉雅」這兩個字，原本還在瘋狂進攻的秋林整個人猛地一僵，腳步差點踩錯。</p><p>他下意識地順著我的手指看了一眼台下的拉雅，腦海裡瞬間浮現出剛才那位防禦系同學被硬生生砸進地板、全身骨折的血腥畫面。拉雅那雙毫無感情的冷漠眼眸，此時也正好若有似無地掃過擂台。</p><p>秋林狠狠打了個寒顫，額頭上瞬間滲出一層冷汗。</p><p>「你……你這傢伙……」秋林看著我那副輕鬆自在、甚至還能開玩笑的完美笑臉，一時間整個人陷入了巨大的糾結與驚恐之中。</p><p>認輸？</p><p>如果久遠晴現在認輸，他就能晉級決賽！這本該是至高無上的榮譽！</p><p>但是……晉級決賽的代價，是要去跟那個不眨眼的暴虐怪物一對一互毆啊！以拉雅那種動不動就把人打殘的殘暴手段，他上去大概撐不到三秒就要被抬進校醫室重組了！</p><p>「哈哈哈哈！代理人同學，你太壞了！」神明在腦海裡笑得直打滾，「你看看這小子的表情，他現在根本不知道該祈禱你動手，還是祈禱你趕快認輸！」</p><p>（這叫合理的戰術心理戰。）我內心調侃道。</p><p>「久遠晴……少瞧不起人了！」</p><p>短暫的恐懼過後，天才的驕傲還是戰勝了理智。秋林咬緊牙關，臉色漲紅，將體內最後一絲【瞬步】能量完全壓榨出來，雙腿爆發出璀璨的光芒，整個人化作一道撕裂空氣的筆直白線，帶著決死之勢直奔我而來！</p><p>「這是我最後的一擊——！」</p><p>「砰！」</p><p>面對秋林那帶著決死之勢、拼盡全力的最後一擊，我依然站在原地，只是在刺骨的風壓吹亂我粉紅長髮的瞬間，右手精準地向前一探。</p><p>【體術：A級】配合著【繪瞳】看穿的能量弱點，我的掌心精準無比地貼在了秋林手腕的能量空隙處，順著他的力道輕輕一卸、一撥。</p><p>這一次，我稍微多加了一點點【風行者】的柔勁。</p><p>秋林只覺得自己像是撞進了一團看不見的棉風裡，所有爆發的能量瞬間被化解得無影無蹤。他整個人在空中失去平衡，一臉懵逼地劃過一道拋物線，最後穩穩地……</p><p>精準落在了擂台邊界外的軟墊上。</p><p>「久遠晴，晉級決賽！」硬漢老師高聲宣布。</p><p>「呼……呼……」秋林坐在地上大口喘著氣，雖然輸了，但他此時看著我的眼神，除了震驚之外，竟然隱隱透出一股……劫後餘生的感激？</p><p>「謝謝你……久遠同學。」秋林擦了擦額頭的冷汗，心有餘悸地低聲說道。</p><p>「不客氣，好好休息吧。」我走下擂台，用那悅耳的女聲對他眨了眨眼。</p><p>「哇靠，晴！你這是在救人一命勝造七級浮屠啊！」老唐一臉崇拜地湊過來，一邊幫秋林倒水，一邊對我豎起大拇指。</p>` },
+            'n1_c15': { volume: 'v1', title: `第十五章：拉雅（一）`, content: `<p>然而，還沒等我們多聊兩句，整座地下實戰模擬室的溫度彷彿在瞬間降到了冰點。</p><p>「決賽，久遠晴對陣拉雅！兩位選手立刻上台！」</p><p>硬漢老師的聲音甚至帶上了一絲期待的緊繃感。周圍原本還在嘰嘰喳喳的同學們瞬間安靜下來，幾十雙眼睛齊刷刷地落在了我和那個角落裡的身影身上。</p><p>「晴，小心點……那個女人真的不是開玩笑的。」老唐收起笑臉，無比嚴肅地拍了拍我的肩膀。</p><p>「放心。」我點了點頭。</p><p>此時，那一頭霧灰色長髮的少女終於動了。</p><p>拉雅緩緩睜開眼，那雙毫無感情的冷漠眼眸隨意地掃了擂台一眼。</p><p>她起身的動作無比優雅，那件純白色的休閒外套依然鬆垮垮地披在肩上。</p><p>她就這樣雙手插在外套口袋裡，踩著不緊不慢的步伐，一步一步走上了擂台。</p><p>甚至在站定之後，她也完全沒有擺出任何格鬥或防禦的姿勢，整個人散發出一股極致的、對周圍一切都不屑一顧的漫不經心。</p><p>彷彿站在她對面的不是一個一路連勝打上來的強者，而只是一粒隨手就能拍掉的灰塵。</p><p>「哇喔，代理人同學，這小姑娘的逼格簡直比本神還要高呢。」神明在我腦海裡興奮地搓了搓手，「她身上那些疊加的能力波動開始好玩起來了，你可別大意啊。」</p><p>（知道了。）</p><p>我深吸了一口氣，緩緩走上擂台。雙眼最深處，S級【繪瞳】的光芒瘋狂流轉。</p><p>在我的視野裡，拉雅看似渾身都是破綻，但她身體周圍那層厚重、凝實到近乎實體的複合能量防禦，卻像是一座移動的钢铁堡壘，沒有任何死角。</p><p>這將是我轉學以來，真正意義上的第一場硬仗。</p><p>「對決開始！」</p><p>隨著硬漢老師一聲令下，整座實戰模擬室的空氣彷彿瞬間被抽空。</p><p>拉雅依舊雙手插在白外套的口袋裡，站在原地動也不動，那雙霧灰色的眼眸冷漠地看著我，周身那層凝實的複合能量防禦如同銅牆鐵壁。在她眼裡，我那看起來纖細的身材和那一頭招搖的粉紅長髮，根本不具備任何威脅。</p><p>然而，她這種極致的漫不經心，正是我等待的機會。</p><p>繪瞳！</p><p>移物！</p><p>一瞬間，拉雅周圍那些密不透風的能量防禦線條在我眼中變得無比清晰。我的操控天賦在這一刻拉到滿中之滿（100%完美掌控），我沒有選擇正面突破她的屏障，而是精準地鎖定了她腳底大理石地面與能量防禦交界處的那一絲極其微小的空隙。</p><p>「起。」我心中默念。</p><p>【移物】的空間念動力瞬間爆發，直接干涉了拉雅腳下碎石的重力分配。</p><p>「轟！」</p><p>拉雅腳下的地面毫無預兆地向上暴起，連帶著幾塊重達數百斤的巨石直接掀翻了她的重心。拉雅那張原本冷漠無比的臉上，第一次閃過了一抹錯愕。</p><p>她完全沒料到一個看起來是速度系的人，竟然能憑空使出這種強大且無聲無息的空間干涉能力！</p><p>在重心失控的剎那，她的複合能量防禦出現了一瞬間的嚴重滯後與散亂。</p><p>我當然不會放過這個千載難逢的破綻，腳步一踏，【風行者】與【體術】化作一道粉紅色的閃電，在百分之一秒內跨越了十幾公尺的距離，瞬間貼近了拉雅的側翼。</p><p>「破。」</p><p>我沉腰鎖骨，右手手掌凝聚了精純的風元勁，精準無比地拍在了她能量防禦最薄弱的節點上。</p><p>「砰——！！」</p><p>一聲沉悶的巨響爆開，狂暴的風壓四碎。</p><p>原本雙手插兜、不可一世的拉雅，整個人竟然被這股精準的柔勁硬生生地擊飛出去，在空中滑行了十幾公尺，有些狼狽地用單手撐地，這才勉強止住了退勢。</p><p>那件原本披在她肩上的純白外套，此時也略顯凌亂地滑落到了手臂上。</p><p>「哇靠——！！」看台上的老唐眼珠子差點掉了出來，瘋狂搖晃著旁邊的秋林，「你看到了嗎？！拉雅被擊退了！晴居然一上場就把拉雅打飛了啊啊啊！」</p><p>全班同學也集體倒吸一口冷氣，連高台上的硬漢老師都震驚得差點按錯了手上的機械臂按鈕。</p><p>「哼……」</p><p>拉雅缓缓站起身，將有些凌亂的霧灰色長髮往後一撥。此時的她，眼中那股輕蔑與漫不經心徹底消失，取而代之的是一種極其恐怖、宛如暴虐猛獸盯上獵物般的狂暴戰意。</p><p>「很好。很久沒有人能讓我把手拿出來了。」</p><p>拉雅冷漠地開口，雙手緩緩從口袋裡伸了出來。</p><p>下一秒，整座實戰模擬室瘋狂顫抖。拉雅周身瞬間亮起了刺眼的五彩光芒——肉體強化、重力干涉、高溫熱浪、衝擊波……數種完全不同的A級能力在一瞬間完美重疊！</p><p>一旦收起輕敵的心態，這位全校第一的怪物所展現出來的真正實力，簡直讓人絕望。</p><p>「唰！」</p><p>拉雅的身影憑空消失。再次出現時，她已經帶著排山倒海般的高溫重拳砸向我的面門。速度快到連空間都有些扭曲。</p><p>「來得好！」</p><p>我的【繪瞳】瘋狂運轉，將她的所有攻擊軌跡全部在腦海中解構。面對拉雅那暴風雨般的攻勢，我一邊將【風行者】催動到極致進行殘影化閃避，一邊利用【移物】不斷在空中製造無形的念力屏障來偏轉她的拳勁。</p><p>「砰！轟！砰！」</p><p>整個擂台在我們的交手中不斷崩碎，全息投影的亂石和鐵骨被狂暴的能量餘波震成齏粉。</p><p>拉雅越打越心驚。她已經拿出了八成的實力，複合能力更是開到了極限，但眼前這個粉髮少年卻像是一片滑不溜手的羽毛，每一次她自以為必殺的重拳，都會被對方以一種精巧到不可思議的角度偏轉或者避開。</p><p>不論她變換幾種能力組合，對方的應對永遠比她更精準、更完美。</p><p>這根本不是能量總量的差距，而是「能力熟練度與操控力」上的絕對降維打擊！</p>` },
+            'n1_c16': { volume: 'v1', title: `第十六章：拉雅（二）`, content: `<p>戰鬥進行到第五分鐘，拉雅的能量體力開始出現下滑，步伐微微沉重了一分。</p><p>「到此為止了，拉雅同學。」</p><p>我用那悅耳的女聲輕輕說道。</p><p>【繪瞳】已經精準捕捉到了她能力銜接時最致命的一個能量空窗期。</p><p>我沒有使用大威力的【音爆】去重創她。我只是身形一晃，鬼魅般地出現在她身後，右手兩指併攏，凝聚了一絲尖銳的風芒，停在了她白皙的脖頸後方不到一公分處。</p><p>刺骨的寒意讓拉雅整個人瞬間僵硬在原地。</p><p>「………………」</p><p>場上，所有的轟鳴聲與能量光芒在一瞬間煙消雲散。</p><p>我站在拉雅身後，粉紅色的長髮隨風微微飄動，手指穩穩地停在那裡，連一絲顫抖都沒有。</p><p>「久遠晴，勝！本屆淘汰賽第一名誕生！」硬漢老師用近乎沙啞的聲音大喊著。</p><p>全場，一片寂靜。所有人都用看神明一樣的眼神死死盯著我。</p><p>拉雅站在原地僵持了幾秒鐘，隨後，她周身殘留的狂暴能量徹底散去。她緩緩轉過身，看著我，那雙霧灰色的眼眸裡沒有怨恨，也沒有不甘，反而顯得異常平靜與坦蕩。</p><p>她優雅地拉了拉披在肩上的純白外套，對我伸出一隻白皙的手，嘴角竟然罕見地勾起了一抹極其微小、卻無比好看的弧度。</p><p>「是我輸了。在能力的操控上，你比我強太多。」拉雅的聲音清冷，卻意外地很真誠，「久遠晴是吧？我記住你了。這學校總算多了一個能讓我提起興趣的人。」</p><p>看著眼前這位雖然兇殘、但意外地輸得非常大氣坦蕩的霧灰髮少女，我也笑了笑，伸出手與她輕輕一握。</p><p>「哈哈哈哈！代理人同學，看來你又收穫了一個厲害的粉絲呢！」神明在腦海裡一邊嚼著不知道從哪順來的仙貝，一邊發出不厚道的笑聲。</p><p>我的第一堂實戰課，就在這場震驚全校的決賽中落下帷幕——雖然我依然得在心裡盤算，等一下放學要怎麼跟悠解釋，我這個「普通轉學生」是怎麼把全校第一的怪物給打落神壇的。</p><p>實戰淘汰賽結束後，高一2班的走廊差點沒被圍觀的群眾給擠爆。</p><p>要不是老唐發揮他那「哈士奇突圍」的本領，一邊嚷嚷著「大佬要吃飯了借過借過」，一邊拉著秋林護送我離開，我可能到現在還被困在地下模擬室裡接受同學們的靈魂拷問。</p><p>三人照舊在食堂解決了午餐。今天的老唐格外激動，一邊扒飯一邊手舞足蹈地重播我剛才那一招「四兩撥千斤」是多麼的驚天地泣鬼神，連一向沉穩的秋林也在旁邊認真地做筆記。</p><p>好不容易應付完這兩個熱血笨蛋，我摸了摸有些發脹的太陽穴，果斷再次溜向了那個專屬於我的「秘密避難空間」。</p><p>推開那面熟悉的藤蔓舊石牆，窄門後的舊天台依舊陽光和煦。我深深地吸了一口帶著泥土與青草芳香的空氣，整個人宛如卸下了千斤重擔。</p><p>「呼……累死了，這年頭當個低調的普通人怎麼這麼難。」</p><p>我呈大字型躺在長滿青苔的舊長椅上，任由溫暖的陽光灑在臉上。連續兩場高強度的精神集中，讓我的大腦此時感到一陣沉甸甸的睡意。沒多久，我便在微風的吹拂下沉沉睡去……</p><p>(代理人同學～快醒醒，你的私人領域要被攻陷囉～)</p><p>腦海裡，神明那幸災樂禍的聲音像個定時鬧鐘一樣突然響起，語氣裡滿是看好戲的愉悅。</p><p>我眉頭一皺，剛想在心裡吐槽她打擾我午睡，一陣細微的腳步聲伴隨著清脆的少女交談聲，就已經穿過全息投影的舊石牆，無比清晰地傳進了我的耳朵裡。</p><p>「……看吧，安安！我就說這傢伙絕對躲在這裡！」</p><p>這清冷中帶著一絲篤定的聲音，一聽就是白川悠。</p><p>我猛地睜開眼坐起身，與此同時，暗門一陣波動，兩個少女的身影並肩走了進來。</p><p>走在前面的自然是一頭黑長直、眼神帶著調侃的悠。而當我看清站在悠身旁的另一名少女時，連我的【繪瞳】都下意識地在心底微微一亮。</p><p>那是一名留著一頭微捲、在陽光下閃爍著耀眼光芒的淡金色長髮少女。最引人注目的是她那雙極其罕見的異色瞳——一隻如秋日暖陽般的淺金色，另一隻則如初春嫩芽般的淺綠色。她身上穿著1班的精緻制服，此時正一隻手搭在悠的肩膀上，精緻的俏臉上滿是好奇與興奮，整個人散發出一股極其強烈、陽光且開朗的八卦氣場。</p><p>沈安，悠都叫她「安安」。同樣是高一1班的天才，同時也是在學院論壇上與悠並列的校花。</p><p>「哇塞！悠，妳居然沒有騙我！」</p><p>沈安那雙漂亮得像寶石一樣的異色瞳在看到我那一頭招搖的粉紅長髮時，瞬間亮了起來。她幾乎是一個箭步蹦到了我的長椅前，整個人湊得極近，身上還帶著一股淡淡的茉莉花香。</p><p>「妳就是那個在入學第一天就把全班男生弄心碎、今天又在淘汰賽把拉雅那個大姐頭給揍翻的『傳奇轉學生』久遠晴？！」沈安劈頭蓋臉就是一串連珠炮，亮晶晶的眼睛死死盯著我「天啊！近距離看真的好漂亮！皮膚怎麼能這麼好？聲音也超好聽！喂，晴，妳真的……是個男生嗎？」</p><p>「呃……」看著眼前這張放大版的絕美校花臉，以及那股撲面而來的強烈八卦活力，我僵硬地往後挪了挪，無奈地用悅耳的女聲回答：「我是男的，貨真價實。還有，我沒有揍翻拉雅同學，只是切磋……」</p><p>「哈哈哈哈！安安，我就說這傢伙會是這個反應吧！」悠在一旁毫無形象地笑了出來，走過來沒好氣地拍了拍沈安的腦袋，「好啦，別把我的青梅竹馬給嚇跑了。」</p><p>「這哪裡是嚇跑，這叫合理的記者採訪！」沈安興奮地在長椅另一頭坐下，雙手托腮，淺金與淺綠的異色瞳裡燃燒著熊熊的八卦之魂，「晴，你不知道，現在整個學院的論壇都已經為你炸開鍋了！</p><p>『粉髮神祕大佬力克暴虐怪物』，這標題我都幫你想好了！快跟我說說，你跟拉雅在台上到底發生了什麼？她最後居然對你笑了耶！那可是那個從來不拿正眼看人的拉雅耶！」</p>` },
+            'n1_c17': { volume: 'v1', title: `第十七章：第二森林`, content: `<p>我看著身邊這個比老唐還要像哈士奇的八卦校花，又看了看在一旁幸災樂禍的悠，頓時覺得自己的太陽穴更痛了。</p><p>「好了啦安安，妳問題太多了，晴都被妳問到要石化了。」悠看著我一臉生無可戀的樣子，笑著出聲拉了沈安一把。</p><p>「好嘛，我這不是好奇嘛！」沈安俏皮地吐了吐舌頭，那雙漂亮的異色瞳在我和悠之間轉了幾圈，眼神裡閃過一抹狡黠的笑意，湊近我神秘兮兮地問「不過話說回來，晴晴，你跟我們家悠……到底是什麼關係呀？青梅竹馬？還是……那種超越友情的朋友？嗯？」</p><p>「就是普通的朋友加鄰居！」我趕緊澄清，求生慾極強地往椅背縮了縮。</p><p>「哼，誰跟他是那種關係啊，這傢伙就是個讓人操心的笨蛋。」悠有些不自然地撇過頭，耳根微微泛紅，嘴硬地反駁。</p><p>「哎呀，解釋就是掩飾喔～」沈安哈哈大笑，隨後大大咧咧地拍了拍我的肩膀，「好啦，不逗你們了！既然你是悠的青梅竹馬，那以後也就是我朋友了。不用叫我沈安那麼生疏，直接跟悠悠一樣叫我安安就好！以後在學校姐罩你……啊不，是以你今天的戰力，以後換你罩我跟悠悠囉！」</p><p>看著這兩個活力十足的校花級少女在秘密空間裡一搭一唱，我只能無奈地微笑應對。好不容易應付完安安排山倒海般的八卦攻勢，下午的課程也隨之到來。</p><p>接下來的幾天平日，校園生活雖然因為我拿下了淘汰賽第一名而變得有些「備受矚目」，但好在有老唐和秋林日常的插科打芢，加上拉雅偶爾投來那種帶著戰意的冷冷目光，日子倒也過得算是有驚無險。</p><p>轉眼間，時間來到了週末。</p><p>清晨，當第一縷陽光穿過久遠家客廳的窗簾時，我已經收拾好了背包。</p><p>「代理人同學，早安啊～」神明的聲音準時在腦海中響起，帶著一絲興奮與迫不及待，「平日的學校家家酒結束了，今天……可就是要動真格的囉。第二森林的白豔們，已經在等著你了。」</p><p>我握緊了背包肩帶，看著鏡子裡自己那一頭粉紅色的長髮，深吸了一口氣。</p><p>【風行者】、【體術】、【音爆】、【移物】，還有【繪瞳】。</p><p>全副武裝的面板在意識中閃爍。雖然心裡難免有些緊張，但更多的，是一種即將踏入未知禁區的悸動。</p><p>「走吧。」我低聲對著腦海裡的神明說道。</p><p>西元2026年的週末清晨，當別的高中生還在被窩裡睡懶覺的時候，我已經站在了這個世界上第二危險的原始禁區——「第二森林」的入口。</p><p>高聳入雲的變異巨木遮天蔽日，空氣中瀰漫著一股淡淡的、屬於超自然怪物的腥甜味。</p><p>「聽好了，代理人同學。」神明在我腦海裡難得收起了平時的吊兒郎當，科普道，「第二森林可沒有外面那些1、2級的小卡拉米。這裡盤踞的白豔，實力全在5級到15級之間。十級以上的傢伙，一巴掌就能把你們學校的教學樓拍成豆腐腦喔。」</p><p>（妳現在說這個是不是有點太晚了？！）</p><p>我一邊在心裡掀桌，一邊嚥了口口水。然而，還沒等我踩出第一步，前方茂密的灌木叢猛地爆開！</p><p>「吼——！！」</p><p>一隻體型堪比雙層巴士、全身長滿鋼鐵般倒刺的獠牙巨型野豬瘋狂地衝了出來！那狂暴的能量波動在我的【繪瞳】視界裡瞬間顯示出猩紅的數據：</p><p>目標：【鋼刺暴豬】</p><p>白豔等級：6級</p><p>「媽呀！一上來就玩這麼大！」</p><p>眼看那對尖銳的獠牙就要把我串成肉串，我的身體本能比大腦更快做出反應。【風行者：100%完美掌控】瞬間發動，我的身形在原地化作一道粉紅色的流光，擦著野豬的皮毛驚險地閃了過去。</p><p>「既然如此……試試新招！」</p><p>我深吸了一口氣，在空中轉身，對著那隻野豬的屁股，張開了我那張平時用來發出悅耳女聲的美麗小嘴。</p><p>音爆！</p><p>「哈——！！」</p><p>一聲由高頻高壓能量凝聚而成的恐怖定向震盪波，化作一圈圈肉眼可見的透明漣漪，從我嘴裡瘋狂噴射出去。</p><p>「轟隆隆——！！」</p><p>伴隨著一聲超越戰鬥機起飛的恐怖巨響，整片樹林的樹葉被瞬間震得精光，那隻高達6級的鋼刺暴豬連慘叫都來不及發出，直接被這一發「超強力獅吼功」轟得雙眼翻白，龐大的身軀在地上犁出了一條幾十公尺長的深溝，當場四腳朝天動彈不得。</p><p>「哇喔！代理人同學，你這一開口，直接把本神的高雅形象都震碎了呢！」神明在腦海裡一邊揉著耳朵一邊吐槽。</p><p>「妳以為是誰給我的奇葩能力啊！」我一邊揉著有些發麻的嗓子，一邊無力地吐槽。</p><p>然而，這只是個開始。第二森林的怪物們顯然被剛才那聲「驚天一吼」給激怒了。</p><p>接下來的兩個小時裡，我的四週簡直成了怪物嘉年華。7級的巨毒沼澤蛙、9級的烈焰雙頭狼、甚至還有一隻高達12級、一尾巴能抽碎山岩的「影刃黑豹」。</p><p>一開始我還有些手忙腳亂，衣服上甚至不小心沾到了白豔那花花綠綠的噁心血液。</p><p>「髒死了！我的新衣服啊！」</p><p>愛乾淨的本能讓我的怒氣值瞬間拉滿，我對新能力的組合開始變得越來越喪心病狂。</p><p>「給我……起！」</p><p>【移物】全開！方圓百公尺內、重達數噸的無數巨石被我憑空拔起，懸浮在半空中。</p><p>隨後，【繪瞳】鎖定所有怪物的能量死角。</p><p>「走你！」</p><p>我右手猛地一揮，幾十塊巨石帶著破空聲，精準得像自動導引飛彈一樣，劈頭蓋臉地砸向那些試圖偷襲的白豔。砸不死的，我就補上一記【音爆】遠程轟炸；試圖近身的，直接用【體術】配合風刃將其無情切裂。</p><p>不知不覺，三個小時過去了。</p><p>此時的第二森林中段，出現了一個極其詭異且搞笑的畫面。</p><p>滿地都是雙眼翻白、口吐白沫、被打得懷疑人生的雙位數級別高階白豔。而這一切的始作俑者——也就是我，此時正面無表情地站在一具14級「泰坦巨猿」的腦袋上。</p>` },
+            'n1_c18': { volume: 'v1', title: `第十八章：綁架`, content: `<p>我的左手正拿著一條不知道從哪撿來的藤蔓，一邊哼著歌，一邊極速、瘋狂地擦拭著校服袖口上的一滴白豔綠色血液。</p><p>因為動作實在太快（風行者100%熟練度），我的手速快到了產生殘影的地步。</p><p>「可惡！為什麼擦不掉！這隻死猴子的血居然自帶染色功能？！」我用那悅耳的女聲發出崩潰的哀鳴，那架勢，比起剛才跟14級怪物肉搏時還要驚恐百倍。</p><p>周圍那些剛刷新出來、原本想上來加餐的5、6級小怪們，一看到這個一隻手就能把14級大佬踩在腳底下、此時卻一臉狂躁地瘋狂擦衣服的「粉髮小惡魔」，紛紛嚇得倒吸一口涼氣，隨後非常默契地、悄悄地、排隊往後退了一百公尺。</p><p>「完蛋了，代理人同學。」神明在腦海裡看著滿地的怪物乾屍，發出了由衷的感嘆，「本神本來是帶你來實戰特訓的，結果你花三個小時……直接把自己練成這座森林裡最恐怖的生物了。」</p><p>「吼——！！！！」</p><p>一聲彷彿能將整座第二森林徹底撕裂的恐怖咆哮，毫無預兆地從密林最深處炸開。</p><p>原本周圍那些正悄悄後退的小怪們，一聽到這個聲音，頓時嚇得肝膽俱裂，連滾帶帶爬地四散逃竄。天空中飛過的一群變異巨鳥，更是直接被這股音波中夾雜的狂暴威壓給震得失去平衡，劈頭蓋臉地摔進樹叢裡。</p><p>大地的震動頻率瞬間拉滿。在我的【繪瞳】世界裡，前方的樹海中正有一團濃郁到近乎實質、呈現漆黑墨綠色的恐怖能量源，正以排山倒海之勢朝我狂奔而來。</p><p>目標：【暗黑奇美拉】</p><p>白豔等級：15級</p><p>「哎呀，驚動這裡的二把手了呢。」神明在腦海裡有些興奮地吹了個口哨，「15級，這傢伙的肉體防禦和毒素攻擊都很難纏喔，代理人同學，這下你的新制服可能真的保不住了。」</p><p>（妳給我閉嘴！）</p><p>看著那隻擁有獅頭、羊身、蛇尾，體型大得像座小山丘一樣的15級大Boss撞碎無數巨木衝到我面前，我的怒氣值在這一刻徹底突破了天際。</p><p>新仇舊恨（指衣服被弄髒）加在一起，我決定不留手了。</p><p>「吼——！！」暗黑奇美拉三個頭同時張開血盆大口，高溫、毒霧與衝擊波蓄勢待發。</p><p>然而，它的技能還在前搖，我的外掛已經啟動完畢。</p><p>繪瞳！</p><p>移物！</p><p>音爆！</p><p>「哈啊——！！！！」</p><p>我深吸了一口氣，將體內所有的能量毫無保留地灌注到嗓子裡，對著那隻奇美拉發出了我有史以來最狂暴的一聲怒吼。</p><p>這已經不是簡單的聲音了，這是一發將空間都震出肉眼可見裂痕的定向能量軌道砲！</p><p>「轟隆隆隆隆——！！！！」</p><p>伴隨著一聲驚天動地的巨響，15級奇美拉噴出的毒霧與高溫瞬間被音爆絞碎。甚至連零點一秒都沒能撐住，這隻足以毀滅一座小鎮的15級災難型白豔，三個頭同時露出了極度驚恐與懵逼的表情，隨後龐大的身軀被音爆帶來的恐怖風壓硬生生掀飛到了半空中。</p><p>還沒完！在它離地的瞬間，【移物】控制的數十塊萬斤巨石如同隕石般從天而降，配合著我宛如鬼魅般的【風行者】殘影，我在一秒內圍繞著它連踢了三十幾腳，每一腳都夾帶著精純的風元勁。</p><p>「砰！砰！砰！砰！轟——！」</p><p>當我優雅地落回地面、拍了拍裙擺時，那隻不可一世的15級暗黑奇美拉，已經像一灘爛泥一樣深深地陷進了一個直徑五十公尺的巨大隕石坑裡。</p><p>三個頭同時翻著白眼，舌頭吐得老長，身上還壓著幾塊巨石，徹底被幹趴得不省人事。</p><p>「……嘖，真弱。」我用悅耳的女聲嫌棄地拍了拍手。</p><p>從它出場到躺平，總共不超過三十秒。</p><p>「哇喔，代理人同學，你現在的戰鬥力簡直比本神還要像個反派呢。」神明在腦海裡嘖嘖稱奇。</p><p>然而，還沒等神明調侃完，她慵懶的聲音突然一沉。</p><p>「等等，晴，有人來了。人數不少，而且……正順著你剛才音爆的動靜快速往這裡移動，大概三十秒後抵達。」</p><p>（有人？這鬼地方怎麼會有人？）我心頭一驚。</p><p>「別廢話，把你的氣息收起來，快藏到樹上去！」神明果斷下達指令。</p><p>我不敢怠慢，【風行者】與【體術】瞬間催動到極致，整個人化作一道無聲無息的粉紅流光，瞬間躥上了身旁一棵高達數十公尺、枝葉極其茂密的千年巨木頂端。</p><p>我將自己完美地隱藏在繁茂的樹冠之中，【繪瞳】悄然啟動，死死盯著下方那片被我夷為平地的戰場邊緣。</p><p>「唰、唰、唰！」</p><p>不過十幾秒的時間，五道黑色的身影如同鬼魅般從茂密的叢林中竄出，穩穩地落在了那個巨大的隕石坑邊緣。</p><p>我透過繁茂的樹葉向下望去，這五個人全都穿著沒有任何標記的漆黑作戰服，臉上帶著隔絕精神探查的防毒面具。而最引人注目的是，其中身材最魁梧的那個人，肩上竟然扛著一個特製的麻袋。</p><p>此時，那麻袋正在劇烈地掙扎著，隱隱還傳來少女細微的嗚咽聲。</p><p>綁架？！在這種高危險度的第二森林裡綁架？</p><p>「老大，這……這到底發生了什麼事？」其中一名黑衣人看著眼前被夷為平地的戰場，以及那隻躺在坑底、正口吐白沫的15級暗黑奇美拉，聲音裡滿是驚恐，「這可是15級的怪物啊！怎麼被打成這副死狗樣了？難道有高階搜查官在附近？」</p><p>被稱作老大的魁梧男子冷哼一聲，緊了緊肩上的麻袋：「管他是誰，動作快點！目標已經到手，只要把這丫頭帶回總部，我們的任務就完成了。撤！」</p><p>看著那個不斷掙扎的麻袋，我體內那屬於久遠晴的直覺和正義感瞬間竄了上來。不管那裡面裝的是誰，在這種鬼地方被綁架，落入這群動機不純的人手裡，絕對只有死路一條。</p>` },
+            'n1_c19': { volume: 'v1', title: `第十九章：黑網`, content: `<p>（不行，得救人！）我在內心對神明說道。</p><p>「哎呀，代理人同學，你想去英雄救美啊？」神明在腦海裡悠悠地開口，語氣裡帶著一絲玩味，「不過你現在這副『久遠晴』的摸樣，要是直接衝下去，可是會被當成學校的怪物、甚至被各方勢力盯上的喔。畢竟你才剛在學校出完風頭呢。」</p><p>（那怎麼辦？總不能見死不救吧！）我有些焦急，下方的黑衣人已經準備撤退了。</p><p>「好啦好啦，本神早就替你想好了。」神明輕笑一聲，語氣裡透出一股不容置疑的神聖威嚴，「為了不暴露你的真實身份，本神現在賜予你一套專屬的『馬甲』。而且……為了安撫你即將受到的心理衝擊，這套馬甲可是自帶強力Buff的喔！」</p><p>轟！</p><p>還沒等我反應過來神明話裡的意思，一股前所未有的浩瀚能量瞬間在我的四肢百骸中炸開。那不是普通的風元勁，而是一種純粹、至高無上、帶著神聖威壓的神明之力。</p><p>我的身體形態在這一刻發生了翻天覆地的變化。</p><p>原本粉紅色的短髮在神聖光芒的包裹下瞬間暴漲，化作一頭如瀑布般垂落至腰間的璀璨銀白色長髮；那雙黑色的眼眸在睜開的剎那，瞳孔徹底轉化為如同紅寶石般妖艷、卻又無比威嚴的深邃紅瞳。</p><p>更讓我震驚的是，我的身體竟然緩緩懸空漂浮了起來。</p><p>【神聖之軀：限定解鎖】</p><p>外觀變更： 銀白長髮、紅瞳少女。</p><p>專屬能力：【御空飛行】（突破物理常數，隨心所欲地在天空中翱翔）。</p><p>限定Buff： 變身期間，你目前所擁有的所有能力（風行者、體術、音爆、移物、繪瞳）之基礎威力與精神感知，全部暴漲3倍！</p><p>「哇靠……這力量……」</p><p>我一開口，聲音不再是之前那種帶著一絲少年感的悅耳女聲，而是變成了一種空靈、冰冷、帶著無上威嚴與一絲魅惑的絕對女神音。</p><p>感受著體內那翻了整整三倍、宛如汪洋大海般近乎無窮無盡的恐怖力量，我微微握了握拳頭。此時的我在【繪瞳】的增幅下，下方的五個黑衣人在我眼裡，弱小得簡直就像五隻隨手可以捏死的螞蟻。</p><p>「這感覺……好像還不賴。」</p><p>我那雙妖艷的紅瞳微微一凝，鎖定了下方正準備離去的黑色身影。</p><p>下一秒，我不再需要借助任何風力，整個人如同一尊降臨凡間的銀髮戰神，無聲無息地從高空緩緩飄落，直接攔在了這群綁匪的退路之上。</p><p>「什麼人？！」</p><p>魁梧的黑衣老大猛地煞住腳步，警惕地低吼一聲，其餘四名黑衣人也瞬間拔出腰間的武器，擺出了戰鬥姿勢。</p><p>然而，當他們看清眼前佇立的身影時，整支黑衣小隊全都不自主地屏住了呼吸。</p><p>離地數公分、靜靜懸浮在半空中的，是一名擁有宛如月光般璀璨的銀白色長髮少女。她身上散發著令人窒息的恐怖威壓，那一雙如血般鮮紅的紅瞳，正居高臨下、毫無感情地俯視著他們。</p><p>這股壓迫感，比剛剛那隻15級的暗黑奇美拉還要可怕數倍！</p><p>「閣下是誰？這是我們『黑網』的事，勸妳最好不要多管閒事……」黑衣老大強忍著雙腿的顫抖，試圖用組織的名號壓人。</p><p>「把人留下。」</p><p>我開口了。</p><p>那是空靈、冰冷且帶著絕對威嚴的女神音。在【神聖之軀】三倍威力的加持下，僅僅是這簡短的三個字，就化作了一道實質化的精神重壓，轟然砸在五人的心頭。</p><p>「可惡！別被她嚇到了！一起上！」</p><p>黑衣老大咬牙一吼，身旁四名訓練有素的黑衣人立刻化作殘影爆射而出！四種不同的A級遠程攻擊能力——火焰、冰刺、重力彈與毒刃，在一瞬間將我所有的閃避路線封死。</p><p>然而，在翻了三倍威力的【繪瞳】與【移物】面前，這種程度的攻擊簡直慢得像是在放慢動作。</p><p>我甚至連指尖都沒有抬一下，只是紅瞳微微一冷。</p><p>移物！</p><p>「轟——！！」</p><p>四道足以粉碎山岩的狂暴攻擊在距離我半公尺的地方，彷彿撞上了一座無形的空間神牆，全數轟然炸裂！熾熱的火光與冰屑四射，卻連我的一根銀白色頭髮都沒能吹動。</p><p>「什麼？！這怎麼可能？！」四名黑衣人眼珠子差點掉了出來。</p><p>「動手動腳的，真沒禮貌。」</p><p>我冷冷地說道，空靈的聲音在空曠的森林裡迴盪。</p><p>移物！</p><p>沒有給他們任何反應的時間，一股無法抗拒的恐怖重力瞬間從天而降，如同數萬噸的高山直直砸在他們肩上！</p><p>「噗——！」</p><p>四名黑衣人連慘叫都來不及發出，雙腿膝蓋同時折斷，直接重重地趴在了地上，深深陷入泥土之中，連動彈一下手指都做不到，當場昏死過去。</p><p>瞬間秒殺四人！</p><p>「妳……妳到底是什麼怪物？！」</p><p>只剩下最後的黑衣老大站在原地，他額頭上冷汗狂飆，扛著麻袋的手臂因為極度的恐懼而瘋狂顫抖。他看著懸浮在半空中的銀髮少女，眼裡的鬥志徹底潰散。</p><p>「我再說最後一遍。」</p><p>我緩緩從半空中飄落，腳尖輕輕踏在泥土上，那一雙深邃的紅瞳靜靜地看著他。</p><p>「把人，放下。」</p><p>「可……可惡啊啊啊！」</p><p>黑衣老大的精神終於崩潰，他猛地將肩上的麻袋甩向地面，同時企圖催動體內所有的能量轉身逃跑。</p><p>「在我面前，你也想跑？」</p><p>我冷哼一聲，右手輕輕一揮。【移物】的無形念力化作一隻巨大的溫柔大手，精準且穩穩地接住了滑落的麻袋，將它輕柔地放置在一旁的草地上。</p><p>緊接著，我的身形宛如一道銀白色的閃電撕裂空間，瞬間跨越了幾十公尺的距離，憑空出現在黑衣老大的背後。</p><p>體術！</p><p>一記看似輕描淡寫的掌擊，輕柔地拍在了黑衣老大的後背上。</p><p>「砰！」</p><p>黑衣老大身軀一震，眼珠子翻白，連一聲哼哼都沒發出來，直接栽倒在地，失去了意識。</p>` },
+            'n1_c20': { volume: 'v1', title: `第二十章：赫爾西亞`, content: `<p>短短不到十秒鐘，一支擁有高級裝備的五人綁架小隊，全滅。</p><p>「哇喔——！代理人同學，太帥了啦！」神明在我腦海裡瘋狂鼓掌吹口哨，「這銀髮紅瞳的姿態配上三倍戰力，簡直是神仙下凡！本神給的這個馬甲是不是超級讚？」</p><p>（……讚是讚，但這力量消耗也太大了。）我微微喘了口氣，感受著體內能量的快速流逝。</p><p>我轉過身，看向那個靜靜躺在草地上的特製麻袋。</p><p>麻袋依然在輕微地蠕動著，裡面傳來少女急促且帶著恐懼的嗚咽聲。顯然，裡面的女孩剛才親耳聽到了外面那場恐怖的戰鬥，此刻不知道外面降臨的到底救星還是另一個更可怕的怪物。</p><p>我沒有急著去解開麻袋。</p><p>「總之……先離開這個是非之地再說。」</p><p>我走上前，用【移物】將麻袋穩穩地懸浮在身後，隨後催動【御空飛行】，化作一道銀白色的流光，帶著麻袋消失在了這片狼藉的第二森林深處。</p><p>我帶著懸浮的麻袋飛到了數公里外的一處清幽山谷。確定周圍沒有其他威脅後，我緩緩降落在草地上，手指輕輕一揮，【移物】的念力便如同一把無形的利刃，乾脆俐落 地割開了麻袋上的特製繩結。</p><p>麻袋被揭開，裡面蜷縮著一個看起來大約十一、十二歲的小女孩。</p><p>她穿著精緻卻略顯凌亂的蕾絲洋裝，一頭柔順的黑色長髮有些散亂。當她抬起頭時，那雙微紅的小眼睛裡充滿了驚恐與怯懦，臉頰上還掛著沒乾的淚痕。</p><p>當她看清眼前懸浮在半空中、散發著冰冷威嚴氣息的我——銀白色的長髮隨風輕揚，一雙如紅寶石般深邃的紅瞳正居高臨下地看著她時，小女孩忍不住縮了縮肩膀，小聲地抽噎了一下。</p><p>「別害怕。」我將聲音壓得極其柔和，用那空靈且帶著神聖感的女聲開口：「壞人已經被我解決了，妳安全了。妳叫什麼名字？怎麼會被抓到這種地方？」</p><p>小女孩吸了吸鼻子，有些害怕地看著我，似乎是被我的外貌與威壓震撼到了，過了幾秒才怯生生地回答：「我……我叫伶雨。今天下午我在街上買蛋糕……突然衝出來好幾個黑衣人……保鏢叔叔們為了保護我，都被他們打倒了……然後我就被蓋上麻袋裝進車裡了……」</p><p>說完，小女孩的眼眶又紅了起來。</p><p>聽到她的描述，我微微挑眉，心裡瞬間有了推測。</p><p>第二森林是高危險度的禁區，普通綁匪不可能特地跑進這裡來執行綁架。唯一的解釋就是，這群「黑網」的傢伙在市區綁了這個小女孩後，為了躲避防禦局的追查，打算繞道第二森林返回他們位於禁區深處的總部，結果剛好撞上了在森林裡特訓的我。</p><p>該說這群綁匪運氣太差，還是這小女孩命不該絕呢？</p><p>「那……大姐姐，妳叫什麼名字？」伶雨用那雙水汪汪的大眼睛看著我，奶聲奶氣地問道。</p><p>大姐姐？</p><p>聽到這個稱呼，我心裡有些哭笑不得，但考慮到現在這個「銀髮紅瞳」的專屬馬甲，我自然不能報出久遠晴的名字。</p><p>我稍微清了清嗓子，眼神微微一凝，散發出一股神秘莫測的氣場，冷靜地編了個名字：「我叫……赫爾西亞。」</p><p>「赫爾西亞姐姐……」伶雨乖巧地念了一遍這個名字，眼神裡的恐懼終於消散了大半，取而代之的是一種對強者的崇拜。</p><p>「這裡很危險，我帶妳回安全的地方。」</p><p>我沒有廢話，直接催動【移物】將伶雨溫柔地包裹起來，隨後【御空飛行】全開，帶著她化作一道銀白色的流光，衝上了雲霄。</p><p>在空中飛行時，我利用【繪瞳】遠距離掃描，很快就在第二森林邊緣的防禦牆旁，找到了一座守備森嚴的重裝要塞——T國白豔防衛局（TWD）第十二前線駐地。</p><p>「唰！」</p><p>一道銀白色的光芒劃破長空，我帶著伶雨穩穩地降落在駐地大門口的全息警戒線前。</p><p>刺耳的警報聲瞬間響徹整座要塞！</p><p>「警報！有不明高能反應靠近！全員戒備！」</p><p>幾十名身穿重型機械裝甲的防禦局衛兵瞬間湧了出來，無數笨重的雷射槍口齊刷刷地對準了我。就在氣氛劍拔弩張之際，駐地指揮所的大門突然被推開，一名氣場強大、中年模樣的長官面色凝重地快速走了出來。</p><p>那名中年長官身上穿著深藍色的高階軍服，最引人注目的是他左臂袖口上刺繡著三條精緻的銀色紋路，胸前則掛著三根銀色的飾針繩索。</p><p>當這位長官看到我身旁的小女孩時，瞳孔猛地一縮，失聲叫了出來：「小雨？！妳怎麼會在這裡？妳不是在市區被綁架了嗎？！」</p><p>「夜聞叔叔！」伶雨看到熟人，立刻興奮地揮了揮手。</p><p>被稱作夜聞的長官連忙快步衝上前來，將伶雨護在身後，隨後極其警惕且震驚地看向懸浮在原地的我。</p><p>「閣下到底是什麼人？為什麼會帶著風哥……也就是伶長風的女兒？」夜聞語氣無比恭敬，卻又帶著深深的戒備。因為他能清楚感受到，眼前這個銀髮紅瞳的少女，身上散發出的能量波動簡直恐怖到無法計算！</p><p>就在我打算隨口解釋兩句就溜走時，神明那幽悠的科普聲音在我腦海中響起。</p><p>「代理人同學，幫你補充一下這個世界的常識喔。這群穿軍服的傢伙是TWD（T國白豔防衛局）。全世界的白豔防衛局職位分級都是嚴格劃分的，看袖子和胸口就能看出來。」</p><p>神明在我腦海裡滑出一張虛擬圖表：</p><p>「按照袖子顏色分為三個階級：金色 &gt; 銀色 &gt; 白色。</p><p>而胸口掛的飾針繩索，又把每個階級細分為1到5級，一繩最小，五繩最大。</p><p>剛才出來的這個夜聞是『銀袖三繩』，算是一方要塞的大人物了。但他口中的那個『風哥（伶長風）』，可是『金袖一繩』的超級大佬！</p><p>順帶一提，整個T國最大的TWD高層，也才『金袖二繩』，而且全國僅此一人。也就是說，你剛剛救下的這個小女孩，她爸爸是站在這個世界金字塔最頂端的戰力之一喔！」</p>` },
+            'n1_c21': { volume: 'v1', title: `第二十一章：有這號人物嗎？`, content: `<p>（原來這小傢伙背景這麼硬……）我在內心驚嘆了一句。</p><p>此時，面對夜聞的質問，我微微昂起頭，用冰冷且空靈的聲音淡然開口：「我在第二森林清理白豔時，順手解決了一支『黑網』的綁架小隊，把她救了下來。既然她是你們的人，那就交給你們了。」</p><p>說完，我根本不給夜聞任何詢問的機會，身形微晃，【御空飛行】爆發出滾滾風壓，整個人直接化作一道璀璨的銀色閃電，瞬間衝向了天際！</p><p>「等等！閣下請留步！請問閣下尊姓大名？！TWD必定重謝——！」</p><p>夜聞大驚失色，連忙催動體內的A級飛行能力想要追上去，但他的速度在擁有了三倍Buff加持的我面前，簡直慢得像隻烏龜。</p><p>只是一眨眼的工夫，我的身影就已經徹底消失在雲層深處，只留下夜聞一個人站在要塞門口，看著浩瀚的天空，震撼得久久無法言語。</p><p>「銀髮……紅瞳……飛行能力……一招打垮黑網小隊……」</p><p>夜聞倒吸了一口涼氣，連忙轉頭對手下大喊：「快！立刻聯繫金袖一繩的伶長風大人！報告他女兒安全找回的消息！還有……順便通報總部，我們可能在第二森林……發現了一位未登記的『S級能力者』！」</p><p>而此時，早已飛出數十里遠的我，正悄悄降落在森林外圍的一處無人廢墟裡，解除變身，變回了那個一頭粉紅長髮的「久遠晴」。</p><p>我拍了拍校服上的灰塵，看著恢復平靜的天空，嘴角輕輕勾起了一抹無奈的笑意。</p><p>「今天這場週末特訓……還真是意外連連啊。」</p><p>位於首都中央特區的TWD總部大樓內，此時的氣氛沉重得彷彿隨時會引爆一顆原子彈。</p><p>「還沒找到？！整整三個小時了！你們這群搜查官平時拿著特級津貼，關鍵時刻連幾個黑網的走狗都堵不住？！」</p><p>特級指揮官辦公室裡，一道震耳欲聾的怒吼聲幾乎要把防彈玻璃給震碎。</p><p>說話的人正是一頭短髮、氣場恐怖如雷霆的伶長風。作為整個T國僅有的兩位「金袖一繩」頂級大佬之一，平時他在新聞上永遠是那副沉穩冷酷、一拳能轟碎15級怪物的鋼鐵硬漢形象。</p><p>但今天，這位金字塔頂端的強者正焦頭爛額地在辦公室裡來回暴走，眼睛紅得像要吃人。</p><p>他最寶貝的寶貴女兒——伶雨，竟然在市區買蛋糕時被黑網綁架了！</p><p>「長風大人，請息怒……黑網這次動用了屏蔽干擾器，而且他們很可能已經逃進了第二森林……」幾名白袖與銀袖的下屬嚇得瑟瑟發抖，低著頭連大氣都不敢喘。</p><p>「第二森林？！那是能隨便帶小孩子去的地方嗎？！」伶長風一巴掌拍在合金辦公桌上，堅硬的桌面瞬間多出了一個深達數公分的清晰掌印。</p><p>就在他準備親自披掛上陣，把第二森林翻個底朝天的時候，桌上的特級加密通訊器突然狂響起來。</p><p>「叮鈴鈴——！」</p><p>伶長風一把抓起通訊器，沒好氣地吼道：「夜聞！如果不是關於小雨的消息，你就準備去南極駐地掃雪吧！」</p><p>通訊器那頭傳來了夜聞有些激動又有些古怪的聲音：「風哥！找到了！小雨在我這裡！第十二前線駐地！」</p><p>「什麼？！小雨沒事？！」伶長風身上的恐怖威壓瞬間一空，整個人差點沒站穩「那些黑網的人呢？妳有沒有受傷？快把電話給我女兒！」</p><p>「爸爸——！」通訊器裡傳來了伶雨奶聲奶氣又帶著點委屈的哭腔，「小雨好想你喔！」</p><p>聽到寶貝女兒聲音的瞬間，這位平時殺伐果斷的金袖大佬差點沒直接掉下眼淚來，剛才那股想要毀天滅地的氣勢瞬間蕩然無存，秒變護短的笨蛋老爹：「小雨別怕！爸爸現在就飛過去！是夜聞叔叔救了妳嗎？爸爸回去給他升官重賞！」</p><p>「呃……風哥……」通訊器那頭的夜聞有些尷尬地咳嗽了兩聲，「其實……救下小雨的不是我。是一名……未登記的神秘超級強者。」</p><p>「神秘強者？」伶長風眉頭一皺。</p><p>十分鐘後，一台超音速戰鬥機直接降落在第十二駐地的停機坪上。伶長風像陣風似的衝進了接待室，一眼看到坐在沙發上吃著草莓蛋糕的小伶雨，二話不說衝上去把女兒抱進懷裡瘋狂蹭臉。</p><p>「小雨！妳嚇死爸爸了！有沒有哪裡受傷？那些壞人有沒有碰妳？」</p><p>「爸爸，我沒事啦，蛋糕都要被你蹭掉了！」小伶雨嫌棄地推開老爹的臉，但眼神裡滿是安全感。</p><p>站在一旁的夜聞這才上前，神色無比嚴肅地回報：「風哥，事情是這樣的。黑網的那支五人小隊……全滅了。被發現的時候，四個被砸進地裡骨折，老大被一掌拍暈，邊上還有一隻受重傷的15級白豔。」</p><p>伶長風雙眼微眯，眼中閃過一絲震驚：「15級白豔？還收拾了黑網小隊？我們T國什麼時候出了這種級別的隱世老怪？對方什麼來頭？S級還是A級？」</p><p>「這個……風哥，妳還是親自問小雨吧，對方把小雨送到門口就直接飛走了，速度快到我連背影都沒追上。」夜聞苦笑道。</p><p>伶長風連忙蹲下身，溫柔地揉了揉女兒的頭：「小雨，跟爸爸說，救妳的那位『老前輩』長什麼樣子？有沒有留下一點聯絡方式？」</p><p>小伶雨嚥下嘴裡的蛋糕，歪著頭認真回想，一雙大眼睛裡放出了崇拜的光芒：</p><p>「救我的不是老爺爺喔！是一位超級超級漂亮的姐姐！」</p><p>「姐姐？女孩？」伶長風一愣。</p><p>「對啊！」小伶雨手舞足蹈地描述起來，「那位姐姐超厲害的！她有一頭好漂亮的銀白色長髮，眼睛像漂亮的紅寶石一樣，是紅色的瞳孔！而且她根本不用踩在地上，是直接在天空裡飛來飛去的耶！」</p>` },
+            'n1_c22': { volume: 'v1', title: `第二十二章：過目不忘`, content: `<p>「銀髮……紅瞳……會飛的少女？！」伶長風與夜聞對視一眼，兩人臉上全是懵逼。</p><p>T國強者名錄裡，哪有這一號人物啊？</p><p>「那她有沒有說她叫什麼名字？」伶長風急切地問道。</p><p>小伶雨挺起小胸脯，一字一頓、極其驕傲地說道：「她說……她叫赫爾西亞！赫爾西亞姐姐超級溫柔的，還特別抱著我飛呢！」</p><p>「赫爾西亞……」</p><p>伶長風重複著這個名字，腦海裡瘋狂運轉，試圖將全世界著名的S級強者名字跟這個代號對上號，但查了半天依然是一片空白。</p><p>一個能飛、銀髮紅瞳、隨手打垮15級怪物、甚至連TWD資料庫都沒有記錄的神秘少女？</p><p>「難道……是某個古老世家培養出來的高手？或者是從外國禁區偷渡過來的隱世大佬？」夜聞在旁邊忍不住發揮想像力。</p><p>「不管她是誰……」</p><p>伶長風站起身，神色無比莊嚴，語氣裡充滿了感激與敬畏：「她救了我伶長風的女兒，那就是我伶家的恩人！傳我的命令，以金袖一繩的名義，動用總部最高的特級情報網，暗中尋找這位『赫爾西亞』大人的下落！」</p><p>「記住，是『請』！態度給我放得要多恭敬有多恭敬！誰要是敢惹這位赫爾西亞大人不高興，我親自扒了他的皮！」</p><p>「是！」夜聞連忙立正敬禮。</p><p>而此時，遠在城市另一頭、剛剛換回粉紅長髮的久遠晴，正猛打著噴嚏。</p><p>「哈啾！……奇怪，誰在背後念叨我？」</p><p>從第二森林折騰了一整天回到家，我差點沒直接癱倒在客廳的沙發上。</p><p>「呼……累死了，這又是英雄救美又是大戰十五級怪物的，我這個普通高中生今天真是運動量超標……」我一邊用悅耳的女聲抱怨著，一邊正準備去浴室洗澡，腦海裡卻突然傳來神明那帶著一絲自豪與邀功的清脆笑聲。</p><p>「叮咚～！恭喜代理人同學完成了第一次『拯救世界（順便打響赫爾西亞名號）』的隱藏任務！」</p><p>神明在我大腦裡開心地鼓起掌來，「看在你今天表現這麼賣力、還完美的維持了本神的時尚品味（指銀髮紅瞳馬甲）的份上，本神決定——頒發獎勵給你！」</p><p>「獎勵？」我挑了挑眉，「該不會又是什麼奇怪的新造型吧？」</p><p>「本神有那麼不靠譜嗎？！」神明不滿地哼了一聲。</p><p>下一秒，我面前的空氣猛地泛起一陣如水波般的空間漣漪。「嗡——」兩道耀眼的純白光芒憑空綻放，隨後「叮噹」兩聲，兩把精緻無比的短刀穩穩地浮現在我面前。</p><p>這兩把短刀通體呈現出一種如羊脂白玉般純淨無暇的漆黑……啊不，是純白！刀身上刻滿了複雜、神秘且流轉著微光的繁瑣花紋，光是靜靜懸浮在那裡，就散發出一股令人心悸的神聖與鋒銳之氣。</p><p>「這兩把短刀名為『雙泠』。」</p><p>神明的聲音突然變得有些高大上起來「這可是本神親自為你打造的專屬神兵！它的效果非常簡單粗暴——第一，【四重裂閃】！只要你拿著它揮刀砍中敵人一下，刀身上的神聖法則就會瞬間觸發，自動追加額外四道同等威力的神聖割裂傷害！」</p><p>「打一下等於砍五刀？！」我眼珠子差點掉了出來，這特麼不就是物理掛上加掛嗎？</p><p>「哼哼，還有第二個效果——【絕對回歸】！」</p><p>神明得意洋洋地補充，「不管你把這兩把刀扔到幾千公里外、哪怕扔進黑洞裡，只要你心念一動，它都會自動飛回你的手裡！而且……本神拿神格向你打包票，這個世界上，絕對沒有任何東西能夠打壞這兩把刀！拿去切菜或者剁15級白豔都隨你便～」</p><p>我伸出手，輕輕握住「雙泠」的刀柄。</p><p>一股溫潤如玉卻又無比契合的感覺瞬間傳遍全身，宛如這兩把刀本就是我身體的一部分。</p><p>「謝啦，這武器確實挺實用的。」我由衷地感嘆道，順手把雙泠收進了神明給的精神空間裡。</p><p>「好啦，看在本神今天大方的份上～」神明在我腦海裡搓了搓手，像個熱情的推銷員一樣問道「代理人同學，你還有沒有什麼特別想要的能力啊？只要你說得出來，本神今天買一送一，通通滿足你喔！」</p><p>能力？我站在客廳裡，認真地思考了三秒鐘。</p><p>我現在有A級風行者、A級體術、A級音爆、A級移物，還有S級的繪瞳，現在又拿到了打一下頂五下的神兵「雙泠」，甚至還能變身成赫爾西亞……說實話，在戰鬥這方面，我已經快要把「無敵」兩個字寫在臉上了。</p><p>作為一個轉學生，我現在最缺的是什麼？我嘆了一口氣，想起下週那堆繁重的課業，以及高一A班那些關於超自然理論、歷史演進和繁雜公式的死記硬背內容，隨口吐嘈道。</p><p>「……能給我一個『過目不忘』嗎？我真的不想背課本。」神明愣了一下，隨後在我腦海裡爆發出一陣排山倒海的狂笑聲「噗——哈哈哈哈哈哈！代理人同學！你擁有了能把15級怪物當球踢的力量，結果你跟本神許願要『過目不忘』？！你是在逗我嗎？！哈哈哈哈笑死本神了！」</p><p>「笑什麼笑啊！我也是要考大學的好嗎！」我氣急敗壞地反駁。</p><p>「行行行～滿足你！這可是你自己選的喔～」神明打了個響指。</p><p>霎時間，我只覺得大腦神經微微抽搐了一下，原本有些混濁的精神在一瞬間變得前所未有的清晰。就像是大腦突然從240P的低畫質升級成了4K超高清，記憶體直接從8G擴展到了無窮大！</p><p>「叮～過目不忘已加載完畢！祝你學習愉快，未來的狀元郎同學～」神明笑得肚子痛，直接在我腦海裡翻滾。</p><p>十分鐘後。我洗完澡，穿著輕鬆的居家服，坐在自己房間的書桌前。面前擺著厚厚一疊高一A班的《超自然能力應用學》、《近代白豔防禦史》以及《數學能量公式解析》。我深吸了一口氣，隨手翻開了第一頁。</p>` },
+            'n1_c23': { volume: 'v1', title: `第二十三章：100分`, content: `<p>「唰唰唰唰——」我不停地翻著書頁，速度快得就像在扇風。然而，神奇的事情發生了！每當我翻過一頁，那一頁上密密麻麻的文字、複雜的能量運行圖、甚至是歷史事件的精確年份，就像是被掃描器直接掃進了我的大腦硬盤裡一樣，條理分明、永不磨滅地儲存了起來！翻完一本厚達三百頁的《超自然能力應用學》，我只花了……二十秒。「我的天……這比開掛還爽啊！」原本昏昏欲睡的學習頓時變得無比解壓。</p><p>我興奮地把桌上所有的教科書、參考書、甚至是千平時看的國中難題庫通通搬了過來！「唰唰唰唰唰！」深夜的久遠家房間裡，不時傳出魔性般的翻書聲。</p><p>「哥……你在幹嘛啊？大半夜的不睡覺在做風扇嗎？」不知何時，穿著睡衣、揉著眼睛的千推開了房門，一臉看傻子的表情看著我那手速快到產生殘影的翻書動作。</p><p>「千！妳來的正好！」我拿著一本《高等能量微積分》，眼神發光地看著她，「快，隨便挑這本書裡的任何一頁任何一題考我！」</p><p>千像看精神病一樣看了我一眼，隨手拿過書翻到第182頁「第182頁第三題............解答是什麼？」</p><p>「第182頁第三題，題目是關於A級火系能量轉化效率公式，解答是答案B，計算過程一共七步，第一步是E=mc^2變體……」我幾乎是秒答，連標點符號都精確地背了出來！</p><p>千：「……」</p><p>看著自家妹妹那雙原本冰冷的黑眸瞬間張大、滿臉寫著「你是不是被外星人寄生了」的驚恐表情，我優雅地推了推並不存在的眼鏡，得意地笑了起來。</p><p>（神明在我腦海裡再次瘋狂捶桌：哈哈哈哈這個代理人真的沒救了！拿神明祝福去當學霸！）</p><p>翌日，高一2班教室。</p><p>「嘿嘿嘿……晚成啊，今天早上的『超自然理論基礎』小考，你考得怎麼樣啊？」</p><p>剛下課，秋林就把那張剛發下來、散發著墨香的考卷輕輕摔在桌上。他雙手環胸，嘴角帶著一抹極其欠扁的弧度，將考卷上方那個鮮紅亮眼的「100」分無死角地展示給隔壁的唐晚成看。</p><p>「靠！秋林你少在那裡擺譜！」老唐看著自己考卷上那個慘不忍忍睹的「58」分，氣得差點把考卷揉成一團，「我不跟全校第二比筆試！有本事我們去擂台上再打一架啊！」</p><p>「省省吧，之前淘汰賽是誰被久遠一招四兩撥千斤送下台的？」秋林推了推眼鏡，補刀毫不留情。</p><p>「你！你還不是被晴逼得差點要撞牆！」老唐臉色一漲，隨即有些鬱悶地捶桌。</p><p>我在旁邊看著這兩個熱血笨蛋打嘴仗，有些好奇地湊過去，用那悅耳動聽的女聲問道：</p><p>「對了，老唐、秋林，我一直有個疑問耶，既然秋林理論課是全校第二名，那為什麼當初沒有被分到高一1班啊？還有……全校第一名到底是誰啊？」=</p><p>聽到我的問題，秋林驕傲的笑容稍微收斂了些，而老唐則是哈了一口氣，拍著我的桌子解釋道：</p><p>「晴，你剛轉來不知道！我們學校雖然是頂級異能高中，但跟舊時代那些死讀書的高中完全不一樣！學校根本不怎麼重視單純的筆試成績——升學和資源分配的時候，筆試成績只佔可憐的三分之一！剩下的三分之二全看實戰壓制力和能力開發度！」</p><p>老唐湊過來，壓低聲音繼續八卦：「至於筆試第一名……哼哼，就是昨天跟你決賽打得天崩地裂的那個怪物——拉雅！」</p><p>「拉雅是第一名？！」我微微驚訝。</p><p>「對啊！」老唐聳了聳肩「那女人平時根本不來上課，小考也全都缺席刷零分。但只要碰到期末考那種大考，她隨便寫寫都能拿滿分！聽說是從小家裡請了頂級的家教，再加上她那變態的精神力，看書速度跟刷屏一樣……」</p><p>（噗，看書跟刷屏一樣？抱歉了拉雅同學，本大爺現在翻書速度比刷屏還快，直接是神明級光速硬碟備份。）我在內心偷偷吐槽，腦海裡的神明更是已經笑得快岔氣了。</p><p>此時，秋林收拾好心情，轉過頭看向一直安靜坐在位置上的我，挑眉問道：</p><p>「對了久遠，你昨天剛轉來，今天也是第一次參加這種理論小考吧？感覺怎麼樣？分數拿出來讓大家看看呗。雖然你實戰高得嚇人，但理論這種東西可不是光靠武力就能——」</p><p>秋林的話還沒說完，我就無奈地嘆了過來，從書包裡掏出了我那張剛發下來的考卷，隨手放在了桌子中央。</p><p>只見考卷的最上方，同樣用紅筆大大的寫著：</p><p>【 100 分 】</p><p>整張考卷密密麻麻全是標準解答，連最後一道佔分三十分的「A級複合能量公式推導」附加題，我都用最完美、最嚴謹的三種不同解法給寫滿了，捲面乾淨得像印刷品一樣！</p><p>教室裡瞬間安靜了兩秒。</p><p>秋林那原本充滿自信的笑容瞬間凝固在臉上，眼珠子差點沒從眼鏡後面瞪出來，死死盯著那張考卷上的名字和分數。</p><p>「一……一百分？！連附加題都對了？！」秋林說話都開始結巴了，「這、這不可能啊！這道附加題連我都只寫出了一種推導方式！你昨天晚上到底看了多久的書？！」</p><p>「呃……其實我也沒看多久，就隨便翻了一下課本……」我心虛地揉了揉鼻子。</p><p>（確實沒看多久，一本三百頁的書我就花了二十秒而已。）</p><p>「啊啊啊啊啊！不公平啊！老天爺太不公平了啦！」</p><p>旁邊的老唐終於徹底崩潰了！他抱著腦袋瘋狂揉搓自己那一頭亂髮，對著天花板發出哈士奇般的哀嚎：</p><p>「長得比校花還漂亮就算了！實戰把全校第一的拉雅給揍了也算了！現在連筆試都拿滿分？！晴！你老實交代，你是不是上輩子拯救了銀河系，這輩子專門跑來我們班虐菜的啊啊啊！」</p>` },
+            'n1_c24': { volume: 'v1', title: `第二十四章：說話要看場合`, content: `<p>「老唐你冷靜一點，小心等一下老師進來以為你發狂……」我無奈地試圖安撫他。</p><p>「我不冷靜！我絕不冷靜！」老唐趴在桌上狂錘桌面，假哭道：「秋林考一百分就算了，反正他是個眼鏡學霸；結果你這個天天在秘密空間睡午覺的轉學生也考一百分！這讓我這個考58分的人以後在A班怎麼混啊！我要轉班！我要回C班當霸王啦！」</p><p>「噗哈哈哈——！」</p><p>看著老唐那崩潰的搞笑模樣，還有秋林在一旁懷疑人生的呆滯表情，連我都忍不住用悅耳的女聲笑出了聲。</p><p>「代理人同學，本神就說吧～」神明在我腦海裡笑得直打滾，「這個『過目不忘』的能力，在凡人學校裡簡直就是最殘忍的精神打擊呢！你看那個哈士奇同學，靈魂都快從嘴裡飄出來了～」</p><p>（妳還笑，還不都是妳給的能力太作弊了！）我內心調侃道。</p><p>中午時分，暖洋洋的陽光灑滿了天台。</p><p>我熟練地推開那面覆蓋著藤蔓的舊石牆暗門，正打算在我的「專屬秘密基地」享受一個安靜的午覺，結果剛邁進去一步，整個人就直接僵在了原地。</p><p>只見天台那張舊長椅上，此時竟然坐著三個風格迥異卻同樣耀眼的少女。</p><p>黑長直的高冷校花悠、淡金髮異色瞳的八卦少女安安，以及——一頭霧灰色長髮、披著白色外套的全校第一怪物拉雅！</p><p>她們三個正圍在一起喝著飲料，氣氛看起來熟絡得不得了。</p><p>「喲，晴！你來啦～」安安最先看到我，興奮地揮了揮那隻漂亮的異色瞳少女特有的細白小手。</p><p>「你們……怎麼會在我的秘密基地？」我用悅耳的女聲無奈地問道。</p><p>悠捧著紅茶，有些彆扭地撇過頭去：「什麼你的秘密基地？我和安安還有拉雅從小就認識了好嗎？這裡以前是我們三個的私房茶會地點，只是這陣子拉雅沒來。」</p><p>我這才知道，原來這三位S班的頂級女神，私底下的關係居然這麼好！</p><p>看到我走過來，原本閉目養神的拉雅緩緩睜開了那雙清冷的霧灰色眼眸。</p><p>她打量了我一眼，嘴角微微勾起，開門見山地說道「久遠晴。今天早上的小考，你拿了滿分吧？」</p><p>「呃，對啊。」我點了點頭。</p><p>「實戰我輸給了你，但在筆試上，我可沒打算繼續輸。」拉雅站起身，霧灰色的長髮隨風輕揚，語氣裡帶著不容置疑的傲氣「三週後的大考，敢不敢和我比一比總分？」</p><p>看著這位戰力怪物居然要在「筆試」上跟我較勁，我不禁有些哭笑不得。開玩笑，我現在可是有神明給的「過目不忘」外掛，跟她比筆試簡直是降維打擊，贏了也勝之不武啊。</p><p>「額，我看還是不用了吧……」我擺了擺手，委婉地拒絕道。</p><p>然而，聽到我的拒絕，拉雅並沒有生氣，反而微微低下頭，精緻的臉上緩緩露出了一個極其罕見、卻又帶著濃厚威脅意味的「溫柔笑容」。</p><p>那笑容美得驚人，但周身隱隱浮現的狂暴能量波動，卻讓人脊椎發涼。</p><p>「嗯？你剛才說……不用？」拉雅歪了歪頭，笑容燦爛得像朵帶毒的花。</p><p>一股直達靈魂深處的巨大危機感瞬間襲上心頭！</p><p>「咳！我意思是……不用多說了！我接下了！」我的求生慾瞬間拉滿，秒速改口「三週後的大考，我們憑實力說話！」</p><p>看到我改口，拉雅這才收起了那令人毛骨悚然的笑容，滿意地點了點頭。</p><p>「哈哈哈哈！代理人同學，你剛才求生的速度比開【風行者】還快呢！」神明在我腦海裡笑得前仰後合。</p><p>這時，一旁的悠有些擔心地看著我，猶豫了一下，小聲地開口道：「三週後的大考範圍很大……晴，如果你不介意的話，這個週末要不要和我一起去市立圖書館讀書？我可以幫你複習一些超自然理論的重點。」</p><p>「好啊，有妳幫忙那太好了。」我笑著答應。</p><p>看到這一幕，對情愛一竅不通的拉雅眼睛一亮，立刻湊過來耿直地說道：「去圖書館嗎？正好，我也要準備大考，週末我也一起去——」</p><p>「去你個大頭鬼啦！」</p><p>拉雅的話還沒說完，旁邊早就看穿一切的安安猛地跳了起來，以一種迅雷不及掩耳的速度直接伸手摀住了拉雅的嘴巴！</p><p>「唔唔唔？！安安妳幹嘛——」拉雅一愣，滿臉寫著困惑。</p><p>「哈哈哈哈！沒事沒事！她剛才胡言亂語的！」安安死死拖著一頭霧水的拉雅往後退，對著我和悠露出了一個無比燦爛且八卦的笑容，「悠悠！晴！你們兩個週末好好去圖書館『培養感情』……啊不，是『好好讀書』！我和拉雅週末有事，就不去打擾你們了哈！」</p><p>說完，安安完全不給拉雅反抗的機會，硬生生把這個戰力全校第一的怪物給一路拉出了隱藏空間的暗門。</p><p>……</p><p>天台走廊外。</p><p>「安安，妳剛才幹嘛拉我？」拉雅掙脫開安安的手，有些不悅地揉了揉嘴巴，「多一個人讀書交流不好嗎？而且久遠晴是個很強烈的競爭對手。」</p><p>安安看著眼前這個實戰滿分、情商零分的戰力怪物，無奈地扶住了額頭，長長地嘆了一口氣：</p><p>「我的大小姐啊！講話要看場合好不好！妳去湊什麼熱鬧啊？妳看不出來悠悠是特地想跟晴單獨約會……啊不，是單獨讀書嗎？妳跑去當什麼幾百瓦的大電燈泡啊！」</p><p>「電燈泡？約會？」拉雅微微歪了歪頭，霧灰色的眼睛裡滿是純真與茫然，「他們不是青梅竹馬嗎？」</p><p>「就是因為是青梅竹馬才需要推進關係啊！」安安恨鐵不成鋼地拍了拍拉雅的肩膀，「聽好了拉雅，要是妳真想跟悠悠和晴一起讀書，等這週末過後，我們額外再辦個四人的『讀書會』不就好了？幹嘛非要去破壞人家的二人世界？」</p>` },
+            'n1_c25': { volume: 'v1', title: `第二十五章：情侶裝`, content: `<p>聽完安安的解釋，拉雅認真地思考了三秒鐘，最後恍然大悟地點了點頭。</p><p>「原來是這樣……好，那我答應了。週末讓他們兩個自己去吧，下週我們再辦讀書會。」拉雅神色認真地說道。</p><p>「這才對嘛～」安安滿意地拍了拍手，淺金與淺綠的異色瞳裡閃爍著興奮的光芒，「嘿嘿，真期待週末市立圖書館會發生什麼精彩的劇情呢～」</p><p>而此時還在祕密基地、對這一切毫不知情的我，只是看著對面有些臉紅的悠，尷尬地揉了揉鼻子。</p><p>空氣彷彿在一瞬間變得有些安靜。</p><p>拉雅和安安離開後，原本熱鬧的舊天台上只剩下我和悠兩個人。微風吹過，帶著一絲夏末特有的草木香氣，將悠那一頭烏黑柔順的長發吹得微微拂動。</p><p>「那個……晴。」</p><p>悠捧著手中的罐裝紅茶，低下頭看著自己的鞋尖，平時在學校裡高冷孤傲的「白川女神」，此刻耳根卻悄悄染上了一抹淡淡的緋紅。</p><p>她輕聲咳嗽了一下，試圖用平時那種冷靜的語調說話，但聲音裡卻夾雜著一絲掩飾不住的緊張與害羞：「剛才安安胡說八道的話……你別放在心上。我、我只是覺得你剛轉學過來，可能對學校的考試題型不太熟悉，所以才想說去圖書館互相幫忙而已！」</p><p>「嗯，我知道啊。」我看著她那副強裝鎮定的可愛模樣，忍不住用悅耳的女聲笑了笑，「悠最可靠了，有妳幫我抓重點，我週末一定認真讀書。」</p><p>「哼，你知道就好。」悠聽到我的回答，微微鬆了一口氣，抬起頭看著我，眼神裡閃過一抹細微的笑意，「那……這個週末早上九點，我們在市立圖書館門口見？我順便把之前的筆記帶給你——」</p><p>話還沒說完，那面覆蓋著藤蔓的舊石牆暗門突然「砰」地一聲被再次推開！</p><p>「——答答！我們回來啦！」</p><p>安安那活潑的大喊聲瞬間破壞了現場剛建立起來的溫馨氣氛。只見安安一臉壞笑地拉著拉雅重新走了進來，那雙淺金與淺綠交織的異色瞳在我和悠身上掃來掃去，眼神裡滿是「我剛才什麼都沒看到」的八卦意味。</p><p>「安安！拉雅？妳們怎麼又回來了？」悠就像是偷吃糖被抓包的小孩一樣，猛地往後退了一步，臉上的紅暈更深了幾分，強自鎮定地問道。</p><p>而被安安拉回來的拉雅，此時眼神則顯得無比認真且坦蕩。</p><p>她邁著修長的雙腿走上前，直勾勾地看著我們，開口道「悠，久遠晴。剛才安安跟我解釋過了，週末去圖書館是你們兩個人的『預定行程』，我不應該去打擾。」</p><p>「等、等等！什麼打擾啊？！拉雅妳在說什麼啦！」悠整個人差點跳起來，臉頰燙得簡直可以蒸熟雞蛋。</p><p>拉雅完全無視了悠的羞憤，自顧自地繼續說道「但是，三週後的大考對我們都很重要。所以安安提議，等你們週末讀完書之後，下週放學，我們四個可以在這裡辦一個『特訓讀書會』。這樣既不會打擾到你們，我也能跟久遠晴交流筆試心得。」</p><p>說完，拉雅還認真地點了點頭，似乎覺得自己的這個安排無比完美且充滿邏輯。</p><p>「噗……哈哈哈哈！」看到悠那張已經紅透了的臉，安安在一旁忍笑忍得肚子直抽抽。</p><p>我則是無奈地笑了笑。看著眼前這三個風格完全不同、卻又極具魅力的少女，我用悅耳的女聲回應道：</p><p>「沒問題啊，下週的讀書會我也參加。多個人討論，效率也會更高嘛。」</p><p>「太好了！」拉雅滿意地露出了微小的笑意。</p><p>「那就這麼決定囉～」安安摟著拉雅的肩膀，對我和悠眨了眨眼，笑得像隻小狐狸，「悠悠，那週末的『二人讀書會』，妳可要加油喔～」</p><p>「沈——安——！妳給我閉嘴啦！」</p><p>午後的天台上，再次響起了悠羞憤的嬌嗔聲與安安銀鈴般的笑聲。陽光灑落，將這個屬於我們的秘密基地渲染得無比溫暖。</p><p>（神明在我腦海裡一邊嚼著洋芋片一邊嘆氣：「代理人同學，看來你的週末圖書館之行，注定不會太平靜呢～」）</p><p>轉眼到了週末。</p><p>週六的早晨，空氣中瀰漫著一股夏末特有的乾爽。</p><p>久遠晴踩著輕鬆的步伐前往市立圖書館。</p><p>他隨手從衣櫃裡挑了一件寬松的深灰色連帽T恤和黑色休閒長褲。</p><p>那一頭招搖柔順的粉紅長髮被他用一根簡單的黑色髮圈松松地紮在腦後，幾縷碎髮垂在耳邊，搭上他那張精緻得不像話的臉蛋和高挑纖細的身材，在陽光下簡直就像從二次元裡走出來的美少女。</p><p>九點整，市立圖書館門口的大噴水池前。</p><p>晴剛走到廣場，就看到一道熟悉的身影正站在樹蔭下等候。</p><p>然而，當晴看清對方的穿著時，整個人猛地煞住了腳步，眼睛差點沒瞪圓——</p><p>只見白川悠今天同樣穿著一件寬松的深灰色連帽T恤，下半身也是一條黑色的休閒長褲！那頭烏黑柔順的長髮瀑布般披在肩上，清冷的高顏值配上這身極簡風的穿搭，氣場全開。</p><p>這哪裡是巧合，這簡直就是撞衫撞到了死胡同裡，活脫脫一對情侶裝！</p><p>「……」</p><p>晴站在原地，看著悠，悠也轉過頭看到了晴。</p><p>空氣在這一刻凝固了足足三秒鐘。</p><p>悠的視線從晴的臉緩緩下移，落在兩人一模一樣的深灰色帽T和黑色長褲上，原本清冷的俏臉「刷」地一下以肉眼可見的速度紅透到了耳朵根！</p><p>「你……你怎麼也穿這件？！」悠羞憤地咬著下唇，聲音都有點發顫。</p><p>「這是我平時隨手買的款式啊！」晴連忙用那悅耳的女聲澄清，無奈地揉了揉太陽穴，「誰知道妳今天也穿這件……要不，我現在跑去旁邊店家買件襯衫換掉？」</p><p>「算了！換什麼換，搞得好像我們多心虛一樣！」悠強自鎮定地吸了一口氣，扭過頭去不敢看晴，「走了啦，進去了！」</p>` },
+            'n1_c26': { volume: 'v1', title: `第二十六章：我沒偷懶`, content: `<p>兩人一前一後朝著圖書館大門走去。</p><p>因為這過於吸睛的顏值和一模一樣的情侶穿搭，剛走到門口，周圍路人的目光就紛紛掃了過來。</p><p>不遠處，兩個手牽手出來逛街的大學女生正目不轉睛地盯著他們，開始小聲地興奮討論</p><p>「哇……妳快看那一對！顏值也太高了吧！」</p><p>「等等，那是兩個女生吧？那個粉紅色長髮的美女好仙啊！旁邊那個黑長直的高冷妹子也超有氣質！」</p><p>「她們居然穿閨蜜情侶裝耶！天啊，高冷御姐x甜美仙女，這對百合CP我直接嗑爆！」</p><p>「她們走在一起好般配喔，這就是青春嗎？！」</p><p>耳尖的晴聽到路人的對話，整個人差點在階梯上絆了一跤。</p><p>（百合個鬼啊！老子是男的！男的啊啊啊！）晴在心裡咆哮，連忙拉低了帽T的兜帽，試圖把自己那一頭招搖的粉紅長髮藏起來。</p><p>神明在他腦海裡笑得險些背氣：「噗哈哈哈哈！代理人同學，『高冷御姐x甜美仙女』，本神覺得路人眼光很毒辣喔～」</p><p>圖書館三樓，自習區。</p><p>這裡氣氛安靜，陽光透過落地窗灑在木質的長桌上。晴和悠找了個靠窗的角落面對面坐下。</p><p>悠從包包裡掏出厚厚一疊整理得一塵不染的筆記和題庫，推到了晴面前，輕聲道：「這是我整理的超自然理論重點，你先看，不懂的問我。」</p><p>「好，謝謝悠。」</p><p>晴笑了笑，伸手接過筆記，隨手翻開了第一頁。</p><p>下一秒，晴的精神瞬間進入了過目不忘的掛逼狀態。</p><p>「唰、唰、唰、唰——」</p><p>靜謐的自習區裡，突然響起了極其規律且頻率高得嚇人的翻書聲。晴的手指像是開了十倍速一樣，一頁筆記他只需要掃一眼（大約0.5秒），大腦硬盤就瞬間將字跡、圖表、甚至悠那秀氣的字跡全部無碼保存，隨後立刻翻下一頁。</p><p>短短兩分鐘，那厚厚一疊原本夠普通人啃三天的特級筆記，已經被晴翻到了最後一頁。</p><p>晴滿意地拍了拍手，將筆記合上，靠在椅背上舒舒服服地伸了個懶腰，準備開始閉目養神。</p><p>坐在對面的悠，整個過程中眉頭越皺越緊。</p><p>在她眼裡，晴剛才的表現簡直就是敷衍到了極致——翻書快得跟扇風一樣，根本連字都沒看清，現在居然還直接合上筆記準備睡覺？！</p><p>悠的火氣頓時有點上來了。她覺得自己昨晚熬夜整理筆記的心意被這傢伙當成了空氣。</p><p>「久遠晴。」悠壓低了聲音，清冷的眼神裡帶著一絲隱隱的怒意與無奈，「你這是在偷懶，還是在敷衍我？」</p><p>「啊？我沒有啊，我全看完了。」晴眨了眨眼，用悅耳的女聲無辜地回答。</p><p>「看完了？」悠冷笑了一聲，顯然完全不信，「你剛才翻書的速度比電風扇還快，你能記住什麼？好，既然你說你看完了，那我考考你。」</p><p>悠隨手翻開自己的那本備份筆記，眼神凌厲地盯著晴：</p><p>「聽好了，第一題，第15頁第8行，寫的是什麼？第二題，第32頁第12行，內容是什麼？第三題，第45頁倒數第3行，寫了什麼？答不出來，今天你就別想回去睡覺！」</p><p>晴微微一愣，表情有些古怪地看著悠：「悠……哪有人這樣考試的啊？誰會去背第幾頁第幾行啊，又不是印表機校對……」</p><p>「少廢話！剛才不是說全看完了嗎？答不出來就給我老老實實從第一頁重新讀！」悠雙手環胸，冷哼一聲，準備開始對這個不知天高地厚的青梅竹馬進行長達半小時的「學習態度訓話」。</p><p>「第一題，第15頁第8行……」悠剛張開嘴，嚴厲的話才說了一半，就被晴那流利、悅耳且毫停頓的聲音硬生生打斷了。</p><p>「第15頁第8行：『A級風系能量在進行二次壓縮時，軌跡應偏轉12度，以避免脈絡過載』。」晴一口氣背了出來。</p><p>悠整個人瞬間僵住了，原本要說的訓話直接卡在喉嚨裡。</p><p>「第二題，第32頁第12行：『複合防禦陣型的三個核心節點分別為天樞、地脊與人核，缺一不可』。」晴繼續順暢地念道，連標點符號都停頓得精準無比。</p><p>悠的眼睛越張越大，滿臉寫著難以置信。這傢伙……真的背下來了？！</p><p>「然後是第三題，第45頁倒數第3行……」</p><p>晴說到這裡，突然頓住了。</p><p>他那雙精緻的眼睛眨了眨，表情變得無比精彩，古怪中帶著一絲哭笑不失的笑意，看著對面已經完全呆住的悠。</p><p>「第45頁倒數第3行寫的是……」晴壓低了聲音，用只有他們兩個人能聽到的悅耳聲音慢慢念道：</p><p>「『晴這個笨蛋要是看到這裡，記得把公式背三遍，不然大考輸給拉雅就準備洗一個月的碗吧』……悠，妳在筆記裡偷偷罵我笨蛋就算了，居然還叫我洗碗啊？」</p><p>「——！！！』</p><p>悠的臉瞬間從耳朵根紅到了脖子尖！簡直像是一隻被踩了尾巴的小貓，整個人差點從椅子上跳起來！</p><p>那是她昨晚整理筆記整理到深夜，一時賭氣寫在頁腳的私人註解和吐槽，誰能想到這個掛逼竟然連這種角落裡的塗鴉都一字不差地給背出來了啊！</p><p>「你……你閉嘴啦！不許念出來！」</p><p>悠急忙伸手跨過桌子，一把捂住了晴的嘴巴！她那白皙嬌嫩的手掌帶著淡淡的茉莉花香，貼在晴的唇邊。</p><p>晴感受著唇邊傳來的冰涼與香氣，看著悠那張近在咫尺、紅得快要滴出水來的絕美臉龐，忍不住彎起眼睛笑了起來。</p><p>悠看著晴眼中那濃濃的笑意，這才反應過來自己的動作有多親密，連忙像觸電一樣收回了手，把臉埋進了手臂裡，小聲地嘟囔著：「討厭死了……你這個怪物……」</p>` }
         };
 
         /* ================================================================= */
+
+        // 卷代號對照表
+        const VOLUME_NAMES = {
+            'v1': '第一卷：伴神行',
+        };
 
         const CHAPTER_ORDER = Object.keys(NOVEL_DATA);
         let currentChapterKey = null;
         let typingTimer = null;
 
-        // --- 櫻花特效引擎 (優化版) ---
-        const canvas = document.getElementById('sakura-canvas');
-        const ctx = canvas.getContext('2d', { alpha: true }); // 優化透明度渲染
-        let width, height, petals = [];
+        // --- 星塵神契特效引擎 ---
+        const canvas = document.getElementById('bg-canvas');
+        const ctx = canvas.getContext('2d', { alpha: true });
+        let width, height, particles = [];
         let animationFrameId;
 
-        class Petal {
+        class Particle {
             constructor() { this.reset(); }
             reset() {
                 this.x = Math.random() * width;
-                this.y = Math.random() * height - height;
-                this.size = Math.random() * 5 + 3; // 稍微調小一點，更精緻
-                this.speed = Math.random() * 1 + 0.5;
-                this.angle = Math.random() * Math.PI * 2;
-                this.spin = Math.random() * 0.02 - 0.01;
-                // 使用更夢幻的顏色
-                const colors = ['#ffb7b2', '#ffdac1', '#e2f0cb', '#ffffff'];
+                this.y = Math.random() * height;
+                this.size = Math.random() * 1.6 + 0.6;
+                this.speedY = Math.random() * 0.25 + 0.05;
+                this.speedX = (Math.random() - 0.5) * 0.15;
+                this.baseOpacity = Math.random() * 0.6 + 0.2;
+                this.twinklePhase = Math.random() * Math.PI * 2;
+                this.twinkleSpeed = Math.random() * 0.02 + 0.01;
+                const colors = ['#e3b873', '#9b8cff', '#6fd6c7', '#ffffff'];
                 this.color = colors[Math.floor(Math.random() * colors.length)];
-                this.opacity = Math.random() * 0.5 + 0.1;
             }
             update() {
-                this.y += this.speed;
-                this.x += Math.sin(this.angle) * 0.3; // 減少橫向擺動幅度，更自然
-                this.angle += this.spin;
-                if (this.y > height) this.reset();
+                this.y -= this.speedY;
+                this.x += this.speedX;
+                this.twinklePhase += this.twinkleSpeed;
+                if (this.y < -10) this.reset(), this.y = height + 10;
+                if (this.x < -10) this.x = width + 10;
+                if (this.x > width + 10) this.x = -10;
             }
             draw() {
+                const opacity = this.baseOpacity * (0.5 + 0.5 * Math.sin(this.twinklePhase));
                 ctx.save();
-                ctx.translate(this.x, this.y);
-                ctx.rotate(this.angle);
-                ctx.globalAlpha = this.opacity;
+                ctx.globalAlpha = opacity;
                 ctx.fillStyle = this.color;
+                ctx.shadowBlur = 6;
+                ctx.shadowColor = this.color;
                 ctx.beginPath();
-                // 繪製花瓣形狀
-                ctx.ellipse(0, 0, this.size, this.size/1.8, 0, 0, Math.PI * 2);
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
                 ctx.fill();
                 ctx.restore();
             }
         }
 
-        function initSakura() {
+        function initParticles() {
             width = canvas.width = window.innerWidth;
             height = canvas.height = window.innerHeight;
             // 根據螢幕寬度調整粒子數量，優化性能
-            const count = width < 768 ? 30 : 60; 
-            petals = Array.from({ length: count }, () => new Petal());
+            const count = width < 768 ? 45 : 90;
+            particles = Array.from({ length: count }, () => new Particle());
+        }
+
+        function connectParticles() {
+            const maxDist = width < 768 ? 90 : 130;
+            for (let i = 0; i < particles.length; i++) {
+                for (let j = i + 1; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    if (dist < maxDist) {
+                        const opacity = (1 - dist / maxDist) * 0.12;
+                        ctx.save();
+                        ctx.globalAlpha = opacity;
+                        ctx.strokeStyle = '#e3b873';
+                        ctx.lineWidth = 0.6;
+                        ctx.beginPath();
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.stroke();
+                        ctx.restore();
+                    }
+                }
+            }
         }
 
         function animate() {
             ctx.clearRect(0, 0, width, height);
-            petals.forEach(p => { p.update(); p.draw(); });
+            particles.forEach(p => { p.update(); p.draw(); });
+            connectParticles();
             animationFrameId = requestAnimationFrame(animate);
         }
 
@@ -515,7 +614,7 @@
                 el.style.maxHeight = '0px';
                 icon.style.transform = 'rotate(0deg)';
             } else {
-                el.style.maxHeight = '800px'; // 增加最大高度以容納更多章節
+                el.style.maxHeight = '3000px'; // 增加最大高度以容納更多章節
                 icon.style.transform = 'rotate(180deg)';
             }
         }
@@ -524,7 +623,7 @@
             const sidebar = document.getElementById('sidebar');
             const overlay = document.getElementById('mobile-overlay');
             const isOpen = !sidebar.classList.contains('-translate-x-full');
-            
+
             if (isOpen) {
                 // 關閉
                 sidebar.classList.add('-translate-x-full');
@@ -536,7 +635,7 @@
                 sidebar.classList.remove('-translate-x-full');
                 overlay.classList.remove('hidden');
                 // 強制重繪以觸發過渡
-                void overlay.offsetWidth; 
+                void overlay.offsetWidth;
                 overlay.classList.remove('opacity-0');
                 overlay.classList.add('opacity-100');
             }
@@ -553,31 +652,33 @@
 
             if (typingTimer) clearTimeout(typingTimer);
             currentChapterKey = key;
-            
+
             const contentContainer = document.getElementById('content-container');
             const reader = document.getElementById('reader-view');
             const defaultView = document.getElementById('default-view');
             const wrapper = document.getElementById('chapter-content-wrapper');
             const titleEl = document.getElementById('chapter-title');
+            const volumeEl = document.getElementById('chapter-volume');
 
             // 1. 先淡出舊內容
             wrapper.classList.add('opacity-0', 'translate-y-8');
-            
+
             setTimeout(() => {
                 // 2. 切換 DOM 顯示
                 defaultView.classList.add('hidden');
                 reader.classList.remove('hidden');
-                
+
                 // 3. 注入新內容
                 document.getElementById('chapter-body').innerHTML = NOVEL_DATA[key].content;
+                volumeEl.textContent = VOLUME_NAMES[NOVEL_DATA[key].volume] || '';
                 titleEl.textContent = ''; // 清空標題準備打字特效
-                
+
                 // 4. 滾動到頂部
                 contentContainer.scrollTo({ top: 0, behavior: 'smooth' });
-                
+
                 // 5. 淡入新內容
                 wrapper.classList.remove('opacity-0', 'translate-y-8');
-                
+
                 // 6. 標題打字特效
                 let i = 0;
                 const text = NOVEL_DATA[key].title;
@@ -585,7 +686,7 @@
                     if (currentChapterKey !== key) return; // 防止快速切換時重疊
                     if (i < text.length) {
                         titleEl.textContent += text[i++];
-                        typingTimer = setTimeout(type, 80); // 稍微加快打字速度
+                        typingTimer = setTimeout(type, 60); // 稍微加快打字速度
                     }
                 }
                 type();
@@ -620,13 +721,13 @@
             navigator.clipboard.writeText('MriaWisp@mirawisp.dpdns.org').then(() => {
                 const btn = document.querySelector('button[onclick="copyEmail()"]');
                 const originalHtml = btn.innerHTML; // 保存原始按鈕內容(包含icon)
-                
+
                 btn.innerHTML = '<i class="fas fa-check"></i> 複製成功！✨';
-                btn.classList.add('bg-green-50', 'text-green-600', 'border-green-200');
-                
+                btn.classList.add('bg-theme-accent/10', 'text-theme-accent', 'border-theme-accent/40');
+
                 setTimeout(() => {
                     btn.innerHTML = originalHtml;
-                    btn.classList.remove('bg-green-50', 'text-green-600', 'border-green-200');
+                    btn.classList.remove('bg-theme-accent/10', 'text-theme-accent', 'border-theme-accent/40');
                 }, 2000);
             }).catch(err => {
                 console.error('複製失敗:', err);
@@ -644,19 +745,18 @@
         let resizeTimeout;
         window.addEventListener('resize', () => {
             clearTimeout(resizeTimeout);
-            resizeTimeout = setTimeout(initSakura, 200);
+            resizeTimeout = setTimeout(initParticles, 200);
         });
 
         // 初始化
         document.addEventListener('DOMContentLoaded', () => {
-            initSakura();
+            initParticles();
             animate();
             setInterval(updateTime, 1000);
             updateTime();
-            // 預設展開第一個小說目錄
-            toggleMenu('novel-1');
+            // 預設展開小說目錄
+            document.getElementById('novel-1').style.maxHeight = '3000px';
         });
     </script>
 </body>
 </html>
-
